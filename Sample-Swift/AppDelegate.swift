@@ -8,17 +8,7 @@
 
 import UIKit
 import Appodeal
-
-
-protocol Connector {
-    typealias Completion = () -> Void
-    func initialise(completion: @escaping Completion)
-}
-
-
-extension Notification.Name {
-    static let AdDidInitialize = Notification.Name("AdDidInitialize")
-}
+import HolisticSolutionSDK
 
 
 @UIApplicationMain
@@ -28,25 +18,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let consent: Bool = true
     }
     
-    /// Services connectors
-    private let connectors: [Connector] = [
-        RemoteConfigConnector(),
-        AppsFlyerConnector()
-    ]
-    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Appodeal.setLogLevel(.verbose)
-        // Activate Firebase and AppsFlyer first.
-        // Appodeal should be initialised after
-        connect {
+        let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
+        let remoteConfig = HSRemoteConfigConnector()
+        let configuration = HSAppConfiguration(attribution: appsFlyer,
+                                               productTesting: remoteConfig)
+        try? HSApp.configure(configuration: configuration) {
             Appodeal.setTestingEnabled(true)
             Appodeal.initialize(
                 withApiKey: servicesInfo.appodeal.apiKey,
                 types: AppodealConstants.adType,
                 hasConsent: AppodealConstants.consent
             )
-            // Notify application that advertising is available
             NotificationCenter.default.post(name: .AdDidInitialize, object: nil)
         }
         return true
@@ -67,16 +52,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-private extension AppDelegate {
-    func connect(completion: @escaping Connector.Completion) {
-        // Wait for all connectors activation completion.
-        let group = DispatchGroup()
-        connectors.forEach { connector in
-            group.enter()
-            connector.initialise(completion: group.leave)
-        }
-        group.notify(queue: .main, execute: completion) 
-    }
+extension Notification.Name {
+    static let AdDidInitialize = Notification.Name("AdDidInitialize")
 }
-
-

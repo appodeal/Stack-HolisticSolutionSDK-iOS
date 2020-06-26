@@ -88,7 +88,7 @@ PODS:
   - Protobuf (3.11.4)
 
 DEPENDENCIES:
-  - Appodeal (= 2.6.3)
+  - Appodeal (>= 2.6.0)
   - AppsFlyerFramework
   - Firebase/Analytics
   - Firebase/RemoteConfig
@@ -134,6 +134,6 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
 
-PODFILE CHECKSUM: 0004e5e34295da4184ca7a6c5fda6d688e1e031c
+PODFILE CHECKSUM: 9f23b68464dc52423734c5b78d2ba8dc14ef727e
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

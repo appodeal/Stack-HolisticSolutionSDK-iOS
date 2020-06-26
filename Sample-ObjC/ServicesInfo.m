@@ -12,8 +12,6 @@
 @interface ServicesInfo ()
 
 @property (nonatomic, copy, readwrite) NSString *appodealApiKey;
-@property (nonatomic, copy, readwrite) NSString *appsFlyerDevId;
-@property (nonatomic, copy, readwrite) NSString *appsFlyerAppId;
 
 @end
 
@@ -43,8 +41,6 @@
                                                                      format:nil
                                                                       error:nil];
     self.appodealApiKey = plist[@"Appodeal"][@"ApiKey"];
-    self.appsFlyerAppId = plist[@"AppsFlyer"][@"AppId"];
-    self.appsFlyerDevId = plist[@"AppsFlyer"][@"DevKey"];
 }
 
 @end

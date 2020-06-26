@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "RemoteConfigConnector.h"
-#import "AppsFlyerConnector.h"
 #import "ServicesInfo.h"
+#import <HolisticSolutionSDK/HolisticSolutionSDK.h>
 
 @import Appodeal;
 
@@ -21,49 +20,35 @@ BOOL const kConsent                                 = YES;
 
 @interface AppDelegate ()
 
-@property (nonatomic, strong) NSHashTable <id<Connector>> *connectors;
-
 @end
 
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Enable logging
     [Appodeal setLogLevel:APDLogLevelVerbose];
     
-    [self setUpConnectors];
-    [self connect:^{
+    HSAppsFlyerConnector *appsFlyer = [[HSAppsFlyerConnector alloc] initWithPlistName:@"Services-Info"
+                                                                                error:nil];
+    HSRemoteConfigConnector *remoteConfig = [[HSRemoteConfigConnector alloc] initWithKeys:@[]
+                                                                                 defaults:nil
+                                                                       expirationDuration:60];
+    HSAppodealConnector *appodeal = [[HSAppodealConnector alloc] init];
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAttribution:appsFlyer
+                                                                         productTesting:remoteConfig
+                                                                            advertising:appodeal];
+    [HSApp configureWithConfiguration:configuration error:nil completion:^{
         // Test Mode
-        [Appodeal setTestingEnabled:YES];
-        /// Initialization
-        [Appodeal initializeWithApiKey:ServicesInfo.sharedInfo.appodealApiKey
-                                 types:kAppodealTypes
-                            hasConsent:kConsent];
-        [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName
-                                                          object:nil];
+               [Appodeal setTestingEnabled:YES];
+               /// Initialization
+               [Appodeal initializeWithApiKey:ServicesInfo.sharedInfo.appodealApiKey
+                                        types:kAppodealTypes
+                                   hasConsent:kConsent];
+               [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName
+                                                                 object:nil];
     }];
-    
     return YES;
-}
-
-- (void)setUpConnectors {
-    RemoteConfigConnector *firebase = [[RemoteConfigConnector alloc] init];
-    AppsFlyerConnector *appsflyer = [[AppsFlyerConnector alloc] init];
-    
-    self.connectors = [NSHashTable hashTableWithOptions:NSHashTableStrongMemory];
-    [self.connectors addObject:firebase];
-    [self.connectors addObject:appsflyer];
-}
-
-- (void)connect:(Completion)completion {
-    dispatch_group_t group = dispatch_group_create();
-    [self.connectors.allObjects enumerateObjectsUsingBlock:^(id<Connector> connector, NSUInteger idx, BOOL *stop) {
-        dispatch_group_enter(group);
-        [connector inititalise:^{
-            dispatch_group_leave(group);
-        }];
-    }];
-    dispatch_group_notify(group, dispatch_get_main_queue(), completion);
 }
 
 #pragma mark - UISceneSession lifecycle

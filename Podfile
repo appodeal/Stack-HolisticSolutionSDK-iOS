@@ -8,7 +8,7 @@ install! 'cocoapods', :deterministic_uuids => false, :warn_for_multiple_pod_sour
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '2.6.3'
+  pod 'Appodeal', '>= 2.6.0'
 # Uncomment followed adapters
   # pod 'APDAdColonyAdapter', '2.6.3.1' 
   # pod 'APDAmazonAdsAdapter', '2.6.3.1' 
@@ -42,17 +42,24 @@ def appsflyer
   pod 'AppsFlyerFramework'
 end
 
+def deps
+  firebase
+  appsflyer
+  appodeal
+end
+
+
+target 'HolisticSolutionSDK' do
+  project 'HolisticSolutionSDK/HolisticSolutionSDK.xcodeproj'
+  deps
+end
 
 target 'Sample-Swift' do
   project 'Sample-Swift.xcodeproj'
-	firebase
-  appsflyer
-	appodeal
+	deps
 end
 
 target 'Sample-ObjC' do
   project 'Sample-ObjC.xcodeproj'
-	firebase
-  appsflyer
-	appodeal
+	deps
 end

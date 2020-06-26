@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		02C2E08A3B7C0CE54BCD3CF8 /* Pods_Sample_ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BA0CF9AD07CBAFD60374B9 /* Pods_Sample_ObjC.framework */; };
+		420F4ECA24A644D3002A242F /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F4EC924A644D3002A242F /* Dummy.swift */; };
+		4294A20124A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */; };
+		4294A20224A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42AC598324654B280022E5A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC597A24654B270022E5A2 /* ViewController.m */; };
 		42AC598424654B280022E5A2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC597D24654B280022E5A2 /* main.m */; };
 		42AC598524654B280022E5A2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC597E24654B280022E5A2 /* AppDelegate.m */; };
@@ -15,16 +18,30 @@
 		42AC598824654B280022E5A2 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC598224654B280022E5A2 /* SceneDelegate.m */; };
 		42AC598D24654B310022E5A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42AC598924654B310022E5A2 /* Main.storyboard */; };
 		42AC598E24654B310022E5A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42AC598B24654B310022E5A2 /* LaunchScreen.storyboard */; };
-		42AC599424654B3C0022E5A2 /* AppsFlyerConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC598F24654B3C0022E5A2 /* AppsFlyerConnector.m */; };
-		42AC599524654B3C0022E5A2 /* RemoteConfigConnector.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC599124654B3C0022E5A2 /* RemoteConfigConnector.m */; };
 		42AC599924654D2E0022E5A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AC599824654D2E0022E5A2 /* GoogleService-Info.plist */; };
 		42AC599D246562000022E5A2 /* Services-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AC599C246562000022E5A2 /* Services-Info.plist */; };
 		42AC59A22465753C0022E5A2 /* ServicesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC59A12465753C0022E5A2 /* ServicesInfo.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4294A20324A4CA5E00F5FFD5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4294A20224A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		19CABF2424D7ED6971FB9F54 /* Pods-Sample-ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-ObjC.debug.xcconfig"; path = "Target Support Files/Pods-Sample-ObjC/Pods-Sample-ObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		22BA0CF9AD07CBAFD60374B9 /* Pods_Sample_ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		420F4EC924A644D3002A242F /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
+		4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AC596324654ADE0022E5A2 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AC597A24654B270022E5A2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		42AC597B24654B270022E5A2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -37,11 +54,6 @@
 		42AC598224654B280022E5A2 /* SceneDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		42AC598A24654B310022E5A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		42AC598C24654B310022E5A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		42AC598F24654B3C0022E5A2 /* AppsFlyerConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppsFlyerConnector.m; path = Connectors/AppsFlyerConnector.m; sourceTree = "<group>"; };
-		42AC599024654B3C0022E5A2 /* Connector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connector.h; path = Connectors/Connector.h; sourceTree = "<group>"; };
-		42AC599124654B3C0022E5A2 /* RemoteConfigConnector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RemoteConfigConnector.m; path = Connectors/RemoteConfigConnector.m; sourceTree = "<group>"; };
-		42AC599224654B3C0022E5A2 /* RemoteConfigConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RemoteConfigConnector.h; path = Connectors/RemoteConfigConnector.h; sourceTree = "<group>"; };
-		42AC599324654B3C0022E5A2 /* AppsFlyerConnector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppsFlyerConnector.h; path = Connectors/AppsFlyerConnector.h; sourceTree = "<group>"; };
 		42AC599824654D2E0022E5A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42AC599C246562000022E5A2 /* Services-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Services-Info.plist"; sourceTree = "<group>"; };
 		42AC59A02465753C0022E5A2 /* ServicesInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServicesInfo.h; sourceTree = "<group>"; };
@@ -55,6 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02C2E08A3B7C0CE54BCD3CF8 /* Pods_Sample_ObjC.framework in Frameworks */,
+				4294A20124A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,7 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				42AC599724654CDE0022E5A2 /* Support */,
-				42AC599624654CC40022E5A2 /* Connectors */,
 				42AC597B24654B270022E5A2 /* AppDelegate.h */,
 				42AC597E24654B280022E5A2 /* AppDelegate.m */,
 				42AC597C24654B270022E5A2 /* SceneDelegate.h */,
@@ -101,18 +113,6 @@
 				42AC597A24654B270022E5A2 /* ViewController.m */,
 			);
 			path = "Sample-ObjC";
-			sourceTree = "<group>";
-		};
-		42AC599624654CC40022E5A2 /* Connectors */ = {
-			isa = PBXGroup;
-			children = (
-				42AC599024654B3C0022E5A2 /* Connector.h */,
-				42AC599324654B3C0022E5A2 /* AppsFlyerConnector.h */,
-				42AC598F24654B3C0022E5A2 /* AppsFlyerConnector.m */,
-				42AC599224654B3C0022E5A2 /* RemoteConfigConnector.h */,
-				42AC599124654B3C0022E5A2 /* RemoteConfigConnector.m */,
-			);
-			name = Connectors;
 			sourceTree = "<group>";
 		};
 		42AC599724654CDE0022E5A2 /* Support */ = {
@@ -127,6 +127,7 @@
 				42AC598924654B310022E5A2 /* Main.storyboard */,
 				42AC597F24654B280022E5A2 /* Assets.xcassets */,
 				42AC598124654B280022E5A2 /* Info.plist */,
+				420F4EC924A644D3002A242F /* Dummy.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -134,6 +135,7 @@
 		9C696E04868894CF345E5802 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */,
 				22BA0CF9AD07CBAFD60374B9 /* Pods_Sample_ObjC.framework */,
 			);
 			name = Frameworks;
@@ -151,6 +153,7 @@
 				42AC596024654ADE0022E5A2 /* Frameworks */,
 				42AC596124654ADE0022E5A2 /* Resources */,
 				44DB2C2766A87740906B3D4D /* [CP] Embed Pods Frameworks */,
+				4294A20324A4CA5E00F5FFD5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,6 +176,7 @@
 				TargetAttributes = {
 					42AC596224654ADE0022E5A2 = {
 						CreatedOnToolsVersion = 11.4.1;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -257,12 +261,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AC598424654B280022E5A2 /* main.m in Sources */,
-				42AC599424654B3C0022E5A2 /* AppsFlyerConnector.m in Sources */,
 				42AC598324654B280022E5A2 /* ViewController.m in Sources */,
 				42AC598524654B280022E5A2 /* AppDelegate.m in Sources */,
 				42AC598824654B280022E5A2 /* SceneDelegate.m in Sources */,
+				420F4ECA24A644D3002A242F /* Dummy.swift in Sources */,
 				42AC59A22465753C0022E5A2 /* ServicesInfo.m in Sources */,
-				42AC599524654B3C0022E5A2 /* RemoteConfigConnector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +412,7 @@
 			baseConfigurationReference = 19CABF2424D7ED6971FB9F54 /* Pods-Sample-ObjC.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WG4VFF78ZM;
 				INFOPLIST_FILE = "Sample-ObjC/Info.plist";
@@ -418,6 +422,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.sandbox;
 				PRODUCT_NAME = Sample;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -428,6 +433,7 @@
 			baseConfigurationReference = D46BEDC692A8B9512C6A1030 /* Pods-Sample-ObjC.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WG4VFF78ZM;
 				INFOPLIST_FILE = "Sample-ObjC/Info.plist";

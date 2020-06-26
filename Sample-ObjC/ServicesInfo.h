@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ServicesInfo : NSObject
 
 @property (nonatomic, copy, readonly) NSString *appodealApiKey;
-@property (nonatomic, copy, readonly) NSString *appsFlyerDevId;
-@property (nonatomic, copy, readonly) NSString *appsFlyerAppId;
 
 + (instancetype)sharedInfo;
 

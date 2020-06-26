@@ -24,7 +24,6 @@ let servicesInfo: ServicesInfo = {
 struct ServicesInfo: Decodable {
     enum Keys: String, CodingKey {
         case appodeal = "Appodeal"
-        case appsFlyer = "AppsFlyer"
     }
     
     struct Appodeal: Decodable {
@@ -40,28 +39,10 @@ struct ServicesInfo: Decodable {
         }
     }
     
-    struct AppsFlyer: Decodable {
-        enum Keys: String, CodingKey {
-            case devKey = "DevKey"
-            case appId = "AppId"
-        }
-        
-        var devKey: String
-        var appId: String
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: Keys.self)
-            devKey = try container.decode(String.self, forKey: .devKey)
-            appId = try container.decode(String.self, forKey: .appId)
-        }
-    }
-    
     var appodeal: Appodeal
-    var appsFlyer: AppsFlyer
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         appodeal = try container.decode(ServicesInfo.Appodeal.self, forKey: .appodeal)
-        appsFlyer = try container.decode(ServicesInfo.AppsFlyer.self, forKey: .appsFlyer)
     }
 }
