@@ -7,8 +7,9 @@
 //
 
 import Foundation
-import Firebase
+import FirebaseCore
 import FirebaseRemoteConfig
+
 
 @objc public
 final class HSRemoteConfigConnector: NSObject { //, HSAttributionPlatform {

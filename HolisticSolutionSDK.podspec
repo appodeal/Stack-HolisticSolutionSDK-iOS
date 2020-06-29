@@ -16,6 +16,7 @@ Pod::Spec.new do |spec|
 
   spec.requires_arc = true
   spec.static_framework = true
+  spec.swift_versions = "4.0", "4.2", "5.0", "5.1", "5.2"
   spec.default_subspecs = "Full"
 
 
@@ -42,6 +43,7 @@ Pod::Spec.new do |spec|
   spec.subspec "FirebaseRemoteConfig" do |ss|
     ss.source_files = "HolisticSolutionSDK/FirebaseRemoteConfig"
     ss.dependency "HolisticSolutionSDK/Core"
+    ss.dependency "Firebase/Core", ">= 6.20"
     ss.dependency "Firebase/Analytics", ">= 6.20"
   	ss.dependency "Firebase/RemoteConfig", ">= 4.4"
   end
@@ -51,6 +53,5 @@ Pod::Spec.new do |spec|
   	ss.dependency "HolisticSolutionSDK/Appodeal"
   	ss.dependency "HolisticSolutionSDK/AppsFlyer"
   	ss.dependency "HolisticSolutionSDK/FirebaseRemoteConfig"
-  	ss.xcconfig = { "VALID_ARCHS": "arm64 arm64e armv7 armv7s x86_64" }
   end
 end
