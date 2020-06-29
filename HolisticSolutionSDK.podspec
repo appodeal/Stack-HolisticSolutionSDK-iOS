@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "appodeal" => "https://appodeal.com" }
   spec.platform     = :ios, "9.0"
 
-  spec.source       = { :git => "https://github.com/appodeal/DataCore-Sample-iOS.git", :tag => "v#{s.version}" }
+  spec.source       = { :git => "https://github.com/appodeal/DataCore-Sample-iOS.git", :tag => "v#{spec.version}" }
 
   spec.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
   spec.exclude_files = 
