@@ -14,33 +14,40 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => "https://github.com/appodeal/DataCore-Sample-iOS.git", :tag => "v#{spec.version}" }
 
-  spec.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
-  spec.exclude_files = 
-  	"HolisticSolutionSDK/Appodeal",
-  	"HolisticSolutionSDK/AppsFlyer",
-  	"HolisticSolutionSDK/FirebaseRemoteConfig"
-
   spec.requires_arc = true
   spec.static_framework = true
   spec.default_subspecs = "Full"
 
+
+  spec.subspec "Core" do |ss|
+  	ss.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
+  	ss.exclude_files = 
+  		"HolisticSolutionSDK/Appodeal",
+  		"HolisticSolutionSDK/AppsFlyer",
+  		"HolisticSolutionSDK/FirebaseRemoteConfig"
+  end
+
   spec.subspec "Appodeal" do |ss|
     ss.source_files	= "HolisticSolutionSDK/Appodeal"
+    ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Appodeal", ">= 2.6"
   end
 
   spec.subspec "AppsFlyer" do |ss|
     ss.source_files = "HolisticSolutionSDK/AppsFlyer"
+    ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "AppsFlyerFramework", ">= 5.3"
   end
 
   spec.subspec "FirebaseRemoteConfig" do |ss|
     ss.source_files = "HolisticSolutionSDK/FirebaseRemoteConfig"
+    ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Firebase/Analytics", ">= 6.20"
   	ss.dependency "Firebase/RemoteConfig", ">= 4.4"
   end
 
   spec.subspec "Full" do |ss| 
+  	ss.dependency "HolisticSolutionSDK/Core"
   	ss.dependency "HolisticSolutionSDK/Appodeal"
   	ss.dependency "HolisticSolutionSDK/AppsFlyer"
   	ss.dependency "HolisticSolutionSDK/FirebaseRemoteConfig"
