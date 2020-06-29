@@ -50,7 +50,7 @@ end
 
 
 target 'HolisticSolutionSDK' do
-  project 'HolisticSolutionSDK/HolisticSolutionSDK.xcodeproj'
+  project 'HolisticSolutionSDK.xcodeproj'
   deps
 end
 
