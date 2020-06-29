@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42411A8924A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42411A8824A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift */; };
 		4248EE1924A5EE60003E9CA6 /* HSAppodealConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1824A5EE60003E9CA6 /* HSAppodealConnector.swift */; };
 		4248EE1B24A5EF99003E9CA6 /* HSRemoteConfigConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1A24A5EF99003E9CA6 /* HSRemoteConfigConnector.swift */; };
 		4248EE1D24A5F223003E9CA6 /* HSPlistDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1C24A5F223003E9CA6 /* HSPlistDecodable.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		42411A8824A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSCancellableAsynchronousOperation.swift; sourceTree = "<group>"; };
 		4248EE1824A5EE60003E9CA6 /* HSAppodealConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAppodealConnector.swift; sourceTree = "<group>"; };
 		4248EE1A24A5EF99003E9CA6 /* HSRemoteConfigConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSRemoteConfigConnector.swift; sourceTree = "<group>"; };
 		4248EE1C24A5F223003E9CA6 /* HSPlistDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSPlistDecodable.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				4294A20D24A4DADE00F5FFD5 /* HSAsynchronousOperation.swift */,
+				42411A8824A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift */,
 				4273EBA524A60D9C00A868FD /* HSAttributionConfigurationOperation.swift */,
 				4273EBA724A620AA00A868FD /* HSProductTestSyncOperation.swift */,
 			);
@@ -273,6 +276,7 @@
 				4248EE1B24A5EF99003E9CA6 /* HSRemoteConfigConnector.swift in Sources */,
 				4294A20724A4D24D00F5FFD5 /* HSProductTestingPlatform.swift in Sources */,
 				4294A1FB24A4BFFB00F5FFD5 /* HSAttributionPlatform.swift in Sources */,
+				42411A8924A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift in Sources */,
 				4294A1F924A4BE7E00F5FFD5 /* HSApp.swift in Sources */,
 				4294A20924A4D61100F5FFD5 /* HSAdvertisingPlatform.swift in Sources */,
 				4273EBA624A60D9C00A868FD /* HSAttributionConfigurationOperation.swift in Sources */,

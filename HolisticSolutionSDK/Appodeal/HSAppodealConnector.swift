@@ -15,8 +15,12 @@ extension HSAppConfiguration {
     @objc convenience
     init(attribution: HSAttributionPlatform,
          productTesting: HSProductTestingPlatform,
-         advertising: HSAdvertisingPlatform = HSAppodealConnector()) {
-        self.init([attribution], [productTesting], [advertising])
+         advertising: HSAdvertisingPlatform = HSAppodealConnector(),
+         timeout: TimeInterval = kHSAppDefaultTimeout) {
+        self.init(attributionPlatforms: [attribution],
+                  productTestingPlatforms: [productTesting],
+                  advertisingPlatforms: [advertising],
+                  timeout: timeout)
     }
 }
 

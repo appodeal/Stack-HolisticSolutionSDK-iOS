@@ -28,7 +28,6 @@ BOOL const kConsent                                 = YES;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Enable logging
     [Appodeal setLogLevel:APDLogLevelVerbose];
-    
     HSAppsFlyerConnector *appsFlyer = [[HSAppsFlyerConnector alloc] initWithPlistName:@"Services-Info"
                                                                                 error:nil];
     HSRemoteConfigConnector *remoteConfig = [[HSRemoteConfigConnector alloc] initWithKeys:@[]
@@ -37,16 +36,17 @@ BOOL const kConsent                                 = YES;
     HSAppodealConnector *appodeal = [[HSAppodealConnector alloc] init];
     HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAttribution:appsFlyer
                                                                          productTesting:remoteConfig
-                                                                            advertising:appodeal];
+                                                                            advertising:appodeal
+                                                                                timeout:15];
     [HSApp configureWithConfiguration:configuration error:nil completion:^{
         // Test Mode
-               [Appodeal setTestingEnabled:YES];
-               /// Initialization
-               [Appodeal initializeWithApiKey:ServicesInfo.sharedInfo.appodealApiKey
-                                        types:kAppodealTypes
-                                   hasConsent:kConsent];
-               [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName
-                                                                 object:nil];
+        [Appodeal setTestingEnabled:YES];
+        /// Initialization
+        [Appodeal initializeWithApiKey:ServicesInfo.sharedInfo.appodealApiKey
+                                 types:kAppodealTypes
+                            hasConsent:kConsent];
+        [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName
+                                                          object:nil];
     }];
     return YES;
 }

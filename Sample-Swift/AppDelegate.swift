@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
         let remoteConfig = HSRemoteConfigConnector()
         let configuration = HSAppConfiguration(attribution: appsFlyer,
-                                               productTesting: remoteConfig)
+                                               productTesting: remoteConfig,
+                                               timeout: 10)
         try? HSApp.configure(configuration: configuration) {
             Appodeal.setTestingEnabled(true)
             Appodeal.initialize(

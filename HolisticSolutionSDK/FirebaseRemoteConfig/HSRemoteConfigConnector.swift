@@ -47,7 +47,8 @@ extension HSRemoteConfigConnector: HSProductTestingPlatform {
             FirebaseApp.configure()
         }
         
-        config.fetch(withExpirationDuration: expirationDuration) { [unowned self] status, error in
+        config.fetch(withExpirationDuration: expirationDuration) { [weak self] status, error in
+            guard let self = self else { return }
             // Fallback on fetch failed
             guard status == .success, error == nil else {
                 completion(self)
@@ -59,7 +60,8 @@ extension HSRemoteConfigConnector: HSProductTestingPlatform {
     
     private func activate(completion: @escaping (HSProductTestingPlatform) -> Void) {
         // Activate config
-        config.activate { [unowned self] error in
+        config.activate { [weak self] error in
+            guard let self = self else { return }
             // Transform config to Appodeal extras
             let config = self.getConfig()
             self.onReceiveConfig?(config)

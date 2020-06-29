@@ -20,6 +20,7 @@ import Foundation
     fileprivate lazy var operationQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.name = "com.explorestack.hsapp"
+        queue.maxConcurrentOperationCount = 2
         queue.qualityOfService = .utility
         return queue
     }()
@@ -37,12 +38,14 @@ private extension HSApp {
                    completion: (() -> Void)?) {
         let attributionOperation = HSAttributionConfigurationOperation(
             attribution: configuration.attribution,
-            advertising: configuration.advertising
+            advertising: configuration.advertising,
+            timeout: configuration.timeout
         )
         
         let productTestingOperation = HSProductTestSyncOperation(
             productTesting: configuration.productTesting,
-            advertising: configuration.advertising
+            advertising: configuration.advertising,
+            timeout: configuration.timeout
         )
         
         let completionOperation = BlockOperation {
