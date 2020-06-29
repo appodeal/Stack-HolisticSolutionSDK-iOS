@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "appodeal" => "https://appodeal.com" }
   spec.platform     = :ios, "9.0"
 
-  spec.source       = { :git => "git@github.com:appodeal/DataCore-Sample-iOS.git", :branch => "feature-holistic-solution" }
+  spec.source       = { :git => "https://github.com/appodeal/DataCore-Sample-iOS.git", :tag => "v#{s.version}" }
 
   spec.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
   spec.exclude_files = 
@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
   	"HolisticSolutionSDK/FirebaseRemoteConfig"
 
   spec.requires_arc = true
-  spec.static_framewotrk = true
+  spec.static_framework = true
   spec.default_subspecs = "Full"
 
   spec.subspec "Appodeal" do |ss|
