@@ -44,5 +44,6 @@ Pod::Spec.new do |spec|
   	ss.dependency "HolisticSolutionSDK/Appodeal"
   	ss.dependency "HolisticSolutionSDK/AppsFlyer"
   	ss.dependency "HolisticSolutionSDK/FirebaseRemoteConfig"
+  	ss.xcconfig = { "VALID_ARCHS": "arm64 arm64e armv7 armv7s x86_64" }
   end
 end
