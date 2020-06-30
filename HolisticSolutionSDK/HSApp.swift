@@ -9,7 +9,7 @@
 import Foundation
 
 
-public
+@objc public
 enum HSError: Int, Error {
     case invalidParameters = 0
     case timeout

@@ -12,15 +12,21 @@ import AppsFlyerLib
 
 
 @objc public
-final class HSAppsFlyerConnector: NSObject { 
+final class HSAppsFlyerConnector: NSObject {
+    public typealias Success = () -> Void
+    public typealias Failure = (HSError) -> Void
+    
     private let devKey: String
     private let appId: String
     private let keys: [String]
     
-    public var id: String? { return AppsFlyerTracker.shared().getAppsFlyerUID() }
+    public var id: String { return AppsFlyerTracker.shared().getAppsFlyerUID() }
     public var onReceiveData: (([AnyHashable : Any]) -> Void)?
-    fileprivate var completion: ((HSAttributionPlatform) -> Void)?
-    
+    public var onReceiveAttributionId: ((String) -> Void)?
+
+    fileprivate var success: Success?
+    fileprivate var failure: Failure?
+
     @objc public
     init(devKey: String,
          appId: String,
@@ -38,9 +44,11 @@ final class HSAppsFlyerConnector: NSObject {
 }
 
 
-extension HSAppsFlyerConnector: HSAttributionPlatform {
-    public func initialise(completion: @escaping (HSAttributionPlatform) -> Void) {
-        self.completion = completion
+extension HSAppsFlyerConnector: HSAttributionService {
+    public func initialise(success: @escaping Success,
+                           failure: @escaping Failure) {
+        self.success = success
+        self.failure = failure
         
         AppsFlyerTracker.shared().appsFlyerDevKey = devKey
         AppsFlyerTracker.shared().appleAppID = appId
@@ -85,13 +93,16 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
             conversionInfo.filter { pair in (pair.key as? String).map(keys.contains) ?? false } :
             conversionInfo
         onReceiveData?(data)
-        completion?(self)
-        completion = nil
+        onReceiveAttributionId?(self.id)
+        success?()
+        success = nil
+        failure = nil
     }
     
     public
     func onConversionDataFail(_ error: Error) {
-        completion?(self)
-        completion = nil
+        failure?(.service)
+        success = nil
+        failure = nil
     }
 } 

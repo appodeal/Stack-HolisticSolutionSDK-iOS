@@ -20,16 +20,16 @@ final class HSAppConfiguration: NSObject {
            case disabled
        }
        
-    let attribution: [HSAttributionPlatform]
-    let productTesting: [HSProductTestingPlatform]
-    let advertising: [HSAdvertisingPlatform]
+    let attribution: [HSAttributionService]
+    let productTesting: [HSProductTestingService]
+    let advertising: [HSAdvertising]
     let timeout: TimeInterval
     let debug: Debug
     
     @objc public
-    init(attributionPlatforms: [HSAttributionPlatform] = [],
-         productTestingPlatforms: [HSProductTestingPlatform] = [],
-         advertisingPlatforms: [HSAdvertisingPlatform] = [],
+    init(attributionPlatforms: [HSAttributionService] = [],
+         productTestingPlatforms: [HSProductTestingService] = [],
+         advertisingPlatforms: [HSAdvertising] = [],
          timeout: TimeInterval = kHSAppDefaultTimeout,
          debug: Debug = .system) {
         self.attribution    = attributionPlatforms
@@ -40,11 +40,6 @@ final class HSAppConfiguration: NSObject {
         super.init()
     }
 }
-
-@objc public protocol HSDebuggable: class {
-    func setDebug(_ debug: HSAppConfiguration.Debug)
-}
-
 
 
 

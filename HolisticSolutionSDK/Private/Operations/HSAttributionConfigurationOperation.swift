@@ -10,8 +10,8 @@ import Foundation
 
 
 final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperation, HSAppOperation {
-    private let attribution: [HSAttributionPlatform]
-    private let advertising: [HSAdvertisingPlatform]
+    private let attribution: [HSAttributionService]
+    private let advertising: [HSAdvertising]
     private let debug: HSAppConfiguration.Debug
     
     private lazy var group = DispatchGroup()
@@ -25,24 +25,24 @@ final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperat
     
     override func main() {
         super.main()
-        attribution.forEach { platform in
-            platform.setDebug(debug)
-            platform.onReceiveData = { [weak self] in self?.syncConversionData($0) }
+        attribution.forEach { service in
+            service.setDebug(debug)
+            service.onReceiveData = { [weak self] in self?.syncConversionData($0) }
+            service.onReceiveAttributionId = { [weak self] in self?.syncAttributionId($0) }
+            
             group.enter()
-            platform.initialise { [weak self] finishedPlatform in
-                self?.syncAttributionId(finishedPlatform)
-                self?.group.leave()
-            }
+            service.initialise(
+                success: { [weak self] in self?.group.leave() },
+                failure: { [weak self] error in self?.group.leave() }
+            )
         }
         group.notify(queue: .main) { [weak self] in
             self?.finish()
         }
     }
     
-    private func syncAttributionId(_ attribution: HSAttributionPlatform) {
-        advertising.forEach { ad in
-            attribution.id.map(ad.setAttributionId)
-        }
+    private func syncAttributionId(_ id: String) {
+        advertising.forEach { $0.setAttributionId(id) }
     }
     
     private func syncConversionData(_ data: [AnyHashable: Any]) {

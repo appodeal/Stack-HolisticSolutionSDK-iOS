@@ -12,8 +12,12 @@ import FirebaseRemoteConfig
 
 
 @objc public
-final class HSRemoteConfigConnector: NSObject { //, HSAttributionPlatform {
+final class HSRemoteConfigConnector: NSObject {
+    public typealias Success = () -> Void
+    public typealias Failure = (HSError) -> Void
+    
     public var onReceiveConfig: (([AnyHashable : Any]) -> Void)?
+    
     private let defaults: [String: NSObject]?
     private let keys: [String]
     private let expirationDuration: TimeInterval
@@ -40,8 +44,9 @@ final class HSRemoteConfigConnector: NSObject { //, HSAttributionPlatform {
     }
 }
 
-extension HSRemoteConfigConnector: HSProductTestingPlatform {
-    public func initialise(completion: @escaping (HSProductTestingPlatform) -> Void) {
+extension HSRemoteConfigConnector: HSProductTestingService {
+    public func initialise(success: @escaping Success,
+                           failure: @escaping Failure) {
         // Check if need to configure FIRApp
         if FirebaseApp.app() == nil {
             FirebaseApp.configure()
@@ -51,10 +56,10 @@ extension HSRemoteConfigConnector: HSProductTestingPlatform {
             guard let self = self else { return }
             // Fallback on fetch failed
             guard status == .success, error == nil else {
-                completion(self)
+                failure(.service)
                 return
             }
-            self.activate(completion: completion)
+            self.activate(success, failure)
         }
     }
     
@@ -62,14 +67,15 @@ extension HSRemoteConfigConnector: HSProductTestingPlatform {
         // TODO: Implement me
     }
     
-    private func activate(completion: @escaping (HSProductTestingPlatform) -> Void) {
+    private func activate(_ success: @escaping Success,
+                          _ failure: @escaping Failure) {
         // Activate config
         config.activate { [weak self] error in
             guard let self = self else { return }
             // Transform config to Appodeal extras
             let config = self.getConfig()
             self.onReceiveConfig?(config)
-            completion(self)
+            success()
         }
     }
     

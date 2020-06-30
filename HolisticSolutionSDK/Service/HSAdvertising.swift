@@ -9,7 +9,7 @@
 import Foundation
 
 
-@objc public protocol HSAdvertisingPlatform: class {
+@objc public protocol HSAdvertising: class {
     @objc func setAttributionId(_ attributionId: String)
     @objc func setConversionData(_ converstionData: [AnyHashable: Any])
     @objc func setProductTestData(_ productTestData: [AnyHashable: Any])

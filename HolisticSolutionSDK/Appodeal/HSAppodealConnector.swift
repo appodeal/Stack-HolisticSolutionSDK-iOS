@@ -13,9 +13,9 @@ import Appodeal
 @objc public
 extension HSAppConfiguration {
     @objc convenience
-    init(attribution: HSAttributionPlatform,
-         productTesting: HSProductTestingPlatform,
-         advertising: HSAdvertisingPlatform = HSAppodealConnector(),
+    init(attribution: HSAttributionService,
+         productTesting: HSProductTestingService,
+         advertising: HSAdvertising = HSAppodealConnector(),
          timeout: TimeInterval = kHSAppDefaultTimeout) {
         self.init(attributionPlatforms: [attribution],
                   productTestingPlatforms: [productTesting],
@@ -28,7 +28,7 @@ extension HSAppConfiguration {
 @objc public
 final class HSAppodealConnector: NSObject {}
 
-extension HSAppodealConnector: HSAdvertisingPlatform {
+extension HSAppodealConnector: HSAdvertising {
     public func setAttributionId(_ attributionId: String) {
         Appodeal.setExtras(["attribution_id": attributionId])
     }

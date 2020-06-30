@@ -10,10 +10,12 @@ import Foundation
 
 
 final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAppOperation {
-    private let productTesting: [HSProductTestingPlatform]
-    private let advertising: [HSAdvertisingPlatform]
+    private let productTesting: [HSProductTestingService]
+    private let advertising: [HSAdvertising]
     private let debug: HSAppConfiguration.Debug
     
+    private lazy var group = DispatchGroup()
+
     init(_ configuration: HSAppConfiguration) {
         productTesting = configuration.productTesting
         advertising = configuration.advertising
@@ -23,14 +25,16 @@ final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAp
     
     override func main() {
         super.main()
-        let group = DispatchGroup()
-        productTesting.forEach { platform in
-            platform.onReceiveConfig = { [unowned self] in self.syncProductTestingData($0) }
+        productTesting.forEach { service in
+            service.onReceiveConfig = { [weak self] in self?.syncProductTestingData($0) }
             group.enter()
-            platform.initialise { _ in group.leave() }
+            service.initialise(
+                success: { [weak self] in self?.group.leave() },
+                failure: { [weak self] error in self?.group.leave() }
+            )
         }
-        group.notify(queue: .main) { [unowned self] in
-            self.finish()
+        group.notify(queue: .main) { [weak self] in
+            self?.finish()
         }
     }
     
