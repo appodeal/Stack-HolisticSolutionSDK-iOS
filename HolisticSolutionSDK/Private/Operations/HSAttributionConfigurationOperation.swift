@@ -9,23 +9,24 @@
 import Foundation
 
 
-final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperation {
+final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperation, HSAppOperation {
     private let attribution: [HSAttributionPlatform]
     private let advertising: [HSAdvertisingPlatform]
+    private let debug: HSAppConfiguration.Debug
     
     private lazy var group = DispatchGroup()
     
-    init(attribution: [HSAttributionPlatform],
-         advertising: [HSAdvertisingPlatform],
-         timeout: TimeInterval) {
-        self.attribution = attribution
-        self.advertising = advertising
-        super.init(timeout: timeout)
+    init(_ configuration: HSAppConfiguration) {
+        attribution = configuration.attribution
+        advertising = configuration.advertising
+        debug = configuration.debug
+        super.init(timeout: configuration.timeout)
     }
     
     override func main() {
         super.main()
         attribution.forEach { platform in
+            platform.setDebug(debug)
             platform.onReceiveData = { [weak self] in self?.syncConversionData($0) }
             group.enter()
             platform.initialise { [weak self] finishedPlatform in

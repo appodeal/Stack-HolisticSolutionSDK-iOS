@@ -58,6 +58,10 @@ extension HSRemoteConfigConnector: HSProductTestingPlatform {
         }
     }
     
+    public func setDebug(_ debug: HSAppConfiguration.Debug) {
+        // TODO: Implement me
+    }
+    
     private func activate(completion: @escaping (HSProductTestingPlatform) -> Void) {
         // Activate config
         config.activate { [weak self] error in

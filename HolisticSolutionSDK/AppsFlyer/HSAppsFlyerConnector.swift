@@ -12,17 +12,9 @@ import AppsFlyerLib
 
 
 @objc public
-final class HSAppsFlyerConnector: NSObject { //, HSAttributionPlatform {
-    @objc public
-    enum Debug: Int {
-        case system
-        case enabled
-        case disabled
-    }
-    
+final class HSAppsFlyerConnector: NSObject { 
     private let devKey: String
     private let appId: String
-    private let debug: Debug
     
     public var id: String? { return AppsFlyerTracker.shared().getAppsFlyerUID() }
     public var onReceiveData: (([AnyHashable : Any]) -> Void)?
@@ -30,11 +22,9 @@ final class HSAppsFlyerConnector: NSObject { //, HSAttributionPlatform {
     
     @objc public
     init(devKey: String,
-         appId: String,
-         debug: Debug = .system) {
+         appId: String) {
         self.devKey = devKey
         self.appId = appId
-        self.debug = debug
         super.init()
     }
     
@@ -53,6 +43,16 @@ extension HSAppsFlyerConnector: HSAttributionPlatform {
         AppsFlyerTracker.shared().appleAppID = appId
         AppsFlyerTracker.shared().delegate = self
         
+        // Register notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didBecomeActive(notification:)),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+    }
+    
+    public func setDebug(_ debug: HSAppConfiguration.Debug) {
         // Set isDebug to true to see AppsFlyer debug logs
         switch debug {
         case .disabled:
@@ -64,14 +64,6 @@ extension HSAppsFlyerConnector: HSAttributionPlatform {
                 AppsFlyerTracker.shared().isDebug = true
             #endif
         }
-        
-        // Register notifications
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didBecomeActive(notification:)),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
     }
 }
 

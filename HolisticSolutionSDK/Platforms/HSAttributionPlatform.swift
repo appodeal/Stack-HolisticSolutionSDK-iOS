@@ -10,9 +10,10 @@ import Foundation
 
 
 @objc public
-protocol HSAttributionPlatform: class {
+protocol HSAttributionPlatform: HSDebuggable {
     var id: String? { get }
     var onReceiveData: (([AnyHashable: Any]) -> Void)? { get set }
     
+    // TODO: Add error objects
     func initialise(completion: @escaping (HSAttributionPlatform) -> Void)
 }

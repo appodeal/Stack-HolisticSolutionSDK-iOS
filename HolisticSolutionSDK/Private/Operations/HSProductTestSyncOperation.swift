@@ -9,16 +9,16 @@
 import Foundation
 
 
-final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation {
+final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAppOperation {
     private let productTesting: [HSProductTestingPlatform]
     private let advertising: [HSAdvertisingPlatform]
+    private let debug: HSAppConfiguration.Debug
     
-    init(productTesting: [HSProductTestingPlatform],
-         advertising: [HSAdvertisingPlatform],
-         timeout: TimeInterval) {
-        self.productTesting = productTesting
-        self.advertising = advertising
-        super.init(timeout: timeout)
+    init(_ configuration: HSAppConfiguration) {
+        productTesting = configuration.productTesting
+        advertising = configuration.advertising
+        debug = configuration.debug
+        super.init(timeout: configuration.timeout)
     }
     
     override func main() {

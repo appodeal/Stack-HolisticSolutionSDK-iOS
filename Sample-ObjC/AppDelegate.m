@@ -38,7 +38,10 @@ BOOL const kConsent                                 = YES;
                                                                          productTesting:remoteConfig
                                                                             advertising:appodeal
                                                                                 timeout:15];
-    [HSApp configureWithConfiguration:configuration error:nil completion:^{
+    [HSApp configureWithConfiguration:configuration completion:^(NSError *error) {
+        if (error) {
+            NSLog(@"%@", error.localizedDescription);
+        }
         // Test Mode
         [Appodeal setTestingEnabled:YES];
         /// Initialization

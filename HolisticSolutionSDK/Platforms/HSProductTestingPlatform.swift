@@ -9,7 +9,7 @@
 import Foundation
 
 
-@objc public protocol HSProductTestingPlatform: class {
+@objc public protocol HSProductTestingPlatform: HSDebuggable {
     var onReceiveConfig: (([AnyHashable: Any]) -> Void)? { get set }
     
     func initialise(completion: @escaping (HSProductTestingPlatform) -> Void)

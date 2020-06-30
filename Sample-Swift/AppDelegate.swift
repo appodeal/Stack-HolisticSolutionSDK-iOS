@@ -26,7 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = HSAppConfiguration(attribution: appsFlyer,
                                                productTesting: remoteConfig,
                                                timeout: 10)
-        try? HSApp.configure(configuration: configuration) {
+        HSApp.configure(configuration: configuration) { error in
+            error.map { print($0.localizedDescription) }
             Appodeal.setTestingEnabled(true)
             Appodeal.initialize(
                 withApiKey: servicesInfo.appodeal.apiKey,
