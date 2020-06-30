@@ -15,6 +15,7 @@ import AppsFlyerLib
 final class HSAppsFlyerConnector: NSObject { 
     private let devKey: String
     private let appId: String
+    private let keys: [String]
     
     public var id: String? { return AppsFlyerTracker.shared().getAppsFlyerUID() }
     public var onReceiveData: (([AnyHashable : Any]) -> Void)?
@@ -22,9 +23,11 @@ final class HSAppsFlyerConnector: NSObject {
     
     @objc public
     init(devKey: String,
-         appId: String) {
+         appId: String,
+         keys: [String] = []) {
         self.devKey = devKey
         self.appId = appId
+        self.keys = keys
         super.init()
     }
     
@@ -78,7 +81,10 @@ extension HSAppsFlyerConnector: HSPlistDecodableExtended {
 extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
     public
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
-        onReceiveData?(conversionInfo)
+        let data = keys.count > 0 ?
+            conversionInfo.filter { pair in (pair.key as? String).map(keys.contains) ?? false } :
+            conversionInfo
+        onReceiveData?(data)
         completion?(self)
         completion = nil
     }
