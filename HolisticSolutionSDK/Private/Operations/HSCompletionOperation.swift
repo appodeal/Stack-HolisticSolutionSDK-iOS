@@ -28,7 +28,6 @@ internal class HSCompletionOperation: Operation {
         let errors = dependencies
             .compactMap { $0 as? HSErrorProvider }
             .compactMap { $0.error }
-        let error = errors.count == dependencies.count ? errors.first : nil
-        DispatchQueue.main.async { [unowned self] in self.completion?(error.map { $0.nserror }) }
+        DispatchQueue.main.async { [unowned self] in self.completion?(errors.first.map { $0.nserror }) }
     }
 }

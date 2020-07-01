@@ -18,7 +18,7 @@ final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperat
     
     init(_ configuration: HSAppConfiguration) {
         attribution = configuration.attribution
-        advertising = configuration.advertising
+        advertising = configuration.connectors
         debug = configuration.debug
         super.init(timeout: configuration.timeout)
     }

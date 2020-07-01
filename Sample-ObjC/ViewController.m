@@ -9,6 +9,9 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 
+#import <HolisticSolutionSDK/HolisticSolutionSDK.h>
+
+
 @import Appodeal;
 
 
@@ -33,6 +36,24 @@
 
 - (void)didInitialiseAd {
     [Appodeal showAd:AppodealShowStyleBannerTop rootViewController:self];
+}
+
+- (IBAction)synthesizePurchase:(UIButton *)sender {
+    [HSApp validateAndTrackInAppPurchaseWithProductId:@"some product id"
+                                                price:@"9.99"
+                                             currency:@"USD"
+                                        transactionId:@"some transaction id"
+                                 additionalParameters:@{}
+                                              success:^(NSDictionary *response) {
+        
+    }
+                                              failure:^(NSError *error, id response) {
+        
+    }];
+}
+
+- (IBAction)synthesizeEvent:(UIButton *)sender {
+    
 }
 
 @end

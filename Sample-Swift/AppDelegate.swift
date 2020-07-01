@@ -23,11 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Appodeal.setLogLevel(.verbose)
         let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
         let remoteConfig = HSRemoteConfigConnector()
-        let configuration = HSAppConfiguration(attribution: appsFlyer,
-                                               productTesting: remoteConfig,
-                                               timeout: 10)
+        let configuration = HSAppConfiguration(services: [appsFlyer, remoteConfig],
+                                               timeout: 15)
         HSApp.configure(configuration: configuration) { error in
             error.map { print($0.localizedDescription) }
+            print("HSApp \(HSApp.initialised ? "is" : "is not") initialised")
             Appodeal.setTestingEnabled(true)
             Appodeal.initialize(
                 withApiKey: servicesInfo.appodeal.apiKey,

@@ -13,14 +13,10 @@ import Appodeal
 @objc public
 extension HSAppConfiguration {
     @objc convenience
-    init(attribution: HSAttributionService,
-         productTesting: HSProductTestingService,
+    init(services: [HSService],
          advertising: HSAdvertising = HSAppodealConnector(),
          timeout: TimeInterval = kHSAppDefaultTimeout) {
-        self.init(attributionPlatforms: [attribution],
-                  productTestingPlatforms: [productTesting],
-                  advertisingPlatforms: [advertising],
-                  timeout: timeout)
+        self.init(services: services, connectors: [advertising], timeout: timeout)
     }
 }
 

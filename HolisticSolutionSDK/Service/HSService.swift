@@ -17,13 +17,3 @@ protocol HSService {
     func setDebug(_ debug: HSAppConfiguration.Debug)
 }
 
-@objc public
-protocol HSAttributionService: HSService {
-    var onReceiveAttributionId: ((String) -> Void)? { get set }
-    var onReceiveData: (([AnyHashable: Any]) -> Void)? { get set }
-}
-
-@objc public protocol HSProductTestingService: HSService {
-    var onReceiveConfig: (([AnyHashable: Any]) -> Void)? { get set }
-}
-

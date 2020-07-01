@@ -76,6 +76,22 @@ extension HSAppsFlyerConnector: HSAttributionService {
             #endif
         }
     }
+    
+    func validateAndTrackInAppPurchase(
+        _ purchase: HSPurchase,
+        success: (([AnyHashable : Any]) -> Void)?,
+        failure: ((Error?, Any?) -> Void)?
+    ) {
+        AppsFlyerTracker.shared().validateAndTrack(
+            inAppPurchase: purchase.productId,
+            price: purchase.price,
+            currency: purchase.currency,
+            transactionId: purchase.transactionId,
+            additionalParameters: purchase.additionalParameters,
+            success: success,
+            failure: failure
+        )
+    }
 }
 
 extension HSAppsFlyerConnector: HSPlistDecodableExtended {
@@ -101,6 +117,7 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
     
     public
     func onConversionDataFail(_ error: Error) {
+        onReceiveAttributionId?(self.id)
         failure?(.service)
         success = nil
         failure = nil

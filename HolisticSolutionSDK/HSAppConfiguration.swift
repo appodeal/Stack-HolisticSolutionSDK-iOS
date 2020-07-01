@@ -14,27 +14,37 @@ public let kHSAppDefaultTimeout: TimeInterval = 30.0
 @objc public
 final class HSAppConfiguration: NSObject {
     @objc public
-       enum Debug: Int {
-           case system
-           case enabled
-           case disabled
-       }
-       
-    let attribution: [HSAttributionService]
-    let productTesting: [HSProductTestingService]
-    let advertising: [HSAdvertising]
-    let timeout: TimeInterval
-    let debug: Debug
+    enum Debug: Int {
+        case system
+        case enabled
+        case disabled
+    }
+    
+    private let services: [HSService]
+    
+    internal let connectors: [HSAdvertising]
+    internal let timeout: TimeInterval
+    internal let debug: Debug
+    
+    internal var productTesting: [HSProductTestingService] {
+        services.compactMap { $0 as? HSProductTestingService }
+    }
+    
+    internal var attribution: [HSAttributionService] {
+        services.compactMap { $0 as? HSAttributionService }
+    }
+    
+    internal var analytics: [HSAnalyticsService] {
+        services.compactMap { $0 as? HSAnalyticsService }
+    }
     
     @objc public
-    init(attributionPlatforms: [HSAttributionService] = [],
-         productTestingPlatforms: [HSProductTestingService] = [],
-         advertisingPlatforms: [HSAdvertising] = [],
+    init(services: [HSService] = [],
+         connectors: [HSAdvertising] = [],
          timeout: TimeInterval = kHSAppDefaultTimeout,
          debug: Debug = .system) {
-        self.attribution    = attributionPlatforms
-        self.productTesting = productTestingPlatforms
-        self.advertising    = advertisingPlatforms
+        self.services       = services
+        self.connectors     = connectors
         self.timeout        = timeout
         self.debug          = debug
         super.init()

@@ -34,10 +34,9 @@ BOOL const kConsent                                 = YES;
                                                                                  defaults:nil
                                                                        expirationDuration:60];
     HSAppodealConnector *appodeal = [[HSAppodealConnector alloc] init];
-    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAttribution:appsFlyer
-                                                                         productTesting:remoteConfig
-                                                                            advertising:appodeal
-                                                                                timeout:15];
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithServices:@[appsFlyer, remoteConfig]
+                                                                         advertising:appodeal
+                                                                             timeout:15];
     [HSApp configureWithConfiguration:configuration completion:^(NSError *error) {
         if (error) {
             NSLog(@"%@", error.localizedDescription);

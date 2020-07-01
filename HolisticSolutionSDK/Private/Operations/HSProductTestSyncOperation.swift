@@ -18,7 +18,7 @@ final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAp
 
     init(_ configuration: HSAppConfiguration) {
         productTesting = configuration.productTesting
-        advertising = configuration.advertising
+        advertising = configuration.connectors
         debug = configuration.debug
         super.init(timeout: configuration.timeout)
     }
