@@ -31,5 +31,5 @@ protocol HSProductTestingService: HSService {
 
 
 protocol HSAnalyticsService: HSService {
-    func trackEvent(_ event: String, customParameters: [String: Any])
+    func trackEvent(_ event: String, customParameters: [String: Any]?)
 }

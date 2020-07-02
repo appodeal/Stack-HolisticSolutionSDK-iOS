@@ -69,6 +69,13 @@ enum HSError: Int, Error {
             failure: failure
         )
     }
+    
+    @objc public
+    static func trackEvent(_ eventName: String,
+                           customParameters: [String: Any]? = nil) {
+        HSApp.shared.trackEvent(eventName,
+                                customParameters: customParameters)
+    }
 }
 
 private extension HSApp {
@@ -108,6 +115,15 @@ private extension HSApp {
             success: success,
             failure: failure
         )
+        operationQueue.addOperation(operation)
+    }
+    
+    func trackEvent(_ eventName: String,
+                    customParameters: [String: Any]?) {
+        guard let configuration = configuration else { return }
+        let operation = HSTrackEventOperation(configuration: configuration,
+                                              event: eventName,
+                                              params: customParameters)
         operationQueue.addOperation(operation)
     }
 }

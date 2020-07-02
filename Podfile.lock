@@ -1,6 +1,12 @@
 PODS:
   - Appodeal (2.6.3)
   - AppsFlyerFramework (5.3.0)
+  - FBSDKCoreKit (7.1.1):
+    - FBSDKCoreKit/Basics (= 7.1.1)
+    - FBSDKCoreKit/Core (= 7.1.1)
+  - FBSDKCoreKit/Basics (7.1.1)
+  - FBSDKCoreKit/Core (7.1.1):
+    - FBSDKCoreKit/Basics
   - Firebase/Analytics (6.24.0):
     - Firebase/Core
   - Firebase/Core (6.24.0):
@@ -88,15 +94,18 @@ PODS:
   - Protobuf (3.11.4)
 
 DEPENDENCIES:
-  - Appodeal (>= 2.6.0)
-  - AppsFlyerFramework
-  - Firebase/Analytics
-  - Firebase/RemoteConfig
+  - Appodeal (>= 2.6)
+  - AppsFlyerFramework (>= 5.3)
+  - FBSDKCoreKit (>= 6.0)
+  - Firebase/Analytics (>= 6.20)
+  - Firebase/Core (>= 6.20)
+  - Firebase/RemoteConfig (>= 4.4)
 
 SPEC REPOS:
   trunk:
     - Appodeal
     - AppsFlyerFramework
+    - FBSDKCoreKit
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -117,6 +126,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Appodeal: 66ef7fa481aadd664ac45f1be505307bf7f2be3e
   AppsFlyerFramework: 122cc8b2de52f2b82ea739c2d9e57f919a9f5653
+  FBSDKCoreKit: b46507dc8b8cefed31d644e74d7cc30e2a715ef8
   Firebase: b28e55c60efd98963cd9011fe2fac5a10c2ba124
   FirebaseABTesting: 821a3a3e4a145987e80fee3657c4de1cb9adf693
   FirebaseAnalytics: 7386fc2176e3f93ad8ef34b5b1f2b33a891e4962
@@ -134,6 +144,6 @@ SPEC CHECKSUMS:
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
 
-PODFILE CHECKSUM: 78a508f599f21cc9944b5d563ec918e327f8a13b
+PODFILE CHECKSUM: 7f667e31b0d7cfb5342ccf9f8b54d580cae93270
 
 COCOAPODS: 1.9.3

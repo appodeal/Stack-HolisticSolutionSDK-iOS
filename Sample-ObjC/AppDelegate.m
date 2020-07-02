@@ -26,23 +26,29 @@ BOOL const kConsent                                 = YES;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self configureHolisticApp];
+    return YES;
+}
+
+- (void)configureHolisticApp {
     // Enable logging
     [Appodeal setLogLevel:APDLogLevelVerbose];
-    HSAppsFlyerConnector *appsFlyer = [[HSAppsFlyerConnector alloc] initWithPlistName:@"Services-Info"
-                                                                                error:nil];
-    HSRemoteConfigConnector *remoteConfig = [[HSRemoteConfigConnector alloc] initWithKeys:@[]
-                                                                                 defaults:nil
-                                                                       expirationDuration:60];
+    [Appodeal setTestingEnabled:YES];
+    
+    // Create service connectors
+    HSAppsFlyerConnector *appsFlyer = [[HSAppsFlyerConnector alloc] initWithPlistName:@"Services-Info" error:nil];
+    HSFirebaseConnector *firebase = [[HSFirebaseConnector alloc] initWithKeys:@[] defaults:nil expirationDuration:60];
+    HSFacebookConnector *facebook = [[HSFacebookConnector alloc] init];
+    // Create advertising connector
     HSAppodealConnector *appodeal = [[HSAppodealConnector alloc] init];
-    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithServices:@[appsFlyer, remoteConfig]
-                                                                         advertising:appodeal
-                                                                             timeout:15];
+    // Create HSApp configuration
+    NSArray <id<HSService>> *services = @[appsFlyer, firebase, facebook];
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithServices:services advertising:appodeal timeout:30];
+    // Configure
     [HSApp configureWithConfiguration:configuration completion:^(NSError *error) {
         if (error) {
             NSLog(@"%@", error.localizedDescription);
         }
-        // Test Mode
-        [Appodeal setTestingEnabled:YES];
         /// Initialization
         [Appodeal initializeWithApiKey:ServicesInfo.sharedInfo.appodealApiKey
                                  types:kAppodealTypes
@@ -50,7 +56,6 @@ BOOL const kConsent                                 = YES;
         [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName
                                                           object:nil];
     }];
-    return YES;
 }
 
 #pragma mark - UISceneSession lifecycle

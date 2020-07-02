@@ -20,15 +20,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        configureHolisticApp()
+        return true
+    }
+
+    private func configureHolisticApp() {
+        // Configure Appodeal before initialisation
         Appodeal.setLogLevel(.verbose)
+        Appodeal.setTestingEnabled(true)
+
+        // Create service connectors
         let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
-        let remoteConfig = HSRemoteConfigConnector()
-        let configuration = HSAppConfiguration(services: [appsFlyer, remoteConfig],
-                                               timeout: 15)
+        let firebase = HSFirebaseConnector(keys: [], defaults: nil, expirationDuration: 60)
+        let facebook = HSFacebookConnector()
+        // Create advertising connector
+        let appodeal = HSAppodealConnector()
+        // Create HSApp configuration
+        let services: [HSService] = [appsFlyer, firebase, facebook]
+        let configuration = HSAppConfiguration(services: services,
+                                               advertising: appodeal, 
+                                               timeout: 30)
+        // Configure
         HSApp.configure(configuration: configuration) { error in
+            // Handle error
             error.map { print($0.localizedDescription) }
             print("HSApp \(HSApp.initialised ? "is" : "is not") initialised")
-            Appodeal.setTestingEnabled(true)
+            // Initialise Appodeal
             Appodeal.initialize(
                 withApiKey: servicesInfo.appodeal.apiKey,
                 types: AppodealConstants.adType,
@@ -36,9 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             )
             NotificationCenter.default.post(name: .AdDidInitialize, object: nil)
         }
-        return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
     func application(_ application: UIApplication,
                      configurationForConnecting connectingSceneSession: UISceneSession,

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
@@ -25,7 +25,8 @@ Pod::Spec.new do |spec|
   	ss.exclude_files = 
   		"HolisticSolutionSDK/Appodeal",
   		"HolisticSolutionSDK/AppsFlyer",
-  		"HolisticSolutionSDK/FirebaseRemoteConfig"
+  		"HolisticSolutionSDK/Firebase",
+      "HolisticSolutionSDK/Facebook"
   end
 
   spec.subspec "Appodeal" do |ss|
@@ -40,12 +41,18 @@ Pod::Spec.new do |spec|
     ss.dependency "AppsFlyerFramework", ">= 5.3"
   end
 
-  spec.subspec "FirebaseRemoteConfig" do |ss|
-    ss.source_files = "HolisticSolutionSDK/FirebaseRemoteConfig"
+  spec.subspec "Firebase" do |ss|
+    ss.source_files = "HolisticSolutionSDK/Firebase"
     ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Firebase/Core", ">= 6.20"
     ss.dependency "Firebase/Analytics", ">= 6.20"
   	ss.dependency "Firebase/RemoteConfig", ">= 4.4"
+  end
+
+  spec.subspec "Facebook" do |ss|
+    ss.source_files = "HolisticSolutionSDK/Facebook"
+    ss.dependency "HolisticSolutionSDK/Core"
+    ss.dependency "FBSDKCoreKit", ">= 6.0"
   end
 
   spec.subspec "Full" do |ss| 

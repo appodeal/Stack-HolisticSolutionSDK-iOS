@@ -5,10 +5,10 @@
       location = "group:HolisticSolutionSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Sample-Swift.xcodeproj">
+      location = "group:Sample-ObjC.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Sample-ObjC.xcodeproj">
+      location = "group:Sample-Swift.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

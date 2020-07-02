@@ -9,10 +9,11 @@
 import Foundation
 import FirebaseCore
 import FirebaseRemoteConfig
+import FirebaseAnalytics
 
 
 @objc public
-final class HSRemoteConfigConnector: NSObject {
+final class HSFirebaseConnector: NSObject {
     public typealias Success = () -> Void
     public typealias Failure = (HSError) -> Void
     
@@ -44,7 +45,7 @@ final class HSRemoteConfigConnector: NSObject {
     }
 }
 
-extension HSRemoteConfigConnector: HSProductTestingService {
+extension HSFirebaseConnector: HSProductTestingService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {
         // Check if need to configure FIRApp
@@ -88,5 +89,11 @@ extension HSRemoteConfigConnector: HSProductTestingService {
             }
             return result
         }
+    }
+}
+
+extension HSFirebaseConnector: HSAnalyticsService {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        Analytics.logEvent(event, parameters: customParameters)
     }
 }

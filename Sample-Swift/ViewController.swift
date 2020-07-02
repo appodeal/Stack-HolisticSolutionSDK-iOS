@@ -8,6 +8,7 @@
 
 import UIKit
 import Appodeal
+import HolisticSolutionSDK
 
 
 final class ViewController: UIViewController {
@@ -33,6 +34,22 @@ final class ViewController: UIViewController {
     @objc
     private func didInitialiseAd() {
         Appodeal.showAd(.bannerTop, rootViewController: self)
+    }
+    
+    @IBAction func synthesizePurchase(_ sender: UIButton) {
+        HSApp.validateAndTrackInAppPurchase(
+            productId: "some product id",
+            price: "9.99",
+            currency: "USD",
+            transactionId: "some transaction id",
+            additionalParameters: [:],
+            success: { print("Purchase is valid. Data \($0.description)") },
+            failure: { _, _ in print("Purchase is invalid.") }
+        )
+    }
+    
+    @IBAction func synthesizeEvent(_ sender: Any) {
+        HSApp.trackEvent("level_started")
     }
 }
 

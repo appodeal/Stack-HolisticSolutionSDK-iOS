@@ -45,15 +45,15 @@
                                         transactionId:@"some transaction id"
                                  additionalParameters:@{}
                                               success:^(NSDictionary *response) {
-        
+        NSLog(@"Purchase is valid. Data %@", response.description);
     }
                                               failure:^(NSError *error, id response) {
-        
+        NSLog(@"Error while validate purchase.");
     }];
 }
 
 - (IBAction)synthesizeEvent:(UIButton *)sender {
-    
+    [HSApp trackEvent:@"level_started" customParameters:nil];
 }
 
 @end

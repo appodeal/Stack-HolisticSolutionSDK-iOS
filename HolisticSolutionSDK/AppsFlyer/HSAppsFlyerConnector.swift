@@ -27,6 +27,8 @@ final class HSAppsFlyerConnector: NSObject {
     fileprivate var success: Success?
     fileprivate var failure: Failure?
 
+    @objc public weak var delegate: AppsFlyerTrackerDelegate?
+    
     @objc public
     init(devKey: String,
          appId: String,
@@ -113,6 +115,7 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
         success?()
         success = nil
         failure = nil
+        delegate?.onConversionDataSuccess(conversionInfo)
     }
     
     public
@@ -121,5 +124,28 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
         failure?(.service)
         success = nil
         failure = nil
+        delegate?.onConversionDataFail(error)
+    }
+    
+    // MARK: Optional
+    public
+    func onAppOpenAttribution(_ attributionData: [AnyHashable : Any]) {
+        delegate?.onAppOpenAttribution?(attributionData)
+    }
+    
+    public
+    func onAppOpenAttributionFailure(_ error: Error) {
+        delegate?.onAppOpenAttributionFailure?(error)
+    }
+    
+    public
+    func allHTTPHeaderFields(forResolveDeepLinkURL URL: URL) -> [String : String]? {
+        return delegate?.allHTTPHeaderFields?(forResolveDeepLinkURL: URL)
     }
 } 
+
+extension HSAppsFlyerConnector: HSAnalyticsService {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        AppsFlyerTracker.shared().trackEvent(event, withValues: customParameters)
+    }
+}
