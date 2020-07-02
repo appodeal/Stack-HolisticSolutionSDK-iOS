@@ -59,6 +59,7 @@ Pod::Spec.new do |spec|
   	ss.dependency "HolisticSolutionSDK/Core"
   	ss.dependency "HolisticSolutionSDK/Appodeal"
   	ss.dependency "HolisticSolutionSDK/AppsFlyer"
-  	ss.dependency "HolisticSolutionSDK/FirebaseRemoteConfig"
+  	ss.dependency "HolisticSolutionSDK/Firebase"
+    ss.dependency "HolisticSolutionSDK/Facebook"
   end
 end
