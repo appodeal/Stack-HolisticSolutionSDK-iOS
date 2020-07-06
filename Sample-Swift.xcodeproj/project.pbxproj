@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		420F4EC424A641A6002A242F /* HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */; };
 		420F4EC524A641A6002A242F /* HolisticSolutionSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		421D383324B3417700F73115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 421D383224B3417700F73115 /* GoogleService-Info.plist */; };
+		421D383524B3418100F73115 /* Services-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 421D383424B3418100F73115 /* Services-Info.plist */; };
 		42528753246025E80013D9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528752246025E80013D9BA /* AppDelegate.swift */; };
 		42528755246025E80013D9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528754246025E80013D9BA /* SceneDelegate.swift */; };
 		42528757246025E80013D9BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528756246025E80013D9BA /* ViewController.swift */; };
 		4252875A246025E80013D9BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42528758246025E80013D9BA /* Main.storyboard */; };
 		4252875C246025E90013D9BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4252875B246025E90013D9BA /* Assets.xcassets */; };
 		4252875F246025E90013D9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4252875D246025E90013D9BA /* LaunchScreen.storyboard */; };
-		4252876B2460585F0013D9BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4252876A2460585F0013D9BA /* GoogleService-Info.plist */; };
-		42AC599B2465613F0022E5A2 /* Services-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42AC599A2465613F0022E5A2 /* Services-Info.plist */; };
 		42AC599F246566930022E5A2 /* ServicesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42AC599E246566930022E5A2 /* ServicesInfo.swift */; };
 		BCC7513A4D8CCD6FE1BC60DA /* Pods_Sample_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A25545BCFDDD9F58A279F9CD /* Pods_Sample_Swift.framework */; };
 /* End PBXBuildFile section */
@@ -37,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		1CB274AAF39A97CD91B136DD /* Pods-Sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.debug.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.debug.xcconfig"; sourceTree = "<group>"; };
+		421D383224B3417700F73115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Plists/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		421D383424B3418100F73115 /* Services-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "Services-Info.plist"; path = "Plists/Services-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4252874F246025E80013D9BA /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42528752246025E80013D9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42528754246025E80013D9BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,9 +47,7 @@
 		4252875B246025E90013D9BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4252875E246025E90013D9BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		42528760246025E90013D9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4252876A2460585F0013D9BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		42AC599A2465613F0022E5A2 /* Services-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Services-Info.plist"; sourceTree = "<group>"; };
 		42AC599E246566930022E5A2 /* ServicesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesInfo.swift; sourceTree = "<group>"; };
 		5FB9F575B5D31BDE05B7DE4B /* Pods-Sample-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-Swift.release.xcconfig"; path = "Target Support Files/Pods-Sample-Swift/Pods-Sample-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		75BCCF1CB00C9D87DB591689 /* Pods-Sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.release.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,12 +82,12 @@
 		42051BB92465426600FCA1BC /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				42AC599A2465613F0022E5A2 /* Services-Info.plist */,
+				421D383424B3418100F73115 /* Services-Info.plist */,
+				421D383224B3417700F73115 /* GoogleService-Info.plist */,
+				42528760246025E90013D9BA /* Info.plist */,
 				42528758246025E80013D9BA /* Main.storyboard */,
 				4252875B246025E90013D9BA /* Assets.xcassets */,
 				4252875D246025E90013D9BA /* LaunchScreen.storyboard */,
-				4252876A2460585F0013D9BA /* GoogleService-Info.plist */,
-				42528760246025E90013D9BA /* Info.plist */,
 				42AC599E246566930022E5A2 /* ServicesInfo.swift */,
 			);
 			name = Support;
@@ -193,9 +193,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4252875F246025E90013D9BA /* LaunchScreen.storyboard in Resources */,
-				4252876B2460585F0013D9BA /* GoogleService-Info.plist in Resources */,
+				421D383324B3417700F73115 /* GoogleService-Info.plist in Resources */,
 				4252875C246025E90013D9BA /* Assets.xcassets in Resources */,
-				42AC599B2465613F0022E5A2 /* Services-Info.plist in Resources */,
+				421D383524B3418100F73115 /* Services-Info.plist in Resources */,
 				4252875A246025E80013D9BA /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -71,7 +71,7 @@ extension HSFirebaseConnector: HSProductTestingService {
     private func activate(_ success: @escaping Success,
                           _ failure: @escaping Failure) {
         // Activate config
-        config.activate { [weak self] error in
+        config.activate { [weak self] _ ,error in
             guard let self = self else { return }
             // Transform config to Appodeal extras
             let config = self.getConfig()

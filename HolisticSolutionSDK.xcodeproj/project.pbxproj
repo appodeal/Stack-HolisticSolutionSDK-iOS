@@ -54,8 +54,8 @@
 		42EB08E124ACBD0800B07AAE /* HSInternalServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSInternalServices.swift; sourceTree = "<group>"; };
 		42EB08E424ACC5C900B07AAE /* HSValidateAndTrackPurchaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSValidateAndTrackPurchaseOperation.swift; sourceTree = "<group>"; };
 		5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5AE86170FC82EF84100DBEE5 /* Pods-HolisticSolutionSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.release.xcconfig"; path = "../Sample/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.release.xcconfig"; sourceTree = "<group>"; };
-		E009234B9C7CD0210F19C025 /* Pods-HolisticSolutionSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.debug.xcconfig"; path = "../Sample/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		5AE86170FC82EF84100DBEE5 /* Pods-HolisticSolutionSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.release.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.release.xcconfig"; sourceTree = "<group>"; };
+		E009234B9C7CD0210F19C025 /* Pods-HolisticSolutionSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.debug.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
