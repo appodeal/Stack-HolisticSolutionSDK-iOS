@@ -78,7 +78,7 @@ extension HSFirebaseConnector: HSProductTestingService {
             guard let self = self else { return }
             // Transform config to Appodeal extras
             let config = self.getConfig()
-            completion(config)
+            DispatchQueue.main.async { completion(config) }
         }
     }
     
