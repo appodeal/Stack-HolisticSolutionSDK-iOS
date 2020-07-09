@@ -15,8 +15,8 @@ struct HSPurchase {
 }
 
 protocol HSAttributionService: HSService {
-    var onReceiveAttributionId: ((String) -> Void)? { get set }
-    var onReceiveData: (([AnyHashable: Any]) -> Void)? { get set }
+    func collect(receiveAttributionId: @escaping ((String) -> Void),
+                receiveData: @escaping (([AnyHashable: Any]?) -> Void))
     
     func validateAndTrackInAppPurchase(
         _ purchase: HSPurchase,
@@ -26,7 +26,7 @@ protocol HSAttributionService: HSService {
 }
 
 protocol HSProductTestingService: HSService {
-    var onReceiveConfig: (([AnyHashable: Any]) -> Void)? { get set }
+    func activateConfig(completion: @escaping (([AnyHashable: Any]?) -> Void))
 }
 
 

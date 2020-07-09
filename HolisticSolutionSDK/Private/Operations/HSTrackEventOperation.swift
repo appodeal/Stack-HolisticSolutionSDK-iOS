@@ -12,6 +12,7 @@ final class HSTrackEventOperation: Operation {
     private let analytics: [HSAnalyticsService]
     private let event: String
     private let params: [String: Any]?
+    private let debug: HSAppConfiguration.Debug
     
     init(configuration: HSAppConfiguration,
          event: String,
@@ -19,11 +20,13 @@ final class HSTrackEventOperation: Operation {
         self.analytics = configuration.analytics
         self.event = event
         self.params = params
+        self.debug = configuration.debug
         super.init()
     }
     
     override func start() {
         guard !isCancelled else { return }
+        debug.log("Track event")
         analytics.forEach { $0.trackEvent(event, customParameters: params) }
     }
 }

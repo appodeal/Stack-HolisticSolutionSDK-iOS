@@ -14,6 +14,7 @@ import FirebaseAnalytics
 
 @objc public
 final class HSFirebaseConnector: NSObject {
+    public typealias Completion = (([AnyHashable : Any]?) -> Void)
     public typealias Success = () -> Void
     public typealias Failure = (HSError) -> Void
     
@@ -49,18 +50,21 @@ extension HSFirebaseConnector: HSProductTestingService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {
         // Check if need to configure FIRApp
-        if FirebaseApp.app() == nil {
+        if FirebaseApp.allApps == nil {
             FirebaseApp.configure()
         }
-        
+        success()
+    }
+    
+    func activateConfig(completion: @escaping (([AnyHashable : Any]?) -> Void)) {
         config.fetch(withExpirationDuration: expirationDuration) { [weak self] status, error in
             guard let self = self else { return }
             // Fallback on fetch failed
             guard status == .success, error == nil else {
-                failure(.service)
+                completion(nil)
                 return
             }
-            self.activate(success, failure)
+            self.activate(completion)
         }
     }
     
@@ -68,15 +72,13 @@ extension HSFirebaseConnector: HSProductTestingService {
         // TODO: Implement me
     }
     
-    private func activate(_ success: @escaping Success,
-                          _ failure: @escaping Failure) {
+    private func activate(_ completion: @escaping Completion) {
         // Activate config
         config.activate { [weak self] _ ,error in
             guard let self = self else { return }
             // Transform config to Appodeal extras
             let config = self.getConfig()
-            self.onReceiveConfig?(config)
-            success()
+            completion(config)
         }
     }
     

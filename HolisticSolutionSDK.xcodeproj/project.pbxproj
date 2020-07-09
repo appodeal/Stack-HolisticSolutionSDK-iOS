@@ -14,9 +14,10 @@
 		4248EE1924A5EE60003E9CA6 /* HSAppodealConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1824A5EE60003E9CA6 /* HSAppodealConnector.swift */; };
 		4248EE1B24A5EF99003E9CA6 /* HSFirebaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1A24A5EF99003E9CA6 /* HSFirebaseConnector.swift */; };
 		4248EE1D24A5F223003E9CA6 /* HSPlistDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1C24A5F223003E9CA6 /* HSPlistDecodable.swift */; };
+		424DADEC24B6FA9100411B6F /* HSInitialiseServicesOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424DADEB24B6FA9100411B6F /* HSInitialiseServicesOperation.swift */; };
 		4253461924ACDC6F00128BB4 /* HSTrackEventOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4253461824ACDC6F00128BB4 /* HSTrackEventOperation.swift */; };
 		4253461C24ACDD5500128BB4 /* HSFacebookConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4253461B24ACDD5500128BB4 /* HSFacebookConnector.swift */; };
-		4273EBA624A60D9C00A868FD /* HSAttributionConfigurationOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273EBA524A60D9C00A868FD /* HSAttributionConfigurationOperation.swift */; };
+		4273EBA624A60D9C00A868FD /* HSAttributionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273EBA524A60D9C00A868FD /* HSAttributionOperation.swift */; };
 		4273EBA824A620AA00A868FD /* HSProductTestSyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4273EBA724A620AA00A868FD /* HSProductTestSyncOperation.swift */; };
 		4294A1F024A4BE3200F5FFD5 /* HolisticSolutionSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 4294A1EE24A4BE3200F5FFD5 /* HolisticSolutionSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4294A1F924A4BE7E00F5FFD5 /* HSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4294A1F824A4BE7E00F5FFD5 /* HSApp.swift */; };
@@ -38,9 +39,10 @@
 		4248EE1824A5EE60003E9CA6 /* HSAppodealConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAppodealConnector.swift; sourceTree = "<group>"; };
 		4248EE1A24A5EF99003E9CA6 /* HSFirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSFirebaseConnector.swift; sourceTree = "<group>"; };
 		4248EE1C24A5F223003E9CA6 /* HSPlistDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSPlistDecodable.swift; sourceTree = "<group>"; };
+		424DADEB24B6FA9100411B6F /* HSInitialiseServicesOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSInitialiseServicesOperation.swift; sourceTree = "<group>"; };
 		4253461824ACDC6F00128BB4 /* HSTrackEventOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSTrackEventOperation.swift; sourceTree = "<group>"; };
 		4253461B24ACDD5500128BB4 /* HSFacebookConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSFacebookConnector.swift; sourceTree = "<group>"; };
-		4273EBA524A60D9C00A868FD /* HSAttributionConfigurationOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAttributionConfigurationOperation.swift; sourceTree = "<group>"; };
+		4273EBA524A60D9C00A868FD /* HSAttributionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAttributionOperation.swift; sourceTree = "<group>"; };
 		4273EBA724A620AA00A868FD /* HSProductTestSyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSProductTestSyncOperation.swift; sourceTree = "<group>"; };
 		4294A1EB24A4BE3200F5FFD5 /* HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4294A1EE24A4BE3200F5FFD5 /* HolisticSolutionSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HolisticSolutionSDK.h; sourceTree = "<group>"; };
@@ -127,7 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				42EB08E324ACC5A500B07AAE /* Base */,
-				4273EBA524A60D9C00A868FD /* HSAttributionConfigurationOperation.swift */,
+				424DADEB24B6FA9100411B6F /* HSInitialiseServicesOperation.swift */,
+				4273EBA524A60D9C00A868FD /* HSAttributionOperation.swift */,
 				4273EBA724A620AA00A868FD /* HSProductTestSyncOperation.swift */,
 				42411A8C24AB1435001CCCD3 /* HSCompletionOperation.swift */,
 				4253461824ACDC6F00128BB4 /* HSTrackEventOperation.swift */,
@@ -309,9 +312,10 @@
 				42411A8924A9DC8C001CCCD3 /* HSCancellableAsynchronousOperation.swift in Sources */,
 				4294A1F924A4BE7E00F5FFD5 /* HSApp.swift in Sources */,
 				4253461C24ACDD5500128BB4 /* HSFacebookConnector.swift in Sources */,
+				424DADEC24B6FA9100411B6F /* HSInitialiseServicesOperation.swift in Sources */,
 				42411A8B24AA3B3D001CCCD3 /* HSAppOperation.swift in Sources */,
 				4294A20924A4D61100F5FFD5 /* HSAdvertising.swift in Sources */,
-				4273EBA624A60D9C00A868FD /* HSAttributionConfigurationOperation.swift in Sources */,
+				4273EBA624A60D9C00A868FD /* HSAttributionOperation.swift in Sources */,
 				42EB08E524ACC5C900B07AAE /* HSValidateAndTrackPurchaseOperation.swift in Sources */,
 				4294A20524A4CCC700F5FFD5 /* HSAppsFlyerConnector.swift in Sources */,
 				4248EE1D24A5F223003E9CA6 /* HSPlistDecodable.swift in Sources */,

@@ -83,17 +83,26 @@ private extension HSApp {
                    completion: ((NSError?) -> Void)?) {
         self.configuration = configuration
         
-        let attributionOperation = HSAttributionConfigurationOperation(configuration)
+        let initOperation = HSInitialiseServicesOperation(configuration)
+        let attributionOperation = HSAttributionOperation(configuration)
         let productTestingOperation = HSProductTestSyncOperation(configuration)
         let completionOperation = HSCompletionOperation(completion)
         
-        let blockOperation = BlockOperation { [weak self] in self?.initialised = true }
+        let blockOperation = BlockOperation { [weak self] in
+            self?.configuration?.debug.log("Finish configuration")
+            self?.initialised = true
+        }
+        
+        attributionOperation.addDependency(initOperation)
+        productTestingOperation.addDependency(initOperation)
         
         completionOperation.addDependency(attributionOperation)
         completionOperation.addDependency(productTestingOperation)
+        
         blockOperation.addDependency(attributionOperation)
         blockOperation.addDependency(productTestingOperation)
         
+        operationQueue.addOperation(initOperation)
         operationQueue.addOperation(attributionOperation)
         operationQueue.addOperation(productTestingOperation)
         operationQueue.addOperation(blockOperation)

@@ -14,6 +14,8 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
     
     private let attribution: [HSAttributionService]
     private let purchase: HSPurchase
+    private let debug: HSAppConfiguration.Debug
+
     private let success:(([AnyHashable: Any]) -> Void)?
     private let failure:((Error?, Any?) -> Void)?
     
@@ -28,6 +30,7 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
          failure:((Error?, Any?) -> Void)?) {
         self.attribution = configuration.attribution
         self.purchase = purchase
+        self.debug = configuration.debug
         self.success = success
         self.failure = failure
         super.init()
@@ -35,6 +38,7 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
     
     override func main() {
         super.main()
+        debug.log("Validate and track in-app purchase")
         attribution.forEach { service in
             group.enter()
             service.validateAndTrackInAppPurchase(

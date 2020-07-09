@@ -13,7 +13,7 @@ final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAp
     private let productTesting: [HSProductTestingService]
     private let advertising: [HSAdvertising]
     private let debug: HSAppConfiguration.Debug
-    
+
     private lazy var group = DispatchGroup()
 
     init(_ configuration: HSAppConfiguration) {
@@ -25,15 +25,16 @@ final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAp
     
     override func main() {
         super.main()
+        debug.log("Start activating of remote configs")
         productTesting.forEach { service in
-            service.onReceiveConfig = { [weak self] in self?.syncProductTestingData($0) }
-            group.enter()
-            service.initialise(
-                success: { [weak self] in self?.group.leave() },
-                failure: { [weak self] error in self?.group.leave() }
-            )
+            service.activateConfig { [weak self] config in
+                guard let self = self else { return }
+                config.map(self.syncProductTestingData)
+                self.group.enter()
+            }
         }
         group.notify(queue: .main) { [weak self] in
+            NSLog("[HSApp] Finish activating of remote configs")
             self?.finish()
         }
     }

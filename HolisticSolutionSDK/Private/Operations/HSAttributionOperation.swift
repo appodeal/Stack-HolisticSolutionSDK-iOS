@@ -9,7 +9,7 @@
 import Foundation
 
 
-final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperation, HSAppOperation {
+final class HSAttributionOperation: HSCancellableAsynchronousOperation, HSAppOperation {
     private let attribution: [HSAttributionService]
     private let advertising: [HSAdvertising]
     private let debug: HSAppConfiguration.Debug
@@ -25,18 +25,17 @@ final class HSAttributionConfigurationOperation: HSCancellableAsynchronousOperat
     
     override func main() {
         super.main()
-        attribution.forEach { service in
-            service.setDebug(debug)
-            service.onReceiveData = { [weak self] in self?.syncConversionData($0) }
-            service.onReceiveAttributionId = { [weak self] in self?.syncAttributionId($0) }
-            
+        debug.log("Start collecting of attribution data")
+        attribution.forEach { service in            
             group.enter()
-            service.initialise(
-                success: { [weak self] in self?.group.leave() },
-                failure: { [weak self] error in self?.group.leave() }
-            )
+            service.collect(receiveAttributionId: syncAttributionId) { [weak self] conversionData in
+                guard let self = self else { return }
+                conversionData.map(self.syncConversionData)
+                self.group.leave()
+            }
         }
         group.notify(queue: .main) { [weak self] in
+            self?.debug.log("Finish collecting of attribution data")
             self?.finish()
         }
     }

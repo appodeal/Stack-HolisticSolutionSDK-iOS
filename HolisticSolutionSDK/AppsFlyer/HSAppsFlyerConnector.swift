@@ -21,11 +21,7 @@ final class HSAppsFlyerConnector: NSObject {
     private let keys: [String]
     
     public var id: String { return AppsFlyerTracker.shared().getAppsFlyerUID() }
-    public var onReceiveData: (([AnyHashable : Any]) -> Void)?
-    public var onReceiveAttributionId: ((String) -> Void)?
-
-    fileprivate var success: Success?
-    fileprivate var failure: Failure?
+    public var onReceiveData: (([AnyHashable : Any]?) -> Void)?
 
     @objc public weak var delegate: AppsFlyerTrackerDelegate?
     
@@ -49,20 +45,12 @@ final class HSAppsFlyerConnector: NSObject {
 extension HSAppsFlyerConnector: HSAttributionService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {
-        self.success = success
-        self.failure = failure
         
         AppsFlyerTracker.shared().appsFlyerDevKey = devKey
         AppsFlyerTracker.shared().appleAppID = appId
         AppsFlyerTracker.shared().delegate = self
-        
-        // Register notifications
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(didBecomeActive(notification:)),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil
-        )
+
+        success()
     }
     
     public func setDebug(_ debug: HSAppConfiguration.Debug) {
@@ -77,6 +65,22 @@ extension HSAppsFlyerConnector: HSAttributionService {
                 AppsFlyerTracker.shared().isDebug = true
             #endif
         }
+    }
+    
+    func collect(receiveAttributionId: @escaping ((String) -> Void),
+                 receiveData: @escaping (([AnyHashable : Any]?) -> Void)) {
+        // Register notifications
+        self.onReceiveData = receiveData
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(didBecomeActive(notification:)),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
+        // Force to track launch
+        AppsFlyerTracker.shared().trackAppLaunch()
+        // Return attribution id
+        receiveAttributionId(id)
     }
     
     func validateAndTrackInAppPurchase(
@@ -111,19 +115,13 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
             conversionInfo.filter { pair in (pair.key as? String).map(keys.contains) ?? false } :
             conversionInfo
         onReceiveData?(data)
-        onReceiveAttributionId?(self.id)
-        success?()
-        success = nil
-        failure = nil
+        onReceiveData = nil
         delegate?.onConversionDataSuccess(conversionInfo)
     }
     
     public
     func onConversionDataFail(_ error: Error) {
-        onReceiveAttributionId?(self.id)
-        failure?(.service)
-        success = nil
-        failure = nil
+        onReceiveData?(nil)
         delegate?.onConversionDataFail(error)
     }
     

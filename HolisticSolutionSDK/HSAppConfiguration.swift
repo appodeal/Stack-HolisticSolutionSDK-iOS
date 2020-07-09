@@ -20,7 +20,7 @@ final class HSAppConfiguration: NSObject {
         case disabled
     }
     
-    private let services: [HSService]
+    internal let services: [HSService]
     
     internal let connectors: [HSAdvertising]
     internal let timeout: TimeInterval
@@ -51,5 +51,18 @@ final class HSAppConfiguration: NSObject {
     }
 }
 
-
+internal extension HSAppConfiguration.Debug {
+    func log(_ message: String) {
+        switch self {
+        case .enabled:
+            NSLog("[HSApp] \(message)")
+        case .system:
+            #if DEBUG
+            NSLog("[HSApp] \(message)")
+            #endif
+        default:
+            break
+        }
+    }
+}
 

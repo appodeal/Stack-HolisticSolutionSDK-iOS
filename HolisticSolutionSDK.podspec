@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "0.0.3"
+  spec.version      = "0.0.4"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
