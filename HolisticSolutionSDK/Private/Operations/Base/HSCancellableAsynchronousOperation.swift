@@ -17,7 +17,7 @@ internal class HSCancellableAsynchronousOperation: HSAsynchronousOperation, HSEr
     private let timeout: TimeInterval
     
     private var timer: Timer?
-    private(set) var error: HSError?
+    var error: HSError?
 
     init(timeout: TimeInterval) {
         self.timeout = timeout

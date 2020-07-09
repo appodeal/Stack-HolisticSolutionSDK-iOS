@@ -98,6 +98,7 @@ private extension HSApp {
         
         completionOperation.addDependency(attributionOperation)
         completionOperation.addDependency(productTestingOperation)
+        completionOperation.addDependency(initOperation)
         
         blockOperation.addDependency(attributionOperation)
         blockOperation.addDependency(productTestingOperation)

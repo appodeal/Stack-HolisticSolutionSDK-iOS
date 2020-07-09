@@ -29,7 +29,10 @@ final class HSInitialiseServicesOperation: HSCancellableAsynchronousOperation, H
             group.enter()
             service.initialise(
                 success: { [weak self] in self?.group.leave() },
-                failure: { [weak self] _ in self?.group.leave() }
+                failure: { [weak self] error in
+                    self?.error = error
+                    self?.group.leave()
+                }
             )
         }
         

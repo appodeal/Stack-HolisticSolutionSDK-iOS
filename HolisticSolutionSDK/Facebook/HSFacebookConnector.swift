@@ -17,8 +17,11 @@ final class HSFacebookConnector: NSObject {}
 extension HSFacebookConnector: HSAnalyticsService {
     public func initialise(success: @escaping () -> Void,
                            failure: @escaping (HSError) -> Void) {
-        checkPlist()
-        success()
+        if checkPlist() {
+            success()
+        } else {
+            failure(.integration)
+        }
     }
     
     public func setDebug(_ debug: HSAppConfiguration.Debug) {}
@@ -32,9 +35,9 @@ extension HSFacebookConnector: HSAnalyticsService {
         }
     }
     
-    private func checkPlist() {
+    private func checkPlist() -> Bool {
         let bundle = Bundle(for: type(of: self))
         let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String
-        assert(appId != nil, "Info.plist doesn't contain FacebookAppID. See https://developers.facebook.com/docs/app-events/getting-started-app-events-ios")
+        return appId != nil
     }
 }
