@@ -80,7 +80,7 @@ extension HSAppsFlyerConnector: HSAttributionService {
         // Force to track launch
         AppsFlyerTracker.shared().trackAppLaunch()
         // Return attribution id
-        receiveAttributionId(id)
+        DispatchQueue.main.async { [unowned self] in receiveAttributionId(self.id) }
     }
     
     func validateAndTrackInAppPurchase(
@@ -114,14 +114,19 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
         let data = keys.count > 0 ?
             conversionInfo.filter { pair in (pair.key as? String).map(keys.contains) ?? false } :
             conversionInfo
-        onReceiveData?(data)
-        onReceiveData = nil
+        DispatchQueue.main.async { [unowned self] in
+            self.onReceiveData?(data)
+            self.onReceiveData = nil
+        }
         delegate?.onConversionDataSuccess(conversionInfo)
     }
     
     public
     func onConversionDataFail(_ error: Error) {
-        onReceiveData?(nil)
+        DispatchQueue.main.async { [unowned self] in
+            self.onReceiveData?(nil)
+            self.onReceiveData = nil
+        }
         delegate?.onConversionDataFail(error)
     }
     
