@@ -126,6 +126,7 @@ private extension HSApp {
             failure: failure
         )
         operationQueue.addOperation(operation)
+
     }
     
     func trackEvent(_ eventName: String,

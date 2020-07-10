@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class HSTrackEventOperation: Operation {
+final class HSTrackEventOperation: HSAsynchronousOperation {
     private let analytics: [HSAnalyticsService]
     private let event: String
     private let params: [String: Any]?
@@ -24,9 +24,10 @@ final class HSTrackEventOperation: Operation {
         super.init()
     }
     
-    override func start() {
-        guard !isCancelled else { return }
+    override func main() {
+        super.main()
         debug.log("Track event")
         analytics.forEach { $0.trackEvent(event, customParameters: params) }
+        finish()
     }
 }

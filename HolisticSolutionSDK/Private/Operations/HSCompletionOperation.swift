@@ -13,7 +13,7 @@ internal protocol HSErrorProvider {
     var error: HSError? { get }
 }
 
-internal class HSCompletionOperation: Operation {
+internal class HSCompletionOperation: HSAsynchronousOperation {
     typealias Completion = (NSError?) -> Void
     
     private let completion: Completion?
@@ -23,11 +23,12 @@ internal class HSCompletionOperation: Operation {
         super.init()
     }
     
-    override func start() {
-        guard !isCancelled else { return }
+    override func main() {
+        super.main()
         let errors = dependencies
             .compactMap { $0 as? HSErrorProvider }
             .compactMap { $0.error }
         DispatchQueue.main.async { [unowned self] in self.completion?(errors.first.map { $0.nserror }) }
+        finish()
     }
 }
