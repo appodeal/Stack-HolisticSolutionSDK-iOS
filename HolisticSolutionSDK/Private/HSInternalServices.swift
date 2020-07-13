@@ -31,5 +31,6 @@ protocol HSProductTestingService: HSService {
 
 
 protocol HSAnalyticsService: HSService {
+    var trackingEnabled: Bool { get set }
     func trackEvent(_ event: String, customParameters: [String: Any]?)
 }

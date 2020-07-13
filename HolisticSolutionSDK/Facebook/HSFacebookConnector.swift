@@ -11,7 +11,9 @@ import FBSDKCoreKit
 
 
 @objc public
-final class HSFacebookConnector: NSObject {}
+final class HSFacebookConnector: NSObject {
+    public var trackingEnabled: Bool = true
+}
 
 
 extension HSFacebookConnector: HSAnalyticsService {
@@ -27,6 +29,7 @@ extension HSFacebookConnector: HSAnalyticsService {
     public func setDebug(_ debug: HSAppConfiguration.Debug) {}
     
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard trackingEnabled else { return }
         let name = AppEvents.Name(event)
         if let params = customParameters {
             AppEvents.logEvent(name, parameters: params)

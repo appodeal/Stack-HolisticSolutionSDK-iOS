@@ -19,6 +19,7 @@ final class HSFirebaseConnector: NSObject {
     public typealias Failure = (HSError) -> Void
     
     public var onReceiveConfig: (([AnyHashable : Any]) -> Void)?
+    public var trackingEnabled: Bool = true
     
     private let defaults: [String: NSObject]?
     private let keys: [String]
@@ -96,6 +97,7 @@ extension HSFirebaseConnector: HSProductTestingService {
 
 extension HSFirebaseConnector: HSAnalyticsService {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard trackingEnabled else { return }
         Analytics.logEvent(event, parameters: customParameters)
     }
 }

@@ -20,6 +20,7 @@ final class HSAppsFlyerConnector: NSObject {
     private let appId: String
     private let keys: [String]
     
+    public var trackingEnabled: Bool = true
     public var id: String { return AppsFlyerTracker.shared().getAppsFlyerUID() }
     public var onReceiveData: (([AnyHashable : Any]?) -> Void)?
 
@@ -149,6 +150,7 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
 
 extension HSAppsFlyerConnector: HSAnalyticsService {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard trackingEnabled else { return }
         AppsFlyerTracker.shared().trackEvent(event, withValues: customParameters)
     }
 }
