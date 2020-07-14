@@ -115,18 +115,18 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
         let data = keys.count > 0 ?
             conversionInfo.filter { pair in (pair.key as? String).map(keys.contains) ?? false } :
             conversionInfo
-        DispatchQueue.main.async { [unowned self] in
-            self.onReceiveData?(data)
-            self.onReceiveData = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.onReceiveData?(data)
+            self?.onReceiveData = nil
         }
         delegate?.onConversionDataSuccess(conversionInfo)
     }
     
     public
     func onConversionDataFail(_ error: Error) {
-        DispatchQueue.main.async { [unowned self] in
-            self.onReceiveData?(nil)
-            self.onReceiveData = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.onReceiveData?(nil)
+            self?.onReceiveData = nil
         }
         delegate?.onConversionDataFail(error)
     }

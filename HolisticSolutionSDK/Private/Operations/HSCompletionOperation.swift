@@ -28,7 +28,9 @@ internal class HSCompletionOperation: HSAsynchronousOperation {
         let errors = dependencies
             .compactMap { $0 as? HSErrorProvider }
             .compactMap { $0.error }
-        DispatchQueue.main.async { [unowned self] in self.completion?(errors.first.map { $0.nserror }) }
-        finish()
+        DispatchQueue.main.async { [weak self] in
+            self?.completion?(errors.first.map { $0.nserror })
+            self?.finish()
+        }
     }
 }

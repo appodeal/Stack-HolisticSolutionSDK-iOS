@@ -34,7 +34,7 @@ final class HSProductTestSyncOperation: HSCancellableAsynchronousOperation, HSAp
             }
         }
         group.notify(queue: .main) { [weak self] in
-            NSLog("[HSApp] Finish activating of remote configs")
+            self?.debug.log("[HSApp] Finish activating of remote configs")
             self?.finish()
         }
     }
