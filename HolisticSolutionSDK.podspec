@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
   additional synchronisation code.
                    DESC
   spec.homepage     = "https://explorestack.com"
-  spec.license      = "MIT"
+  spec.license      = { :type => "GPLv3", :file => "LICENSE" }
   spec.author       = { "appodeal" => "https://appodeal.com" }
   spec.platform     = :ios, "9.0"
 
