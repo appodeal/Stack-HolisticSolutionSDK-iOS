@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ServicesInfo.h"
 #import <HolisticSolutionSDK/HolisticSolutionSDK.h>
-
+ 
 @import Appodeal;
 
 

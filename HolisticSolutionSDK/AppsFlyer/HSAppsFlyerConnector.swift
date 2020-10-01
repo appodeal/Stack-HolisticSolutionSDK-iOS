@@ -21,10 +21,10 @@ final class HSAppsFlyerConnector: NSObject {
     private let keys: [String]
     
     public var trackingEnabled: Bool = true
-    public var id: String { return AppsFlyerTracker.shared().getAppsFlyerUID() }
+    public var id: String { return AppsFlyerLib.shared().getAppsFlyerUID() }
     public var onReceiveData: (([AnyHashable : Any]?) -> Void)?
 
-    @objc public weak var delegate: AppsFlyerTrackerDelegate?
+    @objc public weak var delegate: AppsFlyerLibDelegate?
     
     @objc public
     init(devKey: String,
@@ -38,7 +38,7 @@ final class HSAppsFlyerConnector: NSObject {
     
     @objc private
     func didBecomeActive(notification: Notification) {
-        AppsFlyerTracker.shared().trackAppLaunch()
+        AppsFlyerLib.shared().start()
     }
 }
 
@@ -47,9 +47,9 @@ extension HSAppsFlyerConnector: HSAttributionService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {
         
-        AppsFlyerTracker.shared().appsFlyerDevKey = devKey
-        AppsFlyerTracker.shared().appleAppID = appId
-        AppsFlyerTracker.shared().delegate = self
+        AppsFlyerLib.shared().appsFlyerDevKey = devKey
+        AppsFlyerLib.shared().appleAppID = appId
+        AppsFlyerLib.shared().delegate = self
 
         success()
     }
@@ -58,12 +58,12 @@ extension HSAppsFlyerConnector: HSAttributionService {
         // Set isDebug to true to see AppsFlyer debug logs
         switch debug {
         case .disabled:
-            AppsFlyerTracker.shared().isDebug = false
+            AppsFlyerLib.shared().isDebug = false
         case .enabled:
-            AppsFlyerTracker.shared().isDebug = true
+            AppsFlyerLib.shared().isDebug = true
         case .system:
             #if DEBUG
-                AppsFlyerTracker.shared().isDebug = true
+                AppsFlyerLib.shared().isDebug = true
             #endif
         }
     }
@@ -79,7 +79,7 @@ extension HSAppsFlyerConnector: HSAttributionService {
             object: nil
         )
         // Force to track launch
-        AppsFlyerTracker.shared().trackAppLaunch()
+        AppsFlyerLib.shared().start()
         // Return attribution id
         DispatchQueue.main.async { [unowned self] in receiveAttributionId(self.id) }
     }
@@ -89,7 +89,7 @@ extension HSAppsFlyerConnector: HSAttributionService {
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
-        AppsFlyerTracker.shared().validateAndTrack(
+        AppsFlyerLib.shared().validateAndLog(
             inAppPurchase: purchase.productId,
             price: purchase.price,
             currency: purchase.currency,
@@ -109,7 +109,7 @@ extension HSAppsFlyerConnector: HSPlistDecodableExtended {
     }
 }
 
-extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
+extension HSAppsFlyerConnector: AppsFlyerLibDelegate {
     public
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
         let data = keys.count > 0 ?
@@ -151,6 +151,6 @@ extension HSAppsFlyerConnector: AppsFlyerTrackerDelegate {
 extension HSAppsFlyerConnector: HSAnalyticsService {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
         guard trackingEnabled else { return }
-        AppsFlyerTracker.shared().trackEvent(event, withValues: customParameters)
+        AppsFlyerLib.shared().logEvent(event, withValues: customParameters)
     }
 }

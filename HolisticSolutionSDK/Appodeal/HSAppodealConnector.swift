@@ -30,7 +30,7 @@ extension HSAppodealConnector: HSAdvertising {
     }
     
     public func setConversionData(_ converstionData: [AnyHashable : Any]) {
-        Appodeal.setSegmentFilter(converstionData)
+        Appodeal.setCustomState(converstionData)
     }
     
     public func setProductTestData(_ productTestData: [AnyHashable : Any]) {
