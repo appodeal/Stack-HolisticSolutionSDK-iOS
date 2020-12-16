@@ -52,7 +52,7 @@ enum HSError: Int, Error {
         price: String,
         currency: String,
         transactionId: String,
-        additionalParameters: [AnyHashable: Any],
+        additionalParameters: [String: Any],
         success:(([AnyHashable: Any]) -> Void)?,
         failure:((Error?, Any?) -> Void)?
     ) {

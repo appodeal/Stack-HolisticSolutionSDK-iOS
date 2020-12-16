@@ -11,7 +11,7 @@ import Foundation
 
 struct HSPurchase {
     var productId, price, currency, transactionId: String
-    var additionalParameters: [AnyHashable: Any]
+    var additionalParameters: [String : Any]
 }
 
 protocol HSAttributionService: HSService {
@@ -33,4 +33,5 @@ protocol HSProductTestingService: HSService {
 protocol HSAnalyticsService: HSService {
     var trackingEnabled: Bool { get set }
     func trackEvent(_ event: String, customParameters: [String: Any]?)
+    func trackInAppPurchase(_ purchase: HSPurchase)
 }

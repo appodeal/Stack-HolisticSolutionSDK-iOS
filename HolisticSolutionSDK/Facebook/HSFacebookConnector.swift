@@ -38,6 +38,18 @@ extension HSFacebookConnector: HSAnalyticsService {
         }
     }
     
+    func trackInAppPurchase(_ purchase: HSPurchase) {
+        guard
+            trackingEnabled,
+            let amount = Double(purchase.price)
+        else { return }
+        //What we need to do with other parameters of HSPurchase (productId, transactionId)
+        //do we need to add them to additional params ? 
+        AppEvents.logPurchase(amount,
+                              currency: purchase.currency,
+                              parameters: purchase.additionalParameters)
+    }
+    
     private func checkPlist() -> Bool {
         let bundle = Bundle(for: type(of: self))
         let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String

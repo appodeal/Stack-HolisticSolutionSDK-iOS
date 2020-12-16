@@ -22,7 +22,12 @@ extension HSAppConfiguration {
 
 
 @objc public
-final class HSAppodealConnector: NSObject {}
+final class HSAppodealConnector: NSObject {
+    public typealias Success = () -> Void
+    public typealias Failure = (HSError) -> Void
+    
+    public var trackingEnabled: Bool = true
+}
 
 extension HSAppodealConnector: HSAdvertising {
     public func setAttributionId(_ attributionId: String) {
@@ -37,4 +42,22 @@ extension HSAppodealConnector: HSAdvertising {
         let keywords = productTestData.values.compactMap { $0 as? String }.joined(separator: ",")
         Appodeal.setExtras(["keywords": keywords])
     }
+}
+
+extension HSAppodealConnector: HSAnalyticsService {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        Appodeal.setExtras([event : customParameters ?? [:]])
+    }
+    
+    func trackInAppPurchase(_ purchase: HSPurchase) {
+        guard let value = NumberFormatter().number(from: purchase.price)
+        else { return }
+        
+        Appodeal.track(inAppPurchase: value, currency: purchase.currency)
+    }
+    
+    //MARK: - Noop
+    public func initialise(success: @escaping Success,
+                           failure: @escaping Failure) {}
+    public func setDebug(_ debug: HSAppConfiguration.Debug) {}
 }

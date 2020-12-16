@@ -153,4 +153,15 @@ extension HSAppsFlyerConnector: HSAnalyticsService {
         guard trackingEnabled else { return }
         AppsFlyerLib.shared().logEvent(event, withValues: customParameters)
     }
+    
+    func trackInAppPurchase(_ purchase: HSPurchase) {
+        guard trackingEnabled else { return }
+        AppsFlyerLib.shared().validateAndLog(inAppPurchase: purchase.productId,
+                                             price: purchase.price,
+                                             currency: purchase.currency,
+                                             transactionId: purchase.transactionId,
+                                             additionalParameters: purchase.additionalParameters,
+                                             success: nil,
+                                             failure: nil)
+    }
 }

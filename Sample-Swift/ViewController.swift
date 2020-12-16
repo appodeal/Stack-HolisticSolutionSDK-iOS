@@ -42,7 +42,8 @@ final class ViewController: UIViewController {
             price: "9.99",
             currency: "USD",
             transactionId: "some transaction id",
-            additionalParameters: [:],
+            additionalParameters: ["Test Custom 1" : "Value 1",
+                                   "Test Custom 2" : "Value 2"],
             success: { print("Purchase is valid. Data \($0.description)") },
             failure: { _, _ in print("Purchase is invalid.") }
         )

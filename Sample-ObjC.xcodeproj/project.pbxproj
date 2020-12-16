@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		02C2E08A3B7C0CE54BCD3CF8 /* Pods_Sample_ObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22BA0CF9AD07CBAFD60374B9 /* Pods_Sample_ObjC.framework */; };
 		420F4ECA24A644D3002A242F /* Dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F4EC924A644D3002A242F /* Dummy.swift */; };
-		421D382D24B33C0F00F73115 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 421D382C24B33C0F00F73115 /* GoogleService-Info.plist */; };
-		421D383124B33D2500F73115 /* Services-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 421D383024B33D2500F73115 /* Services-Info.plist */; };
 		4294A20124A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */; };
 		4294A20224A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42AC598324654B280022E5A2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AC597A24654B270022E5A2 /* ViewController.m */; };
@@ -41,8 +39,6 @@
 		19CABF2424D7ED6971FB9F54 /* Pods-Sample-ObjC.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-ObjC.debug.xcconfig"; path = "Target Support Files/Pods-Sample-ObjC/Pods-Sample-ObjC.debug.xcconfig"; sourceTree = "<group>"; };
 		22BA0CF9AD07CBAFD60374B9 /* Pods_Sample_ObjC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_ObjC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		420F4EC924A644D3002A242F /* Dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dummy.swift; sourceTree = "<group>"; };
-		421D382C24B33C0F00F73115 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Plists/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		421D383024B33D2500F73115 /* Services-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Services-Info.plist"; path = "../Plists/Services-Info.plist"; sourceTree = "<group>"; };
 		4294A20024A4CA5E00F5FFD5 /* HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AC596324654ADE0022E5A2 /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42AC597A24654B270022E5A2 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -118,8 +114,6 @@
 		42AC599724654CDE0022E5A2 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				421D383024B33D2500F73115 /* Services-Info.plist */,
-				421D382C24B33C0F00F73115 /* GoogleService-Info.plist */,
 				42AC598124654B280022E5A2 /* Info.plist */,
 				42AC59A02465753C0022E5A2 /* ServicesInfo.h */,
 				42AC59A12465753C0022E5A2 /* ServicesInfo.m */,
@@ -204,9 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AC598D24654B310022E5A2 /* Main.storyboard in Resources */,
-				421D382D24B33C0F00F73115 /* GoogleService-Info.plist in Resources */,
 				42AC598E24654B310022E5A2 /* LaunchScreen.storyboard in Resources */,
-				421D383124B33D2500F73115 /* Services-Info.plist in Resources */,
 				42AC598624654B280022E5A2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
