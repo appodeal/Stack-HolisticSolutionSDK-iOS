@@ -50,9 +50,11 @@ extension HSAppodealConnector: HSAnalyticsService {
     }
     
     func trackInAppPurchase(_ purchase: HSPurchase) {
-        guard let value = NumberFormatter().number(from: purchase.price)
+        guard
+            trackingEnabled,
+            let value = NumberFormatter().number(from: purchase.price)
         else { return }
-        //must be used only in main thread
+        
         DispatchQueue.main.async {
             Appodeal.track(inAppPurchase: value, currency: purchase.currency)
         }

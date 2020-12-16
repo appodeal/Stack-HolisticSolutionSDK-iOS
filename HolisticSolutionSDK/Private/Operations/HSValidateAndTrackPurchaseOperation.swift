@@ -46,10 +46,8 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
             service.validateAndTrackInAppPurchase(
                 purchase,
                 success: { [weak self] response in
-                    guard let self = self else { return }
-                    self.analytics.forEach { $0.trackInAppPurchase(self.purchase) }
-                    self.response.merge(response) { current, _ in current }
-                    self.group.leave()
+                    self?.response.merge(response) { current, _ in current }
+                    self?.group.leave()
                 },
                 failure: { [weak self] error, id in
                     self?.error = (error, id)
@@ -62,6 +60,7 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
             if let error = self.error {
                 self.failure?(error.0, error.1)
             } else {
+                self.analytics.forEach { $0.trackInAppPurchase(self.purchase) }
                 self.success?(self.response)
             }
             self.finish()

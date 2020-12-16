@@ -26,8 +26,6 @@ extension HSFacebookConnector: HSAnalyticsService {
         }
     }
     
-    public func setDebug(_ debug: HSAppConfiguration.Debug) {}
-    
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
         guard trackingEnabled else { return }
         let name = AppEvents.Name(event)
@@ -38,21 +36,13 @@ extension HSFacebookConnector: HSAnalyticsService {
         }
     }
     
-    func trackInAppPurchase(_ purchase: HSPurchase) {
-        guard
-            trackingEnabled,
-            let amount = Double(purchase.price)
-        else { return }
-        //What we need to do with other parameters of HSPurchase (productId, transactionId)
-        //do we need to add them to additional params ? 
-        AppEvents.logPurchase(amount,
-                              currency: purchase.currency,
-                              parameters: purchase.additionalParameters)
-    }
-    
     private func checkPlist() -> Bool {
         let bundle = Bundle(for: type(of: self))
         let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String
         return appId != nil
     }
+    
+    //MARK: - Noop
+    func trackInAppPurchase(_ purchase: HSPurchase) {}
+    public func setDebug(_ debug: HSAppConfiguration.Debug) {}
 }

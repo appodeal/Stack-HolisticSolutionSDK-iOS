@@ -101,17 +101,6 @@ extension HSFirebaseConnector: HSAnalyticsService {
         Analytics.logEvent(event, parameters: customParameters)
     }
     
-    // TODO: Check constants for purchase?
-    func trackInAppPurchase(_ purchase: HSPurchase) {
-        let parameters: [String : Any] = [
-            AnalyticsParameterPromotionID   : purchase.productId,
-            AnalyticsParameterPrice         : purchase.price,
-            AnalyticsParameterCurrency      : purchase.currency,
-            AnalyticsParameterTransactionID : purchase.transactionId,
-        ]
-        .merging(purchase.additionalParameters) { $1 }
-        
-        Analytics.logEvent(AnalyticsEventPurchase,
-                           parameters: parameters)
-    }
+    //MARK: - Noop
+    func trackInAppPurchase(_ purchase: HSPurchase) {}
 }
