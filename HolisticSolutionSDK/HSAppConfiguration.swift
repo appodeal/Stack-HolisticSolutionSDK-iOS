@@ -35,7 +35,10 @@ final class HSAppConfiguration: NSObject {
     }
     
     internal var analytics: [HSAnalyticsService] {
-        services.compactMap { $0 as? HSAnalyticsService }
+        var analytics: [HSAnalyticsService] = []
+        analytics += services.compactMap { $0 as? HSAnalyticsService }
+        analytics += connectors.compactMap { $0 as? HSAnalyticsService } 
+        return analytics
     }
     
     @objc public

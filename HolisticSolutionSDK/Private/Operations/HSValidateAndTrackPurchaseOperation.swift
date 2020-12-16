@@ -13,6 +13,7 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
     private typealias FailedResponse = (Error?, Any?)
     
     private let attribution: [HSAttributionService]
+    private let analytics: [HSAnalyticsService]
     private let purchase: HSPurchase
     private let debug: HSAppConfiguration.Debug
 
@@ -29,6 +30,7 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
          success:(([AnyHashable: Any]) -> Void)?,
          failure:((Error?, Any?) -> Void)?) {
         self.attribution = configuration.attribution
+        self.analytics = configuration.analytics
         self.purchase = purchase
         self.debug = configuration.debug
         self.success = success
@@ -44,8 +46,10 @@ final class HSValidateAndTrackPurchaseOperation: HSAsynchronousOperation {
             service.validateAndTrackInAppPurchase(
                 purchase,
                 success: { [weak self] response in
-                    self?.response.merge(response) { current, _ in current }
-                    self?.group.leave()
+                    guard let self = self else { return }
+                    self.analytics.forEach { $0.trackInAppPurchase(self.purchase) }
+                    self.response.merge(response) { current, _ in current }
+                    self.group.leave()
                 },
                 failure: { [weak self] error, id in
                     self?.error = (error, id)

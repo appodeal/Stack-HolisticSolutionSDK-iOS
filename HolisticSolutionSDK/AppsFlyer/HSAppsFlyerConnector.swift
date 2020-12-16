@@ -156,12 +156,14 @@ extension HSAppsFlyerConnector: HSAnalyticsService {
     
     func trackInAppPurchase(_ purchase: HSPurchase) {
         guard trackingEnabled else { return }
-        AppsFlyerLib.shared().validateAndLog(inAppPurchase: purchase.productId,
-                                             price: purchase.price,
-                                             currency: purchase.currency,
-                                             transactionId: purchase.transactionId,
-                                             additionalParameters: purchase.additionalParameters,
-                                             success: nil,
-                                             failure: nil)
+        //Has already logged in method: self.validateAndTrackInAppPurchase ? 
+        AppsFlyerLib.shared().logEvent(AFEventPurchase, withValues: [
+            AFEventParamCurrency : purchase.currency,
+            AFEventParamQuantity : purchase.price,
+            AFEventParamReceiptId: purchase.transactionId,
+            AFEventParamContentId: purchase.productId
+        ]
+        .merging(purchase.additionalParameters) { $1 }
+        )
     }
 }
