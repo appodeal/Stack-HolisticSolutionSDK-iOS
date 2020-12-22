@@ -50,13 +50,10 @@ extension HSAppodealConnector: HSAnalyticsService {
     }
     
     func trackInAppPurchase(_ purchase: HSPurchase) {
-        guard
-            trackingEnabled,
-            let value = NumberFormatter().number(from: purchase.price)
-        else { return }
-        
+        guard trackingEnabled else { return }
         DispatchQueue.main.async {
-            Appodeal.track(inAppPurchase: value, currency: purchase.currency)
+            Appodeal.track(inAppPurchase: NSNumber(value: purchase.price.convertPrice()),
+                           currency: purchase.currency)
         }
     }
     
@@ -64,4 +61,31 @@ extension HSAppodealConnector: HSAnalyticsService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {}
     public func setDebug(_ debug: HSAppConfiguration.Debug) {}
+}
+
+fileprivate extension String {
+    func convertPrice() -> Double {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        if let number = formatter.number(from: self) {
+            return number.doubleValue
+        } else {
+            let pattern = #"(\d.)+"#
+            // Remove spaces and replace comma with dot
+            let withoutSpaces = self
+                .replacingOccurrences(of: " ", with: "")
+                .replacingOccurrences(of: ",", with: ".")
+            // Search numbers
+            guard let range = withoutSpaces.range(of:pattern, options: .regularExpression)
+            else { return 0 }
+            // Search whole and fractional parts
+            let result = String(withoutSpaces[range]).components(separatedBy: ".")
+            let fractionalPart = result.last ?? "00"
+            let wholePart  = result.dropLast().joined()
+            let raw = wholePart.appending(".").appending(fractionalPart)
+            // Try to parse it again
+            let number = formatter.number(from: raw)
+            return number?.doubleValue ?? 0
+        }
+    }
 }
