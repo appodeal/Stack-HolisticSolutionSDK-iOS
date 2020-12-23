@@ -45,34 +45,35 @@ extension HSAppodealConnector: HSAdvertising {
 }
 
 extension HSAppodealConnector: HSAnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
-        Appodeal.setExtras([event : customParameters ?? [:]])
-    }
-    
     func trackInAppPurchase(_ purchase: HSPurchase) {
         guard trackingEnabled else { return }
         DispatchQueue.main.async {
-            Appodeal.track(inAppPurchase: NSNumber(value: purchase.price.convertPrice()),
-                           currency: purchase.currency)
+            Appodeal.track(
+                inAppPurchase: purchase.priceValue(),
+                currency: purchase.currency
+            )
         }
     }
     
     //MARK: - Noop
-    public func initialise(success: @escaping Success,
-                           failure: @escaping Failure) {}
+    public func initialise(
+        success: @escaping Success,
+        failure: @escaping Failure
+    ) {}
     public func setDebug(_ debug: HSAppConfiguration.Debug) {}
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {}
 }
 
-fileprivate extension String {
-    func convertPrice() -> Double {
+fileprivate extension HSPurchase {
+    func priceValue() -> NSNumber {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
-        if let number = formatter.number(from: self) {
-            return number.doubleValue
+        if let number = formatter.number(from: price) {
+            return number
         } else {
             let pattern = #"(\d.)+"#
             // Remove spaces and replace comma with dot
-            let withoutSpaces = self
+            let withoutSpaces = price
                 .replacingOccurrences(of: " ", with: "")
                 .replacingOccurrences(of: ",", with: ".")
             // Search numbers
@@ -85,7 +86,7 @@ fileprivate extension String {
             let raw = wholePart.appending(".").appending(fractionalPart)
             // Try to parse it again
             let number = formatter.number(from: raw)
-            return number?.doubleValue ?? 0
+            return number ?? 0
         }
     }
 }
