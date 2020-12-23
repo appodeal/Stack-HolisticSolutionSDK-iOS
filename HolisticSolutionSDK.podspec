@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "1.1.1"
+  spec.version      = "1.1.2"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = "https://explorestack.com"
   spec.license      = { :type => "GPLv3", :file => "LICENSE" }
   spec.author       = { "appodeal" => "https://appodeal.com" }
-  spec.platform     = :ios, "9.0"
+  spec.platform     = :ios, "10.0"
 
   spec.source       = { :git => "https://github.com/appodeal/Stack-HolisticSolutionSDK-iOS.git", :tag => "v#{spec.version}" }
 
@@ -44,9 +44,9 @@ Pod::Spec.new do |spec|
   spec.subspec "Firebase" do |ss|
     ss.source_files = "HolisticSolutionSDK/Firebase"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "Firebase/Core", ">= 6.20"
-    ss.dependency "Firebase/Analytics", ">= 6.20"
-  	ss.dependency "Firebase/RemoteConfig", ">= 4.4"
+    ss.dependency "Firebase/Core", ">= 7.0.0"
+    ss.dependency "Firebase/Analytics", ">= 7.0.0"
+  	ss.dependency "Firebase/RemoteConfig", ">= 7.0.0"
   end
 
   spec.subspec "Facebook" do |ss|
