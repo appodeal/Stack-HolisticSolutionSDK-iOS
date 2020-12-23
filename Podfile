@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 workspace 'HolisticSolutionSDK.xcworkspace'
 
 source 'https://cdn.cocoapods.org/'
@@ -12,9 +12,9 @@ def appodeal
 end
 
 def firebase
-  pod 'Firebase/Core', '>= 6.20'
-  pod 'Firebase/Analytics', '>= 6.20'
-  pod 'Firebase/RemoteConfig', '>= 4.4'
+  pod 'Firebase/Core', '>= 7.0.0'
+  pod 'Firebase/Analytics', '>= 7.0.0'
+  pod 'Firebase/RemoteConfig', '>= 7.0.0'
 end
 
 def appsflyer
