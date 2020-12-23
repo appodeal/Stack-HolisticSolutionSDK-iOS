@@ -19,6 +19,17 @@ Pod::Spec.new do |spec|
   spec.swift_versions = "4.0", "4.2", "5.0", "5.1", "5.2"
   spec.default_subspecs = "Full"
 
+  spec.pod_target_xcconfig = { 
+    "VALID_ARCHS": "arm64 armv7 armv7s x86_64",
+    "VALID_ARCHS[sdk=iphoneos*]": "arm64 armv7 armv7s",
+    "VALID_ARCHS[sdk=iphonesimulator*]": "x86_64"
+  }
+
+  spec.user_target_xcconfig = { 
+    "VALID_ARCHS": "arm64 armv7 armv7s x86_64",
+    "VALID_ARCHS[sdk=iphoneos*]": "arm64 armv7 armv7s",
+    "VALID_ARCHS[sdk=iphonesimulator*]": "x86_64"
+  }
 
   spec.subspec "Core" do |ss|
   	ss.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
@@ -26,7 +37,7 @@ Pod::Spec.new do |spec|
   		"HolisticSolutionSDK/Appodeal",
   		"HolisticSolutionSDK/AppsFlyer",
   		"HolisticSolutionSDK/Firebase",
-      	"HolisticSolutionSDK/Facebook"
+      "HolisticSolutionSDK/Facebook"
   end
 
   spec.subspec "Appodeal" do |ss|
