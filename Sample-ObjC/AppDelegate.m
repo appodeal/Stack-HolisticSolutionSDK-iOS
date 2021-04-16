@@ -9,7 +9,9 @@
 #import "AppDelegate.h"
 #import "ServicesInfo.h"
 #import <HolisticSolutionSDK/HolisticSolutionSDK.h>
- 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
+
 @import Appodeal;
 
 
@@ -26,14 +28,18 @@ BOOL const kConsent                                 = YES;
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self configureHolisticApp];
+    [self configureHolisticApp:application launchOptions:launchOptions];
     return YES;
 }
 
-- (void)configureHolisticApp {
+- (void)configureHolisticApp:(UIApplication)app launchOptions:(NSDictionary *)launchOptions {
     // Enable logging
     [Appodeal setLogLevel:APDLogLevelVerbose];
     [Appodeal setTestingEnabled:YES];
+
+    // Facebook
+    [FBSDKApplicationDelegate.sharedInstance application:app
+                           didFinishLaunchingWithOptions:launchOptions];
     
     // Create service connectors
     HSAppsFlyerConnector *appsFlyer = [[HSAppsFlyerConnector alloc] initWithPlistName:@"Services-Info" error:nil];

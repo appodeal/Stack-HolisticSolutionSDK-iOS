@@ -51,10 +51,15 @@ extension HSFirebaseConnector: HSProductTestingService {
     public func initialise(success: @escaping Success,
                            failure: @escaping Failure) {
         // Check if need to configure FIRApp
-        if FirebaseApp.allApps == nil {
-            FirebaseApp.configure()
+        guard FirebaseApp.allApps == nil else {
+            success()
+            return
         }
-        success()
+        
+        DispatchQueue.main.async {
+            FirebaseApp.configure()
+            success()
+        }
     }
     
     func activateConfig(completion: @escaping (([AnyHashable : Any]?) -> Void)) {

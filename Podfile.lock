@@ -127,9 +127,9 @@ DEPENDENCIES:
   - Appodeal (>= 2.6)
   - AppsFlyerFramework (>= 5.3)
   - FBSDKCoreKit (>= 6.0)
-  - Firebase/Analytics (= 7.0.0)
-  - Firebase/Core (= 7.0.0)
-  - Firebase/RemoteConfig (= 7.0.0)
+  - Firebase/Analytics (>= 7.0.0)
+  - Firebase/Core (>= 7.0.0)
+  - Firebase/RemoteConfig (>= 7.0.0)
 
 SPEC REPOS:
   trunk:
@@ -172,6 +172,6 @@ SPEC CHECKSUMS:
   StackIAB: 14975a45de9e3b78fdb0845ab1438af218e42431
   StackModules: bdce04cf8a281cfbd982e43f90d90df23166f0fa
 
-PODFILE CHECKSUM: 94c804f12cab23baf12993ac67764244e6d9b9a8
+PODFILE CHECKSUM: 20431b71bd9880834c2745bbe9a3f875dc14b3ae
 
-COCOAPODS: 1.10.0.rc.1
+COCOAPODS: 1.10.1

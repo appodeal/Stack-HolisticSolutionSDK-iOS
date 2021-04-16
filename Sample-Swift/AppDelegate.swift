@@ -9,6 +9,7 @@
 import UIKit
 import Appodeal
 import HolisticSolutionSDK
+import FBSDKCoreKit
 
 
 @UIApplicationMain
@@ -18,17 +19,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         static let consent: Bool = true
     }
     
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureHolisticApp()
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        configureHolisticApp(application, launchOptions: launchOptions)
         return true
     }
-
-    private func configureHolisticApp() {
+    
+    private func configureHolisticApp(
+        _ app: UIApplication,
+        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) {
         // Configure Appodeal before initialisation
         Appodeal.setLogLevel(.verbose)
         Appodeal.setTestingEnabled(true)
-
+        
+        // Facebook
+        ApplicationDelegate.shared.application(app, didFinishLaunchingWithOptions: launchOptions)
+        
         // Create service connectors
         let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
         let firebase = HSFirebaseConnector(keys: [], defaults: nil, expirationDuration: 60)
@@ -56,15 +65,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: UISceneSession Lifecycle
-    func application(_ application: UIApplication,
-                     configurationForConnecting connectingSceneSession: UISceneSession,
-                     options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
         return UISceneConfiguration(
             name: "Default Configuration",
             sessionRole: connectingSceneSession.role
         )
     }
-
+    
     func application(_ application: UIApplication,
                      didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
 }
