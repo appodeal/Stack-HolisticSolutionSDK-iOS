@@ -230,6 +230,38 @@ Connector for **Firebase Remote Config** and **Firebase Analytics** system. Afte
 
 Connector for **Facebook Analytics** system. Facebook analytics automatic initialisation should be enabled. Also project's `Info.plist` should contains [all required keys](https://developers.facebook.com/docs/app-events/getting-started-app-events-ios#step-5--configure-your-project).
 
+Connect application delegate and scene delegate according to step 6 from the [official documentation](https://developers.facebook.com/docs/app-events/getting-started-app-events-ios#step-6--connect-your-app-delegate-and-scene-delegate). 
+
+*Objective-C*
+```obj-c
+#import "AppDelegate.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [FBSDKApplicationDelegate.sharedInstance application:app
+                           didFinishLaunchingWithOptions:launchOptions];
+    return YES;
+}
+
+```
+
+*Swift*
+```swift
+import FBSDKCoreKit
+
+
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+    	ApplicationDelegate.shared.application(app, didFinishLaunchingWithOptions: launchOptions)
+    }
+```
 
 ### Appodeal
 
