@@ -9,11 +9,11 @@
 import Foundation
 
 
-internal protocol HSErrorProvider {
+internal protocol ErrorProvider {
     var error: HSError? { get }
 }
 
-internal class HSCompletionOperation: HSAsynchronousOperation {
+internal class CompletionOperation: AsynchronousOperation {
     typealias Completion = (NSError?) -> Void
     
     private let completion: Completion?
@@ -26,7 +26,7 @@ internal class HSCompletionOperation: HSAsynchronousOperation {
     override func main() {
         super.main()
         let errors = dependencies
-            .compactMap { $0 as? HSErrorProvider }
+            .compactMap { $0 as? ErrorProvider }
             .compactMap { $0.error }
         DispatchQueue.main.async { [weak self] in
             self?.completion?(errors.first.map { $0.nserror })

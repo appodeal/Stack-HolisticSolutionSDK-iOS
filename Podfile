@@ -8,13 +8,13 @@ install! 'cocoapods', :deterministic_uuids => false, :warn_for_multiple_pod_sour
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '>= 2.6'
+  pod 'Appodeal', '>= 2.9'
 end
 
 def firebase
-  pod 'Firebase/Core', '>= 7.0.0'
-  pod 'Firebase/Analytics', '>= 7.0.0'
-  pod 'Firebase/RemoteConfig', '>= 7.0.0'
+  pod 'Firebase/Core', '>= 8.0.0'
+  pod 'Firebase/Analytics', '>= 8.0.0'
+  pod 'Firebase/RemoteConfig', '>= 8.0.0'
 end
 
 def appsflyer
@@ -22,14 +22,25 @@ def appsflyer
 end
 
 def facebook 
-  pod 'FBSDKCoreKit', '>= 6.0'
+  pod 'FBSDKCoreKit', '>= 9.3'
+end
+
+def adjust
+  pod 'Adjust', '~> 4.29.2'
+  pod 'AdjustPurchase', :git => 'https://github.com/adjust/ios_purchase_sdk', :tag => 'v1.0.0'
+end
+
+def connsent_manager
+  pod 'StackConsentManager', '>= 1.1.0'
 end
 
 def deps
   firebase
   appsflyer
+  adjust
   facebook
   appodeal
+  connsent_manager
 end
 
 

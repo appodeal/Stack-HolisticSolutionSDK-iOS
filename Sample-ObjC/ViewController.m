@@ -53,7 +53,7 @@
 }
 
 - (IBAction)synthesizeEvent:(UIButton *)sender {
-    [HSApp trackEvent:@"level_started" customParameters:nil];
+    [[Appodeal hs] trackEvent:@"level_started" customParameters:nil];
 }
 
 @end

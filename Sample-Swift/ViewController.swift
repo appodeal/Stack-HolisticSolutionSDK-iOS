@@ -37,20 +37,20 @@ final class ViewController: UIViewController {
     }
     
     @IBAction func synthesizePurchase(_ sender: UIButton) {
-        HSApp.validateAndTrackInAppPurchase(
-            productId: "some product id",
-            price: "9.99",
-            currency: "USD",
-            transactionId: "some transaction id",
-            additionalParameters: ["Test Custom 1" : "Value 1",
-                                   "Test Custom 2" : "Value 2"],
-            success: { print("Purchase is valid. Data \($0.description)") },
-            failure: { _, _ in print("Purchase is invalid.") }
-        )
+//        Appodeal.hs.validateAndTrackInAppPurchase(
+//            productId: "some product id",
+//            price: "9.99",
+//            currency: "USD",
+//            transactionId: "some transaction id",
+//            additionalParameters: ["Test Custom 1" : "Value 1",
+//                                   "Test Custom 2" : "Value 2"],
+//            success: { print("Purchase is valid. Data \($0.description)") },
+//            failure: { _, _ in print("Purchase is invalid.") }
+//        )
     }
     
     @IBAction func synthesizeEvent(_ sender: Any) {
-        HSApp.trackEvent("level_started")
+        Appodeal.hs.trackEvent("level_started", customParameters: nil)
     }
 }
 

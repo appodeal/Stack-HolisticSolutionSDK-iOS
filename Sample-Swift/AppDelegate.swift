@@ -15,6 +15,7 @@ import FBSDKCoreKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private struct AppodealConstants {
+        static let appKey = "dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f"
         static let adType: AppodealAdType = .banner
         static let consent: Bool = true
     }
@@ -23,46 +24,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        configureHolisticApp(application, launchOptions: launchOptions)
+        Appodeal.hs.register(connectors: [
+                                AppsFlyerConnector.self,
+                                AdjustConnector.self,
+                                FirebaseConnector.self,
+                                FacebookConnector.self
+        ])
+        
+        Appodeal.hs.initialize(
+            application: application,
+            launchOptions: launchOptions,
+            appKey: AppodealConstants.appKey
+        )
+        
         return true
     }
     
-    private func configureHolisticApp(
-        _ app: UIApplication,
-        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    ) {
-        // Configure Appodeal before initialisation
-        Appodeal.setLogLevel(.verbose)
-        Appodeal.setTestingEnabled(true)
-        
-        // Facebook
-        ApplicationDelegate.shared.application(app, didFinishLaunchingWithOptions: launchOptions)
-        
-        // Create service connectors
-        let appsFlyer = try! HSAppsFlyerConnector(plist: .custom(path: "Services-Info"))
-        let firebase = HSFirebaseConnector(keys: [], defaults: nil, expirationDuration: 60)
-        let facebook = HSFacebookConnector()
-        // Create advertising connector
-        let appodeal = HSAppodealConnector()
-        // Create HSApp configuration
-        let services: [HSService] = [appsFlyer, firebase, facebook]
-        let configuration = HSAppConfiguration(services: services,
-                                               advertising: appodeal, 
-                                               timeout: 30)
-        // Configure
-        HSApp.configure(configuration: configuration) { error in
-            // Handle error
-            error.map { print($0.localizedDescription) }
-            print("HSApp \(HSApp.initialised ? "is" : "is not") initialised")
-            // Initialise Appodeal
-            Appodeal.initialize(
-                withApiKey: servicesInfo.appodeal.apiKey,
-                types: AppodealConstants.adType,
-                hasConsent: AppodealConstants.consent
-            )
-            NotificationCenter.default.post(name: .AdDidInitialize, object: nil)
-        }
-    }
+//    private func configureHolisticApp(
+//        _ app: UIApplication,
+//        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+//    ) {
+//        // Configure Appodeal before initialisation
+//        Appodeal.setLogLevel(.verbose)
+//        Appodeal.setTestingEnabled(true)
+//
+//        // Facebook
+//        ApplicationDelegate.shared.application(app, didFinishLaunchingWithOptions: launchOptions)
+//
+//        // Create service connectors
+//        let appsFlyer = try! AppsFlyerConnector(plist: .custom(path: "Services-Info"))
+//        let firebase = FirebaseConnector(keys: [], defaults: nil, expirationDuration: 60)
+//        let facebook = FacebookConnector()
+//        // Create advertising connector
+//        let appodeal = AppodealConnector()
+//        // Create HSApp configuration
+//        let services: [Service] = [appsFlyer, firebase, facebook]
+//        let configuration = AppConfiguration(
+//            services: services,
+//            advertising: appodeal,
+//            timeout: 30
+//        )
+//        // Configure
+//        App.configure(configuration: configuration) { error in
+//            // Handle error
+//            error.map { print($0.localizedDescription) }
+//            print("HSApp \(App.initialised ? "is" : "is not") initialised")
+//            // Initialise Appodeal
+//            Appodeal.initialize(
+//                withApiKey: servicesInfo.appodeal.apiKey,
+//                types: AppodealConstants.adType,
+//                hasConsent: AppodealConstants.consent
+//            )
+//            NotificationCenter.default.post(name: .AdDidInitialize, object: nil)
+//        }
+//    }
     
     // MARK: UISceneSession Lifecycle
     func application(

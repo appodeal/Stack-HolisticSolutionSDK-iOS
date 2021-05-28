@@ -9,27 +9,19 @@
 import Foundation
 import Appodeal
 
+@objc(HSAppodealConnector) final
+class AppodealConnector: NSObject, Service {
+    var name: String { "appodeal" }
+    var sdkVersion: String { APDSdkVersionString() }
+    var version: String { APDSdkVersionString() + ".1" }
+}
 
-@objc public
-extension HSAppConfiguration {
-    @objc convenience
-    init(services: [HSService],
-         advertising: HSAdvertising = HSAppodealConnector(),
-         timeout: TimeInterval = kHSAppDefaultTimeout) {
-        self.init(services: services, connectors: [advertising], timeout: timeout)
+
+extension AppodealConnector: Advertising {
+    func setTrackId(_ trackId: String) {
+        Appodeal.setExtras(["track_id": trackId])
     }
-}
-
-
-@objc public
-final class HSAppodealConnector: NSObject {
-    public typealias Success = () -> Void
-    public typealias Failure = (HSError) -> Void
     
-    public var trackingEnabled: Bool = true
-}
-
-extension HSAppodealConnector: HSAdvertising {
     public func setAttributionId(_ attributionId: String) {
         Appodeal.setExtras(["attribution_id": attributionId])
     }
@@ -44,9 +36,9 @@ extension HSAppodealConnector: HSAdvertising {
     }
 }
 
-extension HSAppodealConnector: HSAnalyticsService {
-    func trackInAppPurchase(_ purchase: HSPurchase) {
-        guard trackingEnabled else { return }
+extension AppodealConnector {//: AnalyticsService {
+    func trackInAppPurchase(_ purchase: Purchase) {
+//        guard trackingEnabled else { return }
         DispatchQueue.main.async {
             Appodeal.track(
                 inAppPurchase: purchase.priceValue(),
@@ -54,17 +46,10 @@ extension HSAppodealConnector: HSAnalyticsService {
             )
         }
     }
-    
-    //MARK: - Noop
-    public func initialise(
-        success: @escaping Success,
-        failure: @escaping Failure
-    ) {}
-    public func setDebug(_ debug: HSAppConfiguration.Debug) {}
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {}
 }
 
-fileprivate extension HSPurchase {
+
+fileprivate extension Purchase {
     func priceValue() -> NSNumber {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")

@@ -13,7 +13,7 @@ import Foundation
 /// 1. Call `super.main()` when override `main` method.
 /// 2. When operation is finished or cancelled set `state = .finished` or `finish()`
 /// Based on https://gist.github.com/Sorix/57bc3295dc001434fe08acbb053ed2bc
-internal class HSCancellableAsynchronousOperation: HSAsynchronousOperation, HSErrorProvider {
+internal class CancellableAsynchronousOperation: AsynchronousOperation, ErrorProvider {
     private let timeout: TimeInterval
     
     private var timer: Timer?
