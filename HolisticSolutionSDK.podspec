@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "appodeal" => "https://appodeal.com" }
   spec.platform     = :ios, "10.0"
 
-  spec.source       = { :git => "https://github.com/appodeal/Stack-HolisticSolutionSDK-iOS.git", :branch => "feature-adjust" }
+  spec.source       = { :git => "https://github.com/appodeal/Stack-HolisticSolutionSDK-iOS.git", :tag => "v#{spec.version}" }
 
   spec.requires_arc = true
   spec.static_framework = true
@@ -32,9 +32,9 @@ Pod::Spec.new do |spec|
   }
 
   spec.subspec "Core" do |ss|
-  	ss.source_files  = "HolisticSolutionSDK/**/*.{h,swift}"
-    ss.dependency = "Appodeal", "~> 2.10.1"
-    ss.dependency = "StackConsentManager", "~> 1.1.0"
+  	ss.source_files = "HolisticSolutionSDK/**/*.{h,swift}"
+    ss.dependency "Appodeal", "~> 2.10.1"
+    ss.dependency "StackConsentManager", "~> 1.1.0"
 
   	ss.exclude_files = 
   		"HolisticSolutionSDK/AppsFlyer",
@@ -60,7 +60,7 @@ Pod::Spec.new do |spec|
     ss.dependency "APDYandexAdapter", "~> 2.10.1" 
   end
   
-  spec.subspec "AppsFlyer" do |ss|
+  spec.subspec "Adjust" do |ss|
     ss.source_files = "HolisticSolutionSDK/Adjust"
     ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Adjust", "~> 4.29.2"
