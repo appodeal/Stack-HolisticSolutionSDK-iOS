@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Appodeal
 
 
 public let kHSAppDefaultTimeout: TimeInterval = 30.0
@@ -24,16 +25,19 @@ class AppConfiguration: NSObject {
     internal let appKey: String
     internal let timeout: TimeInterval
     internal let debug: Debug
+    internal let adTypes: AppodealAdType
     
     @objc public
     init(
         appKey: String,
         timeout: TimeInterval = kHSAppDefaultTimeout,
-        debug: Debug = .system
+        debug: Debug = .system,
+        adTypes: AppodealAdType = [.banner, .interstitial, .MREC, .rewardedVideo]
     ) {
         self.appKey = appKey
         self.timeout = timeout
         self.debug = debug
+        self.adTypes = adTypes
         super.init()
     }
 }

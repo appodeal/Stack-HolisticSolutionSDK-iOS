@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 @objc(HSService) public
 protocol Service {
@@ -16,6 +16,15 @@ protocol Service {
     var version: String { get }
     
     init()
+    
+    @objc optional
+    func set(
+        _ app: UIApplication,
+        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    )
+    
+    @objc optional
+    func set(debug: AppConfiguration.Debug)
 }
 
 

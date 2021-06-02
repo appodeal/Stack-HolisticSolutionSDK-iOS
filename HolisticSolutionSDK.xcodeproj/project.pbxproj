@@ -14,7 +14,6 @@
 		421B713B2655660D00075968 /* FetchServicesParametersOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B713A2655660D00075968 /* FetchServicesParametersOperation.swift */; };
 		4229F7D4264D15C60068E8D7 /* AdjustConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F7D3264D15C60068E8D7 /* AdjustConnector.swift */; };
 		42411A8924A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42411A8824A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift */; };
-		42411A8D24AB1435001CCCD3 /* CompletionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42411A8C24AB1435001CCCD3 /* CompletionOperation.swift */; };
 		4246449B24AB5E1B00C8B8D1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246449A24AB5E1B00C8B8D1 /* Service.swift */; };
 		4248EE1924A5EE60003E9CA6 /* AppodealConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1824A5EE60003E9CA6 /* AppodealConnector.swift */; };
 		4248EE1B24A5EF99003E9CA6 /* FirebaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1A24A5EF99003E9CA6 /* FirebaseConnector.swift */; };
@@ -44,7 +43,6 @@
 		421B713A2655660D00075968 /* FetchServicesParametersOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchServicesParametersOperation.swift; sourceTree = "<group>"; };
 		4229F7D3264D15C60068E8D7 /* AdjustConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustConnector.swift; sourceTree = "<group>"; };
 		42411A8824A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableAsynchronousOperation.swift; sourceTree = "<group>"; };
-		42411A8C24AB1435001CCCD3 /* CompletionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionOperation.swift; sourceTree = "<group>"; };
 		4246449A24AB5E1B00C8B8D1 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		4248EE1824A5EE60003E9CA6 /* AppodealConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppodealConnector.swift; sourceTree = "<group>"; };
 		4248EE1A24A5EF99003E9CA6 /* FirebaseConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnector.swift; sourceTree = "<group>"; };
@@ -162,7 +160,6 @@
 				421B713A2655660D00075968 /* FetchServicesParametersOperation.swift */,
 				4273EBA524A60D9C00A868FD /* AttributionOperation.swift */,
 				4273EBA724A620AA00A868FD /* ProductTestSyncOperation.swift */,
-				42411A8C24AB1435001CCCD3 /* CompletionOperation.swift */,
 				4253461824ACDC6F00128BB4 /* TrackEventOperation.swift */,
 				42EB08E424ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift */,
 			);
@@ -284,7 +281,7 @@
 				TargetAttributes = {
 					4294A1EA24A4BE3200F5FFD5 = {
 						CreatedOnToolsVersion = 11.5;
-						LastSwiftMigration = 1150;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -364,7 +361,6 @@
 				4229F7D4264D15C60068E8D7 /* AdjustConnector.swift in Sources */,
 				421B713926553ADC00075968 /* InitializeServiceOperation.swift in Sources */,
 				4294A20E24A4DADE00F5FFD5 /* AsynchronousOperation.swift in Sources */,
-				42411A8D24AB1435001CCCD3 /* CompletionOperation.swift in Sources */,
 				421B7137265537F800075968 /* UIApplicationExtensions.swift in Sources */,
 				4273EBA824A620AA00A868FD /* ProductTestSyncOperation.swift in Sources */,
 				4294A20B24A4D7C100F5FFD5 /* AppConfiguration.swift in Sources */,
@@ -520,6 +516,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.HolisticSolutionSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,6 +546,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.HolisticSolutionSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

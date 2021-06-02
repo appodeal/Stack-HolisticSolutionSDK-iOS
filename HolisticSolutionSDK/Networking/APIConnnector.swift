@@ -67,7 +67,7 @@ final class API {
         }
     }
     
-    private let url = URL(string: "http://herokuapp.appodeal.com/hs_init")!//  URL(string: "https://a.appbaqend.com/hs/init")!
+    private let url = URL(string: "http://herokuapp.appodeal.com/hs_init_adjust")!//  URL(string: "https://a.appbaqend.com/hs/init")!
     private let request: Request
     
     init(
@@ -98,17 +98,51 @@ final class API {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession
             .shared
-            .dataTask(with: request) { data, _, _ in
-                guard let response: RawParameters = STKJSONSerialization.jsonObject(data) else {
+            .dataTask(with: request) { [weak self] data, _, _ in
+                if let response: RawParameters = STKJSONSerialization.jsonObject(data) {
+                    self?.archive(response: response)
+                    success(response)
+                } else if let response = self?.unarchive() {
+                    success(response)
+                } else {
                     failure(.service)
-                    return
                 }
-                success(response)
             }
             .resume()
     }
     
     func setDebug(_ debug: AppConfiguration.Debug) {}
+    
+    private func cachePath() throws -> URL {
+        guard
+            let caches = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first
+        else { throw HSError.unknown }
+        
+        var path = URL(fileURLWithPath: caches)
+        path.appendPathComponent("HolisticSolution")
+        
+        if !FileManager.default.fileExists(atPath: path.path) {
+            try FileManager.default.createDirectory(at: path, withIntermediateDirectories: false, attributes: nil)
+        }
+        
+        path.appendPathComponent("init.json")
+        
+        return path
+    }
+    
+    private func archive(response: RawParameters) {
+        guard
+            let path = try? cachePath(),
+            let data = try? STKJSONSerialization.data(withJSONObject: response, options: [])
+        else { return }
+        try? data.write(to: path)
+    }
+    
+    private func unarchive() -> RawParameters? {
+        return (try? cachePath())
+            .flatMap { try? Data(contentsOf: $0) }
+            .flatMap { STKJSONSerialization.jsonObject($0) }
+    }
 }
 
 

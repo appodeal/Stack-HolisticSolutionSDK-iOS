@@ -28,7 +28,10 @@ class ConsentManagerConnector: NSObject, Service {
         _ parameters: Parameters,
         completion: @escaping (HSError?) -> ()
     ) {
-        STKConsentManager.shared().synchronize(withAppKey: parameters.appKey) { [weak self] error in
+        STKConsentManager.shared().synchronize(
+            withAppKey: parameters.appKey,
+            customParameters: ["track_id" : parameters.trackId]
+        ) { [weak self] error in
             if let _ = error  {
                 completion(HSError.service)
             } else if !STKConsentManager.shared().shouldShowConsentAlert {
@@ -52,8 +55,6 @@ class ConsentManagerConnector: NSObject, Service {
             }
         }
     }
-    
-    public func setDebug(_ debug: AppConfiguration.Debug) {}
 }
 
 

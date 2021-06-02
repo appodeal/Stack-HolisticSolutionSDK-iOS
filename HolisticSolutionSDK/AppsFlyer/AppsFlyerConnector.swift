@@ -41,11 +41,24 @@ class AppsFlyerConnector: NSObject, Service {
     
     private var onReceiveConversionData: (([AnyHashable : Any]?) -> Void)?
     private var conversionKeys: [String] = []
-    private var trackingEnabled = true
+    private var trackingEnabled = false
     
     @objc private
     func didBecomeActive(notification: Notification) {
         AppsFlyerLib.shared().start()
+    }
+    
+    public func set(debug: AppConfiguration.Debug) {
+        switch debug {
+        case .disabled: AppsFlyerLib.shared().isDebug = false
+        case .enabled: AppsFlyerLib.shared().isDebug = true
+        case .system:
+            #if DEBUG
+            AppsFlyerLib.shared().isDebug = true
+            #else
+            AppsFlyerLib.shared().isDebug = false
+            #endif
+        }
     }
 }
 
@@ -63,7 +76,6 @@ extension AppsFlyerConnector: RawParametersInitializable {
         AppsFlyerLib.shared().appsFlyerDevKey = parameters.devKey
         AppsFlyerLib.shared().appleAppID = parameters.appId
         AppsFlyerLib.shared().delegate = self
-        AppsFlyerLib.shared().isDebug = true
         
         conversionKeys = parameters.conversionKeys
         trackingEnabled = parameters.tracking
@@ -84,10 +96,9 @@ extension AppsFlyerConnector: AttributionService {
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
+        onReceiveConversionData = receiveData
         
         AppsFlyerLib.shared().start()
-        AppsFlyerLib.shared()
-        onReceiveConversionData = receiveData
         receiveAttributionId(AppsFlyerLib.shared().getAppsFlyerUID())
     }
     

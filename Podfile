@@ -9,6 +9,7 @@ use_frameworks!
 
 def appodeal
   pod 'Appodeal', '>= 2.9'
+  pod 'StackConsentManager', '>= 1.1.0'
 end
 
 def firebase
@@ -30,17 +31,12 @@ def adjust
   pod 'AdjustPurchase', :git => 'https://github.com/adjust/ios_purchase_sdk', :tag => 'v1.0.0'
 end
 
-def connsent_manager
-  pod 'StackConsentManager', '>= 1.1.0'
-end
-
 def deps
   firebase
   appsflyer
   adjust
   facebook
   appodeal
-  connsent_manager
 end
 
 

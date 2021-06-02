@@ -14,70 +14,42 @@ import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    private struct AppodealConstants {
+    static let complete: Notification.Name = .init("HSAppCompleteNotification")
+    
+    struct AppodealConstants {
         static let appKey = "dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f"
         static let adType: AppodealAdType = .banner
-        static let consent: Bool = true
     }
     
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        Appodeal.hs.register(connectors: [
-                                AppsFlyerConnector.self,
-                                AdjustConnector.self,
-                                FirebaseConnector.self,
-                                FacebookConnector.self
-        ])
         
+        Appodeal.swizzle()
+        
+        let connectors: [Service.Type] = [
+            AppsFlyerConnector.self,
+            AdjustConnector.self,
+            FirebaseConnector.self,
+            FacebookConnector.self
+        ]
+        
+        Appodeal.setTestingEnabled(true)
+        Appodeal.hs.register(connectors: connectors)
         Appodeal.hs.initialize(
             application: application,
             launchOptions: launchOptions,
-            appKey: AppodealConstants.appKey
+            configuration: .init(
+                appKey: AppodealConstants.appKey,
+                timeout: 10,
+                debug: .enabled,
+                adTypes: AppodealConstants.adType
+            )
         )
         
         return true
     }
-    
-//    private func configureHolisticApp(
-//        _ app: UIApplication,
-//        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-//    ) {
-//        // Configure Appodeal before initialisation
-//        Appodeal.setLogLevel(.verbose)
-//        Appodeal.setTestingEnabled(true)
-//
-//        // Facebook
-//        ApplicationDelegate.shared.application(app, didFinishLaunchingWithOptions: launchOptions)
-//
-//        // Create service connectors
-//        let appsFlyer = try! AppsFlyerConnector(plist: .custom(path: "Services-Info"))
-//        let firebase = FirebaseConnector(keys: [], defaults: nil, expirationDuration: 60)
-//        let facebook = FacebookConnector()
-//        // Create advertising connector
-//        let appodeal = AppodealConnector()
-//        // Create HSApp configuration
-//        let services: [Service] = [appsFlyer, firebase, facebook]
-//        let configuration = AppConfiguration(
-//            services: services,
-//            advertising: appodeal,
-//            timeout: 30
-//        )
-//        // Configure
-//        App.configure(configuration: configuration) { error in
-//            // Handle error
-//            error.map { print($0.localizedDescription) }
-//            print("HSApp \(App.initialised ? "is" : "is not") initialised")
-//            // Initialise Appodeal
-//            Appodeal.initialize(
-//                withApiKey: servicesInfo.appodeal.apiKey,
-//                types: AppodealConstants.adType,
-//                hasConsent: AppodealConstants.consent
-//            )
-//            NotificationCenter.default.post(name: .AdDidInitialize, object: nil)
-//        }
-//    }
     
     // MARK: UISceneSession Lifecycle
     func application(
@@ -91,11 +63,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }
     
-    func application(_ application: UIApplication,
-                     didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
+    func application(
+        _ application: UIApplication,
+        didDiscardSceneSessions sceneSessions: Set<UISceneSession>
+    ) {}
 }
 
 
-extension Notification.Name {
-    static let AdDidInitialize = Notification.Name("AdDidInitialize")
+private extension Appodeal {
+    static func swizzle() {
+        guard
+            let method1 = class_getClassMethod(Appodeal.self, #selector(initialize(withApiKey:types:consentReport:))),
+            let swizzled1 = class_getClassMethod(Appodeal.self, #selector(_initialize(withApiKey:types:consentReport:))),
+            let method2 = class_getClassMethod(Appodeal.self, #selector(initialize(withApiKey:types:))),
+            let swizzled2 = class_getClassMethod(Appodeal.self, #selector(_initialize(withApiKey:types:)))
+        else { return }
+        
+        method_exchangeImplementations(method1, swizzled1)
+        method_exchangeImplementations(method2, swizzled2)
+    }
+    
+    @objc class
+    func _initialize(withApiKey: String, types: AppodealAdType, consentReport: STKConsent) {
+        _initialize(withApiKey: withApiKey, types: types, consentReport: consentReport)
+        NotificationCenter.default.post(name: AppDelegate.complete, object: nil)
+    }
+    
+    @objc class
+    func _initialize(withApiKey: String, types: AppodealAdType) {
+        _initialize(withApiKey: withApiKey, types: types)
+        NotificationCenter.default.post(name: AppDelegate.complete, object: nil)
+    }
 }

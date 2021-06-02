@@ -7,13 +7,24 @@
 //
 
 import Foundation
+import StackConsentManager
 import Appodeal
+import StackFoundation
+
 
 @objc(HSAppodealConnector) final
 class AppodealConnector: NSObject, Service {
     var name: String { "appodeal" }
     var sdkVersion: String { APDSdkVersionString() }
     var version: String { APDSdkVersionString() + ".1" }
+    
+    func set(debug: AppConfiguration.Debug) {
+        switch debug {
+        case .disabled: Appodeal.setLogLevel(.off)
+        case .enabled: Appodeal.setLogLevel(.debug)
+        case .system: Appodeal.setLogLevel(.error)
+        }
+    }
 }
 
 
@@ -36,9 +47,30 @@ extension AppodealConnector: Advertising {
     }
 }
 
-extension AppodealConnector {//: AnalyticsService {
+
+extension AppodealConnector: Initializable {
+    typealias Parameters = AppConfiguration
+    
+    func initialize(_ parameters: AppConfiguration, completion: @escaping (HSError?) -> ()) {
+        defer { completion(nil) }
+        if let consent = STKConsentManager.shared().consent {
+            let selector = NSSelectorFromString("initializeWithApiKey:types:consentReport:")
+            typealias InitializeType = @convention(c) (AnyObject, Selector, String, AppodealAdType, STKConsent) -> ()
+            let method = Appodeal.method(for: selector)
+            let initialize = unsafeBitCast(method, to: InitializeType.self)
+            initialize(Appodeal.self, selector, parameters.appKey, parameters.adTypes, consent)
+        } else {
+            Appodeal.initialize(
+                withApiKey: parameters.appKey,
+                types: parameters.adTypes
+            )
+        }
+    }
+}
+
+
+extension AppodealConnector: AnalyticsService {
     func trackInAppPurchase(_ purchase: Purchase) {
-//        guard trackingEnabled else { return }
         DispatchQueue.main.async {
             Appodeal.track(
                 inAppPurchase: purchase.priceValue(),
@@ -46,6 +78,8 @@ extension AppodealConnector {//: AnalyticsService {
             )
         }
     }
+    
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {}
 }
 
 

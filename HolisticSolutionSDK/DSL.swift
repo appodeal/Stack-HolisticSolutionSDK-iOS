@@ -15,6 +15,7 @@ enum HSError: Int, Error {
     case integration = 0
     case timeout
     case service
+    case unknown
     
     var nserror: NSError { NSError.from(self) }
 }
@@ -43,7 +44,8 @@ protocol DSL {
     func initialize(
         application: UIApplication,
         launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
-        appKey: String
+        appKey: String,
+        adTypes: AppodealAdType
     )
     
     func validateAndTrackInAppPurchase(
@@ -79,6 +81,7 @@ fileprivate extension NSError {
         case .integration: userInfo = [ NSLocalizedDescriptionKey: "Some of input paramerers was invalid" ]
         case .service: userInfo = [ NSLocalizedDescriptionKey: "Error has been occurred while starting service" ]
         case .timeout: userInfo = [ NSLocalizedDescriptionKey: "HSApp timeout has been reached" ]
+        case .unknown: userInfo = [  NSLocalizedDescriptionKey: "Unknown error has been occurred" ]
         }
         
         return NSError(

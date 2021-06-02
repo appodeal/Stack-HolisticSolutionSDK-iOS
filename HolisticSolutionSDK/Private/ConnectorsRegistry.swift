@@ -31,6 +31,10 @@ struct ConnnectorsRegistry {
         connectors.append(connector)
     }
     
+    mutating func filter(closure: (Service) -> Bool) {
+        connectors = connectors.filter(closure)
+    }
+    
     func types<T: Service>(of connectorType: T.Type) -> [T.Type] {
         return types.compactMap { $0 as? T.Type }
     }

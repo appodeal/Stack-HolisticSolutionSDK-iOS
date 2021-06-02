@@ -13,59 +13,72 @@ import FBSDKCoreKit
 @objc(HSFacebookConnector) public final
 class FacebookConnector: NSObject, Service {
     struct Parameters {
-        static let id: String = "facebook"
-        
         var tracking: Bool
+        
+        init(tracking: Bool = false) {
+            self.tracking = tracking
+        }
+        
+        init?(_ parameters: RawParameters) {
+            guard let tracking = parameters["tracking"] as? Bool else { return nil }
+            self.tracking = tracking
+        }
     }
-
     
-    public var name: String { Parameters.id }
+    public var name: String { "facebook" }
     public var sdkVersion: String { FBSDK_VERSION_STRING }
     public var version: String { sdkVersion + ".1" }
-//    let parameters: FacebookParameters
-//
-//    @objc public convenience
-//    init(tracking: Bool = true) {
-//        let parameters: FacebookParameters = .init(tracking: tracking)
-//        self.init(parameters: parameters)
-//    }
-//
-//    init(parameters: FacebookParameters) {
-//        self.parameters = parameters
-//        super.init()
-//    }
+    
+    private var parameters = Parameters()
+    private weak var application: UIApplication?
+    private var launchOptions: [UIApplication.LaunchOptionsKey : Any]?
+    
+    public func set(
+        _ app: UIApplication,
+        launchOptions: [UIApplication.LaunchOptionsKey : Any]?
+    ) {
+        self.application = app
+        self.launchOptions = launchOptions
+    }
 }
 
 
-extension FacebookConnector {//: AnalyticsService {
-//    public func initialise(
-//        success: @escaping () -> Void,
-//        failure: @escaping (HSError) -> Void
-//    ) {
-//        if checkPlist() {
-//            success()
-//        } else {
-//            failure(.integration)
-//        }
-//    }
-//
-//    func trackEvent(_ event: String, customParameters: [String : Any]?) {
-//        guard parameters.tracking else { return }
-//        let name = AppEvents.Name(event)
-//        if let params = customParameters {
-//            AppEvents.logEvent(name, parameters: params)
-//        } else {
-//            AppEvents.logEvent(name)
-//        }
-//    }
-//
-//    private func checkPlist() -> Bool {
-//        let bundle = Bundle(for: type(of: self))
-//        let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String
-//        return appId != nil
-//    }
-//
-//    //MARK: - Noop
-//    func trackInAppPurchase(_ purchase: Purchase) {}
-//    public func setDebug(_ debug: AppConfiguration.Debug) {}
+extension FacebookConnector: RawParametersInitializable {
+    func initialize(_ parameters: RawParameters, completion: @escaping (HSError?) -> ()) {
+        guard
+            let parameters = Parameters(parameters),
+            validatePlist()
+        else {
+            completion(.service)
+            return
+        }
+        
+        self.parameters = parameters
+        ApplicationDelegate.shared.application(
+            application ?? .shared,
+            didFinishLaunchingWithOptions: launchOptions
+        )
+        completion(nil)
+    }
+    
+    private func validatePlist() -> Bool {
+        let bundle = Bundle(for: type(of: self))
+        let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String
+        return appId != nil
+    }
+}
+
+extension FacebookConnector: AnalyticsService {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard parameters.tracking else { return }
+        let name = AppEvents.Name(event)
+        if let params = customParameters {
+            AppEvents.logEvent(name, parameters: params)
+        } else {
+            AppEvents.logEvent(name)
+        }
+    }
+
+    // MARK: - Noop
+    func trackInAppPurchase(_ purchase: Purchase) {}
 }

@@ -18,6 +18,16 @@ class AdjustConnector: NSObject, Service {
         var appToken, environment: String
         var tracking: Bool
         
+        init(
+            appToken: String = "",
+            environment: String = "sandbox",
+            tracking: Bool = false
+        ) {
+            self.appToken = appToken
+            self.environment = environment
+            self.tracking = tracking
+        }
+        
         init?(_ parameters: RawParameters) {
             guard
                 let appToken = parameters["app_token"] as? String,
@@ -25,21 +35,29 @@ class AdjustConnector: NSObject, Service {
                 let tracking = parameters["tracking"] as? Bool
             else { return nil }
             
-            self.appToken = appToken
-            self.environment = environment
-            self.tracking = tracking
+            self.init(
+                appToken: appToken,
+                environment: environment,
+                tracking: tracking
+            )
         }
     }
     
     public var name: String { "adjust" }
     public var sdkVersion: String { Adjust.sdkVersion() ?? "" }
     public var version: String { sdkVersion + ".1" }
-    
     public var onReceiveConversionData: (([AnyHashable : Any]?) -> Void)?
+
+    private var parameters = Parameters()
+    private var debug: AppConfiguration.Debug = .system
+    
+    public func set(debug: AppConfiguration.Debug) {
+        self.debug = debug
+    }
 }
 
 
-extension AdjustConnector: RawParametersInitializable {//: AttributionService {
+extension AdjustConnector: RawParametersInitializable {
     func initialize(
         _ parameters: RawParameters,
         completion: @escaping (HSError?) -> ()
@@ -54,46 +72,30 @@ extension AdjustConnector: RawParametersInitializable {//: AttributionService {
             environment: parameters.environment
         )
         config?.delegate = self
-        Adjust.appDidLaunch(config)
+        switch debug {
+        case .enabled: config?.logLevel = ADJLogLevelVerbose
+        case .disabled: config?.logLevel = ADJLogLevelSuppress
+        default: break
+        }
         
+        Adjust.appDidLaunch(config)
+
         let purchaseConfig = ADJPConfig(
             appToken: parameters.appToken,
             andEnvironment: parameters.environment
         )
+        
+        switch debug {
+        case .enabled: purchaseConfig?.logLevel = ADJPLogLevelVerbose
+        case .disabled: purchaseConfig?.logLevel = ADJPLogLevelNone
+        default: break
+        }
         AdjustPurchase.`init`(purchaseConfig)
+        
+        self.parameters = parameters
         
         completion(nil)
     }
-    //
-    //    func validateAndTrackInAppPurchase(
-    //        _ purchase: Purchase,
-    //        success: (([AnyHashable : Any]) -> Void)?,
-    //        failure: ((Error?, Any?) -> Void)?
-    //    ) {
-    //        guard
-    //            let recieptURL = Bundle.main.appStoreReceiptURL,
-    //            let reciept = try? Data(contentsOf: recieptURL)
-    //        else {
-    //            failure?(HSError.service.nserror, nil)
-    //            return
-    //        }
-    //
-    //        AdjustPurchase.verifyPurchase(
-    //            reciept,
-    //            forTransaction: purchase.productId,
-    //            productId: purchase.productId
-    //        ) { [weak self] info in
-    //            guard
-    //                let info = info,
-    //                info.verificationState == ADJPVerificationStatePassed
-    //            else {
-    //                failure?(HSError.service.nserror, nil)
-    //                return
-    //            }
-    //            self?.trackInAppPurchase(purchase)
-    //            #warning("Success")
-    //        }
-    //    }
 }
 
 extension AdjustConnector: AttributionService {
@@ -108,7 +110,29 @@ extension AdjustConnector: AttributionService {
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
+        guard
+            let recieptURL = Bundle.main.appStoreReceiptURL,
+            let reciept = try? Data(contentsOf: recieptURL)
+        else {
+            failure?(HSError.service.nserror, nil)
+            return
+        }
         
+        AdjustPurchase.verifyPurchase(
+            reciept,
+            forTransaction: purchase.productId,
+            productId: purchase.productId
+        ) { [weak self] info in
+            guard
+                let info = info,
+                info.verificationState == ADJPVerificationStatePassed
+            else {
+                failure?(HSError.service.nserror, nil)
+                return
+            }
+            self?.trackInAppPurchase(purchase)
+            success?(["message": info.message])
+        }
     }
 }
 
@@ -120,8 +144,10 @@ extension AdjustConnector: AdjustDelegate {
 }
 
 
-extension AdjustConnector {//: AnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {}
+extension AdjustConnector {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard parameters.tracking else { return }
+    }
     
     //MARK: - Noop
     func trackInAppPurchase(_ purchase: Purchase) {}

@@ -11,6 +11,7 @@ import Foundation
 
 struct Purchase {
     var productId, price, currency, transactionId: String
+    var type: PurchaseType
     var additionalParameters: [String : Any]
 }
 

@@ -10,36 +10,26 @@ import Foundation
 
 
 final class ProductTestSyncOperation: CancellableAsynchronousOperation {
-//    private let productTesting: [ProductTestingService]
-//    private let advertising: [Advertising]
-    private let debug: AppConfiguration.Debug
+    var productTesting: [ProductTestingService] = []
+    var advertising: Advertising!
 
     private lazy var group = DispatchGroup()
-
-    init(_ configuration: AppConfiguration) {
-//        productTesting = configuration.productTesting
-//        advertising = configuration.connectors
-        debug = configuration.debug
-        super.init(timeout: configuration.timeout)
-    }
     
     override func main() {
         super.main()
-        debug.log("Start activating of remote configs")
-//        productTesting.forEach { service in
-//            service.activateConfig { [weak self] config in
-//                guard let self = self else { return }
-//                config.map(self.syncProductTestingData)
-//                self.group.enter()
-//            }
-//        }
+        App.log("Start activation of remote configs")
+        productTesting.forEach { service in
+            group.enter()
+            service.activateConfig { [weak self] config in
+                guard let self = self else { return }
+                config.map(self.advertising.setProductTestData)
+                self.group.leave()
+            }
+        }
+        
         group.notify(queue: .main) { [weak self] in
-            self?.debug.log("[HSApp] Finish activating of remote configs")
+            App.log("[HSApp] Finish activating of remote configs")
             self?.finish()
         }
-    }
-    
-    private func syncProductTestingData(_ data: [AnyHashable: Any]) {
-//        advertising.forEach { ad in ad.setProductTestData(data) }
     }
 }
