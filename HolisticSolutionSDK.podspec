@@ -64,6 +64,7 @@ Pod::Spec.new do |spec|
     ss.source_files = "HolisticSolutionSDK/Adjust"
     ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Adjust", "~> 4.29.2"
+    ss.dependency "AdjustPurchase", "1.0.0"
   end
 
   spec.subspec "AppsFlyer" do |ss|

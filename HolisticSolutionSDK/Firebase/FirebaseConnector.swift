@@ -119,7 +119,7 @@ extension FirebaseConnector: ProductTestingService {
 }
 
 
-extension FirebaseConnector {//: AnalyticsService {
+extension FirebaseConnector: AnalyticsService {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
         guard parameters.tracking else { return }
         Analytics.logEvent(event, parameters: customParameters)
