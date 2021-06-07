@@ -14,7 +14,7 @@ public let kHSAppDefaultTimeout: TimeInterval = 30.0
 
 @objc(HSAppConfiguration) public final
 class AppConfiguration: NSObject {
-    @objc public
+    @objc(HSAppConfigurationDebug) public
     enum Debug: Int {
         case system
         case enabled

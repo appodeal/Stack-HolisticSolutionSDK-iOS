@@ -36,10 +36,18 @@ BOOL const kConsent                                 = YES;
         HSAdjustConnector.class
     ]];
     
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAppKey:kAppodealAppKey
+                                                                           timeout:30
+                                                                             debug:HSAppConfigurationDebugEnabled
+                                                                           adTypes:kAppodealTypes];
+    
+    
     [Appodeal.hs initializeWithApplication:application
                              launchOptions:launchOptions
-                                    appKey:kAppodealAppKey
-                                   adTypes:kAppodealTypes];
+                             configuration:configuration
+                                completion:^(NSError *error) {
+        [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName object:nil];
+    }];
     return YES;
 }
 
