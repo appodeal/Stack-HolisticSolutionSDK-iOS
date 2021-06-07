@@ -59,9 +59,9 @@ class App: NSObject {
                 service.set?(debug: self.configuration.debug)
                 // Save connector
                 self.registry.store($0.init())
-                // Pass track id
-                self.registry.ad.setTrackId(self.configuration.id)
             }
+            // Pass track id
+            self.registry.ad.setTrackId(self.configuration.id)
         }
         // Fetch services parameters
         let fetchParametersOperation = FetchServicesParametersOperation(

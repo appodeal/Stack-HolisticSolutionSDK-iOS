@@ -9,9 +9,11 @@
 import Foundation
 
 
-class InitializeServiceOperation<Connector>: AsynchronousOperation where Connector: Initializable & Service {
+class InitializeServiceOperation<Connector>: AsynchronousOperation, ErrorProvider where Connector: Initializable & Service {
     var connector: Connector!
     let parameters: Connector.Parameters
+    
+    private(set) var error: HSError?
     
     init(parameters: Connector.Parameters) {
         self.parameters = parameters
@@ -27,6 +29,7 @@ class InitializeServiceOperation<Connector>: AsynchronousOperation where Connect
                 defer { self.finish() }
                 
                 if let error = error {
+                    self.error = error
                     App.log("Error while initializing service \(self.connector.name): \(error.nserror)")
                 } else {
                     App.log("Complete service \(self.connector.name) initialization")

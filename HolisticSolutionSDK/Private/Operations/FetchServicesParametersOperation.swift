@@ -9,14 +9,15 @@
 import Foundation
 
 
-final class FetchServicesParametersOperation: AsynchronousOperation {
+final class FetchServicesParametersOperation: AsynchronousOperation, ErrorProvider {
     private let appKey: String
     private let trackId: String
     
     var services: [Service] = []
     
     private(set) var response: [String: AnyHashable]?
-    
+    private(set) var error: HSError?
+
     private var connector: API!
     
     init(appKey: String, trackId: String) {
@@ -45,7 +46,8 @@ final class FetchServicesParametersOperation: AsynchronousOperation {
                 self?.response = response
                 self?.finish()
             },
-            failure: { [weak self] _ in
+            failure: { [weak self] error in
+                self?.error = error
                 self?.finish()
             }
         )
