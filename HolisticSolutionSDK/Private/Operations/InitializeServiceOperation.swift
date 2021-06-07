@@ -25,7 +25,7 @@ class InitializeServiceOperation<Connector>: AsynchronousOperation where Connect
             self.connector.initialize(self.parameters) { [weak self] error in
                 guard let self = self else { return }
                 defer { self.finish() }
-
+                
                 if let error = error {
                     App.log("Error while initializing service \(self.connector.name): \(error.nserror)")
                 } else {

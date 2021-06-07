@@ -10,14 +10,12 @@ import Foundation
 import UIKit
 import Appodeal
 
-@objc public
-enum HSError: Int, Error {
-    case integration = 0
-    case timeout
-    case service
-    case unknown
-    
-    var nserror: NSError { NSError.from(self) }
+
+internal enum HSError: Error {
+    case integration(String)
+    case timeout(String)
+    case service(String)
+    case unknown(String)
 }
 
 
@@ -27,7 +25,6 @@ enum PurchaseType: Int {
     case nonConsumable
     case autoRenewableSubscription
     case nonRenewingSubscription
-    
 }
 
 
@@ -44,8 +41,8 @@ protocol DSL {
     func initialize(
         application: UIApplication,
         launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
-        appKey: String,
-        adTypes: AppodealAdType
+        configuration: AppConfiguration,
+        completion: ((Error?) -> Void)?
     )
     
     func validateAndTrackInAppPurchase(
@@ -70,24 +67,4 @@ protocol DSL {
 extension Appodeal {
     @objc static
     var hs: DSL { App.shared }
-}
-
-
-fileprivate extension NSError {
-    static func from(_ error: HSError) -> NSError {
-        let domain = "com.explorestack.hs"
-        let userInfo: [String: Any]
-        switch error {
-        case .integration: userInfo = [ NSLocalizedDescriptionKey: "Some of input paramerers was invalid" ]
-        case .service: userInfo = [ NSLocalizedDescriptionKey: "Error has been occurred while starting service" ]
-        case .timeout: userInfo = [ NSLocalizedDescriptionKey: "HSApp timeout has been reached" ]
-        case .unknown: userInfo = [  NSLocalizedDescriptionKey: "Unknown error has been occurred" ]
-        }
-        
-        return NSError(
-            domain: domain,
-            code: error.rawValue,
-            userInfo: userInfo
-        )
-    }
 }

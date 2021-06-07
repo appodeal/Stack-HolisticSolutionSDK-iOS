@@ -63,7 +63,7 @@ extension AdjustConnector: RawParametersInitializable {
         completion: @escaping (HSError?) -> ()
     ) {
         guard let parameters = Parameters(parameters) else {
-            completion(.service)
+            completion(.service("Unable to decode Adjust parameters"))
             return
         }
         
@@ -114,7 +114,7 @@ extension AdjustConnector: AttributionService {
             let recieptURL = Bundle.main.appStoreReceiptURL,
             let reciept = try? Data(contentsOf: recieptURL)
         else {
-            failure?(HSError.service.nserror, nil)
+            failure?(HSError.unknown("No app store receipt url was found").nserror, nil)
             return
         }
         
@@ -127,7 +127,7 @@ extension AdjustConnector: AttributionService {
                 let info = info,
                 info.verificationState == ADJPVerificationStatePassed
             else {
-                failure?(HSError.service.nserror, nil)
+                failure?(HSError.service("Purchase was't passed verification"), nil)
                 return
             }
             self?.trackInAppPurchase(purchase)

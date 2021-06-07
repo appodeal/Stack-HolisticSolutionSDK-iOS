@@ -29,124 +29,128 @@ class App: NSObject {
         return queue
     }()
 
-    private func synchronizeConsent() {
-        let parameters = ConsentManagerConnector.Parameters(
-            appKey: configuration.appKey,
-            trackId: configuration.id
-        )
-        
-        let privacy = InitializeServiceOperation<ConsentManagerConnector>(
-            parameters: parameters
-        )
-        
-        let adapter = BlockOperation { [unowned self, unowned privacy] in
-            privacy.connector = self.registry.types(of: ConsentManagerConnector.self).first?.init()
-        }
-                
-        privacy.addDependency(adapter)
-    
-        queue.addOperations([adapter, privacy], waitUntilFinished: false)
-    }
-    
-    private func initializeServices(
-        app: UIApplication,
-        launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    private func _initialize(
+        application: UIApplication,
+        launchOptions: [UIApplication.LaunchOptionsKey : Any]?,
+        configuration: AppConfiguration,
+        completion:((Error?) -> Void)?
     ) {
-        let initialize = BlockOperation { [unowned self, unowned app] in
+        // Store configuration
+        self.configuration = configuration
+        // Synchronize privacy operation
+        let privacyOperation = InitializeServiceOperation<ConsentManagerConnector>(
+            parameters: .init(
+                appKey: configuration.appKey,
+                trackId: configuration.id
+            )
+        )
+        // Adapter for privacy operation
+        let privacyAdapterOperation = BlockOperation { [unowned self, unowned privacyOperation] in
+            privacyOperation.connector = self.registry.types(of: ConsentManagerConnector.self).first?.init()
+        }
+        privacyOperation.addDependency(privacyAdapterOperation)
+        // Create and configure services connectors
+        let setupConnectorsOperation = BlockOperation { [unowned self, unowned application] in
             self.registry.types.forEach {
+                // Create service connector
                 let service = $0.init()
-                service.set?(app, launchOptions: launchOptions)
+                // Setup connector
+                service.set?(application, launchOptions: launchOptions)
+                service.set?(debug: self.configuration.debug)
+                // Save connector
                 self.registry.store($0.init())
+                // Pass track id
+                self.registry.ad.setTrackId(self.configuration.id)
             }
         }
-        
-        let trackId = BlockOperation { [unowned self] in
-            self.registry.ad.setTrackId(self.configuration.id)
-        }
-        
-        let debug = BlockOperation { [unowned self] in
-            (self.registry.all() as [Service]).forEach { $0.set?(debug: self.configuration.debug) }
-        }
-        
-        let request = FetchServicesParametersOperation(
+        // Fetch services parameters
+        let fetchParametersOperation = FetchServicesParametersOperation(
             appKey: configuration.appKey,
             trackId: configuration.id
         )
-        
-        let requestAdapter = BlockOperation { [unowned self, unowned request] in
-            request.services = self.registry.all()
+        // Adapter for fetch
+        let fetchParametersAdapterOperation = BlockOperation { [unowned self, unowned fetchParametersOperation] in
+            fetchParametersOperation.services = self.registry.all()
         }
-
-        let connectors = InitializeServicesOperation()
-        let connectorsAdapter = BlockOperation { [unowned connectors, unowned request] in
-            connectors.parameters = request.response
-            connectors.connector = { [unowned self] name in
+        // Initialize services
+        let initializeServicesOperation = InitializeServicesOperation()
+        let initializeServicesAdapterOperation = BlockOperation { [unowned initializeServicesOperation, unowned fetchParametersOperation] in
+            initializeServicesOperation.parameters = fetchParametersOperation.response
+            initializeServicesOperation.connector = { [unowned self] name in
                 return self.registry.initalizable(name)
             }
         }
-        
-        let removeUnused = BlockOperation { [unowned request, unowned self] in
-            let keys: [String] = request.response.flatMap { Array($0.keys) } ?? []
+        // Clear registry
+        let removeUnusedConnectorsOperation = BlockOperation { [unowned fetchParametersOperation, unowned self] in
+            let keys: [String] = fetchParametersOperation.response.flatMap { Array($0.keys) } ?? []
             self.registry.filter { $0 is AppodealConnector || keys.contains($0.name) }
         }
         
-        removeUnused.addDependency(request)
-        requestAdapter.addDependency(initialize)
-        trackId.addDependency(initialize)
-        debug.addDependency(initialize)
-        request.addDependency(requestAdapter)
-        connectors.addDependency(connectorsAdapter)
-        connectorsAdapter.addDependency(request)
+        removeUnusedConnectorsOperation.addDependency(fetchParametersOperation)
+        fetchParametersOperation.addDependency(setupConnectorsOperation)
+        fetchParametersOperation.addDependency(fetchParametersAdapterOperation)
+        initializeServicesOperation.addDependency(initializeServicesAdapterOperation)
+        initializeServicesAdapterOperation.addDependency(fetchParametersOperation)
         
-        queue.addOperations(
-            [
-                initialize,
-                trackId,
-                debug,
-                requestAdapter,
-                request,
-                removeUnused,
-                connectorsAdapter,
-                connectors
-            ],
-            waitUntilFinished: false
-        )
-    }
-    
-    private func collectAttributionData() {
-        let attribution = AttributionOperation(timeout: configuration.timeout)
-        let adapter = BlockOperation { [unowned attribution, unowned self] in
-            attribution.advertising = self.registry.ad
-            attribution.connectors = self.registry.all()
+        // Collect attribution data
+        let attributionOperation = AttributionOperation(timeout: configuration.timeout)
+        let attributionAdapterOperation = BlockOperation { [unowned attributionOperation, unowned self] in
+            attributionOperation.advertising = self.registry.ad
+            attributionOperation.connectors = self.registry.all()
         }
-        attribution.addDependency(adapter)
+        attributionOperation.addDependency(attributionAdapterOperation)
         
-        queue.addOperations([adapter, attribution], waitUntilFinished: false)
-    }
-    
-    private func activateRemoteConfiguration() {
-        let testing = ProductTestSyncOperation(timeout: configuration.timeout)
-        let adapter = BlockOperation { [unowned testing, unowned self] in
-            testing.advertising = self.registry.ad
-            testing.productTesting = self.registry.all()
+        // Sync remote config
+        let syncRemoteConfigOperation = ProductTestSyncOperation(timeout: configuration.timeout)
+        let syncRemoteConfigAdapterOperation = BlockOperation { [unowned syncRemoteConfigOperation, unowned self] in
+            syncRemoteConfigOperation.advertising = self.registry.ad
+            syncRemoteConfigOperation.productTesting = self.registry.all()
         }
+        syncRemoteConfigOperation.addDependency(syncRemoteConfigAdapterOperation)
         
-        testing.addDependency(adapter)
-        queue.addOperations([adapter, testing], waitUntilFinished: false)
-    }
-    
-    private func initializeAdvertising() {
-        let advertising = InitializeServiceOperation<AppodealConnector>(
+        let advertisingOperation = InitializeServiceOperation<AppodealConnector>(
             parameters: self.configuration
         )
         
-        let adapter = BlockOperation { [unowned self, unowned advertising] in
-            advertising.connector = self.registry.types(of: AppodealConnector.self).first?.init()
+        let advertisingAdapterOperation = BlockOperation { [unowned self, unowned advertisingOperation] in
+            advertisingOperation.connector = self.registry.types(of: AppodealConnector.self).first?.init()
         }
                 
-        advertising.addDependency(adapter)
-    
-        queue.addOperations([adapter, advertising], waitUntilFinished: false)
+        advertisingOperation.addDependency(advertisingAdapterOperation)
+        
+        let completionOperation = CompletionOperation { error in
+            DispatchQueue.main.async {
+                completion?(error)
+            }
+        }
+
+        completionOperation.addDependency(privacyOperation)
+        completionOperation.addDependency(fetchParametersOperation)
+        completionOperation.addDependency(initializeServicesOperation)
+        completionOperation.addDependency(attributionOperation)
+        completionOperation.addDependency(syncRemoteConfigOperation)
+        completionOperation.addDependency(advertisingOperation)
+
+        queue.addOperations(
+            [
+                privacyAdapterOperation,
+                privacyOperation,
+                setupConnectorsOperation,
+                fetchParametersAdapterOperation,
+                fetchParametersOperation,
+                removeUnusedConnectorsOperation,
+                initializeServicesAdapterOperation,
+                initializeServicesOperation,
+                attributionAdapterOperation,
+                attributionOperation,
+                syncRemoteConfigAdapterOperation,
+                syncRemoteConfigOperation,
+                advertisingAdapterOperation,
+                advertisingOperation,
+                completionOperation
+            ],
+            waitUntilFinished: false
+        )
     }
 }
 
@@ -170,26 +174,26 @@ extension App: DSL {
         launchOptions: [UIApplication.LaunchOptionsKey : Any]?,
         configuration: AppConfiguration
     ) {
-        self.configuration = configuration
-        synchronizeConsent()
-        initializeServices(app: application, launchOptions: launchOptions)
-        collectAttributionData()
-        activateRemoteConfiguration()
-        initializeAdvertising()
+        initialize(
+            application: application,
+            launchOptions: launchOptions,
+            configuration: configuration,
+            completion: nil
+        )
     }
     
     @objc public
     func initialize(
         application: UIApplication,
         launchOptions: [UIApplication.LaunchOptionsKey : Any]?,
-        appKey: String,
-        adTypes: AppodealAdType
+        configuration: AppConfiguration,
+        completion:((Error?) -> Void)?
     ) {
-        let configuration = AppConfiguration(appKey: appKey, adTypes: adTypes)
-        initialize(
+        _initialize(
             application: application,
             launchOptions: launchOptions,
-            configuration: configuration
+            configuration: configuration,
+            completion: completion
         )
     }
     

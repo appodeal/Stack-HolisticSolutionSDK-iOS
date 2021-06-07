@@ -32,9 +32,9 @@ class ConsentManagerConnector: NSObject, Service {
             withAppKey: parameters.appKey,
             customParameters: ["track_id" : parameters.trackId]
         ) { [weak self] error in
-            if let _ = error  {
-                completion(HSError.service)
-            } else if !STKConsentManager.shared().shouldShowConsentAlert {
+            if let error = error  {
+                completion(HSError.service(error.localizedDescription))
+            } else if STKConsentManager.shared().shouldShowConsentDialog == .false {
                 completion(nil)
             } else {
                 self?.completion = completion
@@ -51,7 +51,7 @@ class ConsentManagerConnector: NSObject, Service {
                     delegate: self
                 )
             } else {
-                self?.completion?(.service)
+                self?.completion?(.service("Unable to present consent dialog"))
             }
         }
     }
@@ -65,7 +65,7 @@ extension ConsentManagerConnector: STKConsentManagerDisplayDelegate {
     public func consentManagerWillShowDialog(_ consentManager: STKConsentManager) {}
     
     public func consentManager(_ consentManager: STKConsentManager, didFailToPresent error: Error) {
-        completion?(.service)
+        completion?(.service(error.localizedDescription))
     }
     
     public func consentManagerDidDismissDialog(_ consentManager: STKConsentManager) {

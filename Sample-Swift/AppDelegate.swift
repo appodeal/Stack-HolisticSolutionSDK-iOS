@@ -25,9 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
-        Appodeal.swizzle()
-        
         let connectors: [Service.Type] = [
             AppsFlyerConnector.self,
             AdjustConnector.self,
@@ -35,18 +32,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FacebookConnector.self
         ]
         
+        let configuration: AppConfiguration = .init(
+            appKey: AppodealConstants.appKey,
+            adTypes: AppodealConstants.adType
+        )
+        
         Appodeal.setTestingEnabled(true)
         Appodeal.hs.register(connectors: connectors)
         Appodeal.hs.initialize(
             application: application,
             launchOptions: launchOptions,
-            configuration: .init(
-                appKey: AppodealConstants.appKey,
-                timeout: 10,
-                debug: .enabled,
-                adTypes: AppodealConstants.adType
-            )
-        )
+            configuration: configuration
+        ) { _ in
+            NotificationCenter.default.post(name: AppDelegate.complete, object: nil)
+        }
         
         return true
     }
@@ -67,31 +66,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {}
-}
-
-
-private extension Appodeal {
-    static func swizzle() {
-        guard
-            let method1 = class_getClassMethod(Appodeal.self, #selector(initialize(withApiKey:types:consentReport:))),
-            let swizzled1 = class_getClassMethod(Appodeal.self, #selector(_initialize(withApiKey:types:consentReport:))),
-            let method2 = class_getClassMethod(Appodeal.self, #selector(initialize(withApiKey:types:))),
-            let swizzled2 = class_getClassMethod(Appodeal.self, #selector(_initialize(withApiKey:types:)))
-        else { return }
-        
-        method_exchangeImplementations(method1, swizzled1)
-        method_exchangeImplementations(method2, swizzled2)
-    }
-    
-    @objc class
-    func _initialize(withApiKey: String, types: AppodealAdType, consentReport: STKConsent) {
-        _initialize(withApiKey: withApiKey, types: types, consentReport: consentReport)
-        NotificationCenter.default.post(name: AppDelegate.complete, object: nil)
-    }
-    
-    @objc class
-    func _initialize(withApiKey: String, types: AppodealAdType) {
-        _initialize(withApiKey: withApiKey, types: types)
-        NotificationCenter.default.post(name: AppDelegate.complete, object: nil)
-    }
 }

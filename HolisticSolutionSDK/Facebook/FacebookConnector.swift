@@ -49,7 +49,7 @@ extension FacebookConnector: RawParametersInitializable {
             let parameters = Parameters(parameters),
             validatePlist()
         else {
-            completion(.service)
+            completion(.service("Application's plist doesn't contain FacebookAppID"))
             return
         }
         

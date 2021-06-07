@@ -32,6 +32,8 @@
 		42CAC483265D1D2F000A0A71 /* APIConnnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CAC482265D1D2F000A0A71 /* APIConnnector.swift */; };
 		42EB08E224ACBD0800B07AAE /* InternalServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB08E124ACBD0800B07AAE /* InternalServices.swift */; };
 		42EB08E524ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB08E424ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift */; };
+		42FCD7BD266DFECC00F8B83F /* ErrorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FCD7BC266DFECC00F8B83F /* ErrorProvider.swift */; };
+		42FCD7BF266E072A00F8B83F /* CompletionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FCD7BE266E072A00F8B83F /* CompletionOperation.swift */; };
 		B8FFDBD77A00F474B1E3DDE7 /* Pods_HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		42CAC482265D1D2F000A0A71 /* APIConnnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConnnector.swift; sourceTree = "<group>"; };
 		42EB08E124ACBD0800B07AAE /* InternalServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalServices.swift; sourceTree = "<group>"; };
 		42EB08E424ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateAndTrackPurchaseOperation.swift; sourceTree = "<group>"; };
+		42FCD7BC266DFECC00F8B83F /* ErrorProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorProvider.swift; sourceTree = "<group>"; };
+		42FCD7BE266E072A00F8B83F /* CompletionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionOperation.swift; sourceTree = "<group>"; };
 		5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AE86170FC82EF84100DBEE5 /* Pods-HolisticSolutionSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.release.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.release.xcconfig"; sourceTree = "<group>"; };
 		E009234B9C7CD0210F19C025 /* Pods-HolisticSolutionSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.debug.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				4273EBA724A620AA00A868FD /* ProductTestSyncOperation.swift */,
 				4253461824ACDC6F00128BB4 /* TrackEventOperation.swift */,
 				42EB08E424ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift */,
+				42FCD7BE266E072A00F8B83F /* CompletionOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -215,6 +220,7 @@
 			children = (
 				4294A20D24A4DADE00F5FFD5 /* AsynchronousOperation.swift */,
 				42411A8824A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift */,
+				42FCD7BC266DFECC00F8B83F /* ErrorProvider.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -346,6 +352,7 @@
 				4248EE1B24A5EF99003E9CA6 /* FirebaseConnector.swift in Sources */,
 				4253461924ACDC6F00128BB4 /* TrackEventOperation.swift in Sources */,
 				42411A8924A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift in Sources */,
+				42FCD7BD266DFECC00F8B83F /* ErrorProvider.swift in Sources */,
 				4294A1F924A4BE7E00F5FFD5 /* App.swift in Sources */,
 				4253461C24ACDD5500128BB4 /* FacebookConnector.swift in Sources */,
 				4294A20924A4D61100F5FFD5 /* Advertising.swift in Sources */,
@@ -361,6 +368,7 @@
 				4229F7D4264D15C60068E8D7 /* AdjustConnector.swift in Sources */,
 				421B713926553ADC00075968 /* InitializeServiceOperation.swift in Sources */,
 				4294A20E24A4DADE00F5FFD5 /* AsynchronousOperation.swift in Sources */,
+				42FCD7BF266E072A00F8B83F /* CompletionOperation.swift in Sources */,
 				421B7137265537F800075968 /* UIApplicationExtensions.swift in Sources */,
 				4273EBA824A620AA00A868FD /* ProductTestSyncOperation.swift in Sources */,
 				4294A20B24A4D7C100F5FFD5 /* AppConfiguration.swift in Sources */,

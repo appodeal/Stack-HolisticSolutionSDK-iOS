@@ -8,6 +8,7 @@
 
 import Foundation
 import StackFoundation
+import AdSupport
 
 
 final class API {
@@ -47,7 +48,7 @@ final class API {
         var httpAllowed = STKDevice.isHTTPSupport
         var manufacturer = "apple"
         var osv = STKDevice.osv
-        var os = STKDevice.os
+        var os = "ios"
         var locale = STKDevice.languageCode
         var localTime = UInt(Date().timeIntervalSince1970)
         var trackingAuthorizationStatus = STKAd.trackingAuthorizationStatus
@@ -67,7 +68,7 @@ final class API {
         }
     }
     
-    private let url = URL(string: "http://herokuapp.appodeal.com/hs_init_adjust")!//  URL(string: "https://a.appbaqend.com/hs/init")!
+    private let url = URL(string: "https://a.appbaqend.com/hs/init")!
     private let request: Request
     
     init(
@@ -105,7 +106,7 @@ final class API {
                 } else if let response = self?.unarchive() {
                     success(response)
                 } else {
-                    failure(.service)
+                    failure(.service("Unable to receive initialization parameters"))
                 }
             }
             .resume()
@@ -116,7 +117,7 @@ final class API {
     private func cachePath() throws -> URL {
         guard
             let caches = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first
-        else { throw HSError.unknown }
+        else { throw HSError.unknown("Cache directory wasn't found") }
         
         var path = URL(fileURLWithPath: caches)
         path.appendPathComponent("HolisticSolution")

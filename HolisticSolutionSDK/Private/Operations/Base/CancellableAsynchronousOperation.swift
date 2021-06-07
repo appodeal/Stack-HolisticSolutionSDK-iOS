@@ -41,7 +41,7 @@ internal class CancellableAsynchronousOperation: AsynchronousOperation {
     
     @objc private func didFire(timer: Timer) {
         guard isExecuting else { return }
-        error = .timeout
+        error = .timeout("Execution exceeds limit: \(timeout)s")
         finish()
     }
     

@@ -69,7 +69,7 @@ extension AppsFlyerConnector: RawParametersInitializable {
         completion: @escaping (HSError?) -> ()
     ) {
         guard let parameters = Parameters(parameters) else {
-            completion(.service)
+            completion(.service("Unable to decode AppsFlyer parameters"))
             return
         }
         
