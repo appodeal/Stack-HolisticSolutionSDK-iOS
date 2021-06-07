@@ -24,7 +24,7 @@ final class CompletionOperation: Operation {
             .compactMap { $0.error }
             .first
             .map { $0.nserror }
-        App.log("Holistic Solution did complete initialization")
+        App.log("Holistic Solution completed initialization")
         block?(error)
     }
 }
