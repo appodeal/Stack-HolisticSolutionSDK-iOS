@@ -131,7 +131,7 @@ extension AdjustConnector: AttributionService {
                 return
             }
             self?.trackInAppPurchase(purchase)
-            success?(["message": info.message])
+            success?(["message": info.message].compactMapValues { $0 })
         }
     }
 }

@@ -26,7 +26,7 @@ final class TrackEventOperation: AsynchronousOperation {
     
     override func main() {
         super.main()
-        App.log("Track event")
+        App.log("Track event \(event), parameters: \(params?.description ?? "")")
         analytics.forEach { $0.trackEvent(event, customParameters: params) }
         finish()
     }

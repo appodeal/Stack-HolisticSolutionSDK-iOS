@@ -37,6 +37,15 @@ final class ValidateAndTrackPurchaseOperation: AsynchronousOperation {
     override func main() {
         super.main()
         App.log("Validate and track in-app purchase")
+        
+        guard attribution.count > 0 else {
+            DispatchQueue.main.async { [weak self] in
+                self?.failure?(HSError.integration("No attriution services connected").nserror, nil)
+                self?.finish()
+            }
+            return
+        }
+        
         attribution.forEach { service in
             group.enter()
             service.validateAndTrackInAppPurchase(
