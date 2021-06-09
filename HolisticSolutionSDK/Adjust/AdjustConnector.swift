@@ -47,7 +47,8 @@ class AdjustConnector: NSObject, Service {
     public var sdkVersion: String { Adjust.sdkVersion() ?? "" }
     public var version: String { sdkVersion + ".1" }
     public var onReceiveConversionData: (([AnyHashable : Any]?) -> Void)?
-
+   
+    private var onCompleteInitialization: ((HSError?) -> ())?
     private var parameters = Parameters()
     private var debug: AppConfiguration.Debug = .system
     
@@ -67,10 +68,14 @@ extension AdjustConnector: RawParametersInitializable {
             return
         }
         
+        self.parameters = parameters
+        self.onCompleteInitialization = completion
+        
         let config = ADJConfig(
             appToken: parameters.appToken,
             environment: parameters.environment
         )
+        
         config?.delegate = self
         switch debug {
         case .enabled: config?.logLevel = ADJLogLevelVerbose
@@ -90,11 +95,12 @@ extension AdjustConnector: RawParametersInitializable {
         case .disabled: purchaseConfig?.logLevel = ADJPLogLevelNone
         default: break
         }
+        
         AdjustPurchase.`init`(purchaseConfig)
         
-        self.parameters = parameters
-        
-        completion(nil)
+        if let _ = Adjust.adid() {
+            completion(nil)
+        }
     }
 }
 
@@ -138,7 +144,19 @@ extension AdjustConnector: AttributionService {
 
 extension AdjustConnector: AdjustDelegate {
     public
+    func adjustSessionTrackingSucceeded(_ sessionSuccessResponseData: ADJSessionSuccess?) {
+        onCompleteInitialization?(nil)
+    }
+    
+    public
+    func adjustEventTrackingFailed(_ eventFailureResponseData: ADJEventFailure?) {
+        let message = eventFailureResponseData?.message ?? "Unknown adjust initialization"
+        onCompleteInitialization?(.service(message))
+    }
+    
+    public
     func adjustAttributionChanged(_ attribution: ADJAttribution?) {
+        onCompleteInitialization?(nil)
         attribution.flatMap { $0.dictionary() }.map { onReceiveConversionData?($0) }
     }
 }
