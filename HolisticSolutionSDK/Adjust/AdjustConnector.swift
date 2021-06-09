@@ -99,6 +99,7 @@ extension AdjustConnector: RawParametersInitializable {
         AdjustPurchase.`init`(purchaseConfig)
         
         if let _ = Adjust.adid() {
+            self.onCompleteInitialization = nil
             completion(nil)
         }
     }
@@ -146,18 +147,26 @@ extension AdjustConnector: AdjustDelegate {
     public
     func adjustSessionTrackingSucceeded(_ sessionSuccessResponseData: ADJSessionSuccess?) {
         onCompleteInitialization?(nil)
+        onCompleteInitialization = nil
     }
     
     public
     func adjustEventTrackingFailed(_ eventFailureResponseData: ADJEventFailure?) {
         let message = eventFailureResponseData?.message ?? "Unknown adjust initialization"
         onCompleteInitialization?(.service(message))
+        onCompleteInitialization = nil
     }
     
     public
     func adjustAttributionChanged(_ attribution: ADJAttribution?) {
         onCompleteInitialization?(nil)
-        attribution.flatMap { $0.dictionary() }.map { onReceiveConversionData?($0) }
+        onCompleteInitialization = nil
+        attribution
+            .flatMap { $0.dictionary() }
+            .map {
+                onReceiveConversionData?($0)
+                onReceiveConversionData = nil
+            }
     }
 }
 
