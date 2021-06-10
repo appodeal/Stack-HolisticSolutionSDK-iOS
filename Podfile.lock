@@ -10,47 +10,29 @@ PODS:
     - StackCrashReporter (= 1.0.0-Beta)
     - StackIAB (~> 1.4.1)
     - StackModules (~> 1.1.0)
-  - AppsFlyerFramework (6.3.0):
-    - AppsFlyerFramework/Main (= 6.3.0)
-  - AppsFlyerFramework/Main (6.3.0)
+  - AppsFlyerFramework (6.3.1):
+    - AppsFlyerFramework/Main (= 6.3.1)
+  - AppsFlyerFramework/Main (6.3.1)
   - FBSDKCoreKit (9.3.0):
     - FBSDKCoreKit/Basics (= 9.3.0)
     - FBSDKCoreKit/Core (= 9.3.0)
   - FBSDKCoreKit/Basics (9.3.0)
   - FBSDKCoreKit/Core (9.3.0):
     - FBSDKCoreKit/Basics
-  - Firebase/Analytics (8.0.0):
+  - Firebase/Analytics (8.1.0):
     - Firebase/Core
-  - Firebase/Core (8.0.0):
+  - Firebase/Core (8.1.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (~> 8.0.0)
-  - Firebase/CoreOnly (8.0.0):
-    - FirebaseCore (= 8.0.0)
-  - Firebase/RemoteConfig (8.0.0):
+    - FirebaseAnalytics (~> 8.1.0)
+  - Firebase/CoreOnly (8.1.0):
+    - FirebaseCore (= 8.1.0)
+  - Firebase/RemoteConfig (8.1.0):
     - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 8.0.0)
-  - FirebaseABTesting (8.0.0):
+    - FirebaseRemoteConfig (~> 8.1.0)
+  - FirebaseABTesting (8.1.0):
     - FirebaseCore (~> 8.0)
-  - FirebaseAnalytics (8.0.0):
-    - FirebaseAnalytics/AdIdSupport (= 8.0.0)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
-    - GoogleUtilities/MethodSwizzler (~> 7.4)
-    - GoogleUtilities/Network (~> 7.4)
-    - "GoogleUtilities/NSData+zlib (~> 7.4)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/AdIdSupport (8.0.0):
-    - FirebaseAnalytics/Base (= 8.0.0)
-    - FirebaseCore (~> 8.0)
-    - FirebaseInstallations (~> 8.0)
-    - GoogleAppMeasurement (= 8.0.0)
-    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
-    - GoogleUtilities/MethodSwizzler (~> 7.4)
-    - GoogleUtilities/Network (~> 7.4)
-    - "GoogleUtilities/NSData+zlib (~> 7.4)"
-    - nanopb (~> 2.30908.0)
-  - FirebaseAnalytics/Base (8.0.0):
+  - FirebaseAnalytics (8.1.0):
+    - FirebaseAnalytics/AdIdSupport (= 8.1.0)
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
@@ -58,40 +40,58 @@ PODS:
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - FirebaseCore (8.0.0):
+  - FirebaseAnalytics/AdIdSupport (8.1.0):
+    - FirebaseAnalytics/Base (= 8.1.0)
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleAppMeasurement (= 8.1.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/MethodSwizzler (~> 7.4)
+    - GoogleUtilities/Network (~> 7.4)
+    - "GoogleUtilities/NSData+zlib (~> 7.4)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseAnalytics/Base (8.1.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
+    - GoogleUtilities/MethodSwizzler (~> 7.4)
+    - GoogleUtilities/Network (~> 7.4)
+    - "GoogleUtilities/NSData+zlib (~> 7.4)"
+    - nanopb (~> 2.30908.0)
+  - FirebaseCore (8.1.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.0.0):
+  - FirebaseCoreDiagnostics (8.1.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
-  - FirebaseInstallations (8.0.0):
+  - FirebaseInstallations (8.1.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/UserDefaults (~> 7.4)
     - PromisesObjC (~> 1.2)
-  - FirebaseRemoteConfig (8.0.0):
+  - FirebaseRemoteConfig (8.1.0):
     - FirebaseABTesting (~> 8.0)
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
-  - GoogleAppMeasurement (8.0.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.0.0)
+  - GoogleAppMeasurement (8.1.0):
+    - GoogleAppMeasurement/AdIdSupport (= 8.1.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.0.0):
+  - GoogleAppMeasurement/AdIdSupport (8.1.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/MethodSwizzler (~> 7.4)
     - GoogleUtilities/Network (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
     - nanopb (~> 2.30908.0)
-  - GoogleDataTransport (9.0.0):
+  - GoogleDataTransport (9.0.1):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (~> 1.2)
@@ -123,52 +123,52 @@ PODS:
   - Protobuf (3.17.0)
   - StackConsentManager (1.1.0)
   - StackCrashReporter (1.0.0-Beta)
-  - StackIAB (1.4.1):
-    - StackIAB/StackIABAssets (= 1.4.1)
-    - StackIAB/StackMRAIDKit (= 1.4.1)
-    - StackIAB/StackNASTKit (= 1.4.1)
-    - StackIAB/StackOpenMeasure (= 1.4.1)
-    - StackIAB/StackRichMedia (= 1.4.1)
-    - StackIAB/StackVASTAssets (= 1.4.1)
-    - StackIAB/StackVASTKit (= 1.4.1)
-    - StackIAB/StackVideoPlayer (= 1.4.1)
-    - StackIAB/StackXML (= 1.4.1)
+  - StackIAB (1.4.2):
+    - StackIAB/StackIABAssets (= 1.4.2)
+    - StackIAB/StackMRAIDKit (= 1.4.2)
+    - StackIAB/StackNASTKit (= 1.4.2)
+    - StackIAB/StackOpenMeasure (= 1.4.2)
+    - StackIAB/StackRichMedia (= 1.4.2)
+    - StackIAB/StackVASTAssets (= 1.4.2)
+    - StackIAB/StackVASTKit (= 1.4.2)
+    - StackIAB/StackVideoPlayer (= 1.4.2)
+    - StackIAB/StackXML (= 1.4.2)
     - StackModules (~> 1.1.0)
-  - StackIAB/StackIABAssets (1.4.1):
+  - StackIAB/StackIABAssets (1.4.2):
     - StackModules (~> 1.1.0)
-  - StackIAB/StackMRAIDKit (1.4.1):
+  - StackIAB/StackMRAIDKit (1.4.2):
     - StackIAB/StackIABAssets
     - StackIAB/StackOpenMeasure
     - StackModules (~> 1.1.0)
-  - StackIAB/StackNASTKit (1.4.1):
+  - StackIAB/StackNASTKit (1.4.2):
     - StackIAB/StackVASTKit
     - StackModules (~> 1.1.0)
-  - StackIAB/StackOpenMeasure (1.4.1):
+  - StackIAB/StackOpenMeasure (1.4.2):
     - StackModules (~> 1.1.0)
-  - StackIAB/StackRichMedia (1.4.1):
+  - StackIAB/StackRichMedia (1.4.2):
     - StackIAB/StackIABAssets
     - StackIAB/StackVASTAssets
     - StackIAB/StackVideoPlayer
     - StackModules (~> 1.1.0)
-  - StackIAB/StackVASTAssets (1.4.1):
+  - StackIAB/StackVASTAssets (1.4.2):
     - StackIAB/StackIABAssets
     - StackIAB/StackXML
     - StackModules (~> 1.1.0)
-  - StackIAB/StackVASTKit (1.4.1):
+  - StackIAB/StackVASTKit (1.4.2):
     - StackIAB/StackMRAIDKit
     - StackIAB/StackVASTAssets
     - StackIAB/StackVideoPlayer
     - StackModules (~> 1.1.0)
-  - StackIAB/StackVideoPlayer (1.4.1):
+  - StackIAB/StackVideoPlayer (1.4.2):
     - StackModules (~> 1.1.0)
-  - StackIAB/StackXML (1.4.1):
+  - StackIAB/StackXML (1.4.2):
     - StackModules (~> 1.1.0)
-  - StackModules (1.1.1):
-    - StackModules/StackProductPresentation (= 1.1.1)
-  - StackModules/StackFoundation (1.1.1)
-  - StackModules/StackProductPresentation (1.1.1):
+  - StackModules (1.1.2):
+    - StackModules/StackProductPresentation (= 1.1.2)
+  - StackModules/StackFoundation (1.1.2)
+  - StackModules/StackProductPresentation (1.1.2):
     - StackModules/StackUIKit
-  - StackModules/StackUIKit (1.1.1):
+  - StackModules/StackUIKit (1.1.2):
     - StackModules/StackFoundation
 
 DEPENDENCIES:
@@ -220,25 +220,25 @@ SPEC CHECKSUMS:
   Adjust: 0b649decc070365365bec4e4b8d8bf6e49fe1746
   AdjustPurchase: ec15f1fd2773bd2907b5ce949cd54a09470f0b0f
   Appodeal: 1bb4a1d29eff4c30deab00ec04103ee0bf4279c1
-  AppsFlyerFramework: e5b13250a1b68887213efcd854238791d17cf50b
+  AppsFlyerFramework: ea0232bd216ee54622da396479d95ad13d1dd2c3
   FBSDKCoreKit: 0d1ae58388a458b8222f72025804cdc84eb5d0c3
-  Firebase: 73c3e3b216ec1ecbc54d2ffdd4670c65c749edb1
-  FirebaseABTesting: daebc95ec8829607d07dfe5e92dc3285aca29bc4
-  FirebaseAnalytics: dcb92c7c9ef4fa7ffac276e8f87bd4fc8c97f1b8
-  FirebaseCore: 3f09591d51292843e2a46f18358d60bf4e996255
-  FirebaseCoreDiagnostics: a31d987ba0fe16d59886a5dbadc2f1de871f88c8
-  FirebaseInstallations: c4aab1005d6547b00a7529777fe52f5d4d45165b
-  FirebaseRemoteConfig: 055f6b5ba1751547596ded5032c4d5c6054ca501
-  GoogleAppMeasurement: c6bbc9753d046b5456dd4f940057fbad2c28419e
-  GoogleDataTransport: 11e3a5f2c190327df1a4a5d7e7ae3d4d5b9c9e4c
+  Firebase: b5956acddaaa53a6c292bec00649fadd18367344
+  FirebaseABTesting: 5b22abfa9a55d5b9cd3d1e500a3ca29f6b1264cb
+  FirebaseAnalytics: e812eaae316ba8914b1ef06bef18f11efc1f56c6
+  FirebaseCore: 389c4ce9a7cce4a7e25eb22326b4bee0050557b2
+  FirebaseCoreDiagnostics: 3e249cee3de5c5f9cfd6cc2a19997231286fec11
+  FirebaseInstallations: 7f31798a8198c354eadcb87176d2090b62edc187
+  FirebaseRemoteConfig: eef8513f6d368ba5c6ed6d1cb267b4d949cf65bf
+  GoogleAppMeasurement: 9ff7b9e23cced93a5a41736c09bdeb5b5b7fb111
+  GoogleDataTransport: 04c3e9a480bbcaa2ec3f5d27f1cdeb6a92f20c8d
   GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
   StackConsentManager: 943dff106851f9c8fd56f4516d6eb60b09907cdc
   StackCrashReporter: 855bc6d59c5ab0a8103b1428e1d5d25abe61ed30
-  StackIAB: 8e250c5d1cf8e7eb65266c5ef91f2bf68bb76f16
-  StackModules: c16217292719286e2353c6a3a7f22af77d8f6ba4
+  StackIAB: 75e842c68f6c68402de00bb4317fb9b8d76ab8bd
+  StackModules: bef01c7612030be6447787802983d02bdf27daff
 
 PODFILE CHECKSUM: 18c1736c4f0c8bedee374d52dbb6c907a581a243
 

@@ -12,10 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
-@import Appodeal;
-
-
-NSString *const kAdDidInitializeNotificationName    = @"AdDidInitialize";
+NSString *const completeNotification    = @"HSAppCompleteNotification";
 NSString *const kAppodealAppKey                     = @"dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f";
 AppodealAdType const kAppodealTypes                 = AppodealAdTypeBanner;
 BOOL const kConsent                                 = YES;
@@ -41,12 +38,12 @@ BOOL const kConsent                                 = YES;
                                                                              debug:HSAppConfigurationDebugEnabled
                                                                            adTypes:kAppodealTypes];
     
-    
+    [Appodeal setTestingEnabled:YES];
     [Appodeal.hs initializeWithApplication:application
                              launchOptions:launchOptions
                              configuration:configuration
                                 completion:^(NSError *error) {
-        [NSNotificationCenter.defaultCenter postNotificationName:kAdDidInitializeNotificationName object:nil];
+        [NSNotificationCenter.defaultCenter postNotificationName:completeNotification object:nil];
     }];
     return YES;
 }

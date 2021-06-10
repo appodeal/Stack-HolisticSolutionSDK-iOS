@@ -19,7 +19,9 @@
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
     if ([scene isKindOfClass:UIWindowScene.class]) {
         self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-        self.window.rootViewController = [ViewController new];
+        UIStoryboard *main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ViewController *root = [main instantiateViewControllerWithIdentifier:@"main"];
+        self.window.rootViewController = root;
         self.window.windowScene = (UIWindowScene *)scene;
         [self.window makeKeyAndVisible];
     }
