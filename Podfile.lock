@@ -13,12 +13,13 @@ PODS:
   - AppsFlyerFramework (6.3.1):
     - AppsFlyerFramework/Main (= 6.3.1)
   - AppsFlyerFramework/Main (6.3.1)
-  - FBSDKCoreKit (9.3.0):
-    - FBSDKCoreKit/Basics (= 9.3.0)
-    - FBSDKCoreKit/Core (= 9.3.0)
-  - FBSDKCoreKit/Basics (9.3.0)
-  - FBSDKCoreKit/Core (9.3.0):
-    - FBSDKCoreKit/Basics
+  - FBSDKCoreKit (11.0.0):
+    - FBSDKCoreKit/Core (= 11.0.0)
+  - FBSDKCoreKit/Core (11.0.0):
+    - FBSDKCoreKit_Basics (~> 11.0.0)
+  - FBSDKCoreKit_Basics (11.0.0):
+    - FBSDKCoreKit_Basics/Basics (= 11.0.0)
+  - FBSDKCoreKit_Basics/Basics (11.0.0)
   - Firebase/Analytics (8.1.0):
     - Firebase/Core
   - Firebase/Core (8.1.0):
@@ -188,6 +189,7 @@ SPEC REPOS:
     - Appodeal
     - AppsFlyerFramework
     - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -221,7 +223,8 @@ SPEC CHECKSUMS:
   AdjustPurchase: ec15f1fd2773bd2907b5ce949cd54a09470f0b0f
   Appodeal: 1bb4a1d29eff4c30deab00ec04103ee0bf4279c1
   AppsFlyerFramework: ea0232bd216ee54622da396479d95ad13d1dd2c3
-  FBSDKCoreKit: 0d1ae58388a458b8222f72025804cdc84eb5d0c3
+  FBSDKCoreKit: 3e6f565de8b4fbe11f8ee5d499f5898b0bde2cdd
+  FBSDKCoreKit_Basics: 9cf699662174870962deb39f07a5d70d4594c4b7
   Firebase: b5956acddaaa53a6c292bec00649fadd18367344
   FirebaseABTesting: 5b22abfa9a55d5b9cd3d1e500a3ca29f6b1264cb
   FirebaseAnalytics: e812eaae316ba8914b1ef06bef18f11efc1f56c6

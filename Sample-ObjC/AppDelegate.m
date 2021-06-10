@@ -12,7 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 
-NSString *const completeNotification    = @"HSAppCompleteNotification";
+NSString *const completeNotification                = @"HSAppCompleteNotification";
 NSString *const kAppodealAppKey                     = @"dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f";
 AppodealAdType const kAppodealTypes                 = AppodealAdTypeBanner;
 BOOL const kConsent                                 = YES;
