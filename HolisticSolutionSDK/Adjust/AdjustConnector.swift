@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import Adjust
 import AdjustPurchase
+import StackFoundation
 
 
 @objc(HSAdjustConnector) public final
@@ -81,6 +82,10 @@ extension AdjustConnector: RawParametersInitializable {
         case .enabled: config?.logLevel = ADJLogLevelVerbose
         case .disabled: config?.logLevel = ADJLogLevelSuppress
         default: break
+        }
+        
+        if STKAd.isZeroIDFA {
+            config?.externalDeviceId = STKAd.generatedAdvertisingIdentifier
         }
         
         Adjust.appDidLaunch(config)
@@ -170,6 +175,11 @@ extension AdjustConnector: AdjustDelegate {
     }
 }
 
+private extension STKAd {
+    static var isZeroIDFA: Bool {
+        return "00000000-0000-0000-0000-000000000000" == advertisingIdentifier
+    }
+}
 
 extension AdjustConnector {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
