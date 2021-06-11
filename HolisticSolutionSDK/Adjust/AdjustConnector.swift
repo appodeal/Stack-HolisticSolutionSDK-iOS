@@ -18,15 +18,18 @@ class AdjustConnector: NSObject, Service {
     struct Parameters {
         var appToken, environment: String
         var tracking: Bool
+        var events: [String: String]
         
         init(
             appToken: String = "",
             environment: String = "sandbox",
-            tracking: Bool = false
+            tracking: Bool = false,
+            events: [String: String] = [:]
         ) {
             self.appToken = appToken
             self.environment = environment
             self.tracking = tracking
+            self.events = events
         }
         
         init?(_ parameters: RawParameters) {
@@ -36,10 +39,13 @@ class AdjustConnector: NSObject, Service {
                 let tracking = parameters["tracking"] as? Bool
             else { return nil }
             
+            let events = parameters["events"] as? [String: String] ?? [:]
+            
             self.init(
                 appToken: appToken,
                 environment: environment,
-                tracking: tracking
+                tracking: tracking,
+                events: events
             )
         }
     }
@@ -183,7 +189,13 @@ private extension STKAd {
 
 extension AdjustConnector {
     func trackEvent(_ event: String, customParameters: [String : Any]?) {
-        guard parameters.tracking else { return }
+        guard
+            parameters.tracking,
+            let token = parameters.events[event]
+        else { return }
+        
+        let adjEvent = ADJEvent(eventToken: token)
+        Adjust.trackEvent(adjEvent)
     }
     
     //MARK: - Noop
