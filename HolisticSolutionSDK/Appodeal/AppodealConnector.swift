@@ -45,6 +45,10 @@ extension AppodealConnector: Advertising {
         let keywords = productTestData.values.compactMap { $0 as? String }.joined(separator: ",")
         Appodeal.setExtras(["keywords": keywords])
     }
+    
+    public func setMMP(mmp: String) {
+        Appodeal.setExtras(["mmp":mmp])
+    }
 }
 
 
