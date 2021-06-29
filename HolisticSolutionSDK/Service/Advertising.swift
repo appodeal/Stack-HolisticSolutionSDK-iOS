@@ -14,5 +14,6 @@ protocol Advertising {
     func setAttributionId(_ attributionId: String)
     func setConversionData(_ converstionData: [AnyHashable: Any])
     func setProductTestData(_ productTestData: [AnyHashable: Any])
+    func setMMP(mmp: String)
 }
 

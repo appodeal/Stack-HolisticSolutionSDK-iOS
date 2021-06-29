@@ -15,7 +15,7 @@
 		4252875C246025E90013D9BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4252875B246025E90013D9BA /* Assets.xcassets */; };
 		4252875F246025E90013D9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4252875D246025E90013D9BA /* LaunchScreen.storyboard */; };
 		426A29A6265E5CCB00EB0843 /* AppTrackingTransparency.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426A29A5265E5CCB00EB0843 /* AppTrackingTransparency.framework */; };
-		42BF117526734F1D00BA8CDA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42BF117426734F1D00BA8CDA /* GoogleService-Info.plist */; };
+		8ABC15CD2686230C00694EF6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8ABC15CC2686230C00694EF6 /* GoogleService-Info.plist */; };
 		BCC7513A4D8CCD6FE1BC60DA /* Pods_Sample_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A25545BCFDDD9F58A279F9CD /* Pods_Sample_Swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,9 +31,9 @@
 		42528760246025E90013D9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		426A29A5265E5CCB00EB0843 /* AppTrackingTransparency.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppTrackingTransparency.framework; path = System/Library/Frameworks/AppTrackingTransparency.framework; sourceTree = SDKROOT; };
 		4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		42BF117426734F1D00BA8CDA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Plists/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5FB9F575B5D31BDE05B7DE4B /* Pods-Sample-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-Swift.release.xcconfig"; path = "Target Support Files/Pods-Sample-Swift/Pods-Sample-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		75BCCF1CB00C9D87DB591689 /* Pods-Sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.release.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.release.xcconfig"; sourceTree = "<group>"; };
+		8ABC15CC2686230C00694EF6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A25545BCFDDD9F58A279F9CD /* Pods_Sample_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sample_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B13F5C3603A41D7CE4A096BA /* Pods-Sample-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample-Swift.debug.xcconfig"; path = "Target Support Files/Pods-Sample-Swift/Pods-Sample-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,7 +66,7 @@
 		42051BB92465426600FCA1BC /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				42BF117426734F1D00BA8CDA /* GoogleService-Info.plist */,
+				8ABC15CC2686230C00694EF6 /* GoogleService-Info.plist */,
 				42528760246025E90013D9BA /* Info.plist */,
 				4252875B246025E90013D9BA /* Assets.xcassets */,
 				4252875D246025E90013D9BA /* LaunchScreen.storyboard */,
@@ -175,8 +175,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4252875F246025E90013D9BA /* LaunchScreen.storyboard in Resources */,
+				8ABC15CD2686230C00694EF6 /* GoogleService-Info.plist in Resources */,
 				4252875C246025E90013D9BA /* Assets.xcassets in Resources */,
-				42BF117526734F1D00BA8CDA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

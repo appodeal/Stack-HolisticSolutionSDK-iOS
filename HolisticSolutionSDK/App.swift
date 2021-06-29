@@ -85,13 +85,19 @@ class App: NSObject {
             let keys: [String] = fetchParametersOperation.response.flatMap { Array($0.keys) } ?? []
             self.registry.filter { $0 is AppodealConnector || keys.contains($0.name) }
         }
+        // Append MMP
+        let setMmpInfoOperation = BlockOperation { [unowned self] in
+            if let mmp = (self.registry.all() as [AttributionService]).first {
+                self.registry.ad.setMMP(mmp: mmp.name)
+            }
+        }
         
         removeUnusedConnectorsOperation.addDependency(fetchParametersOperation)
         fetchParametersOperation.addDependency(setupConnectorsOperation)
         fetchParametersOperation.addDependency(fetchParametersAdapterOperation)
         initializeServicesOperation.addDependency(initializeServicesAdapterOperation)
         initializeServicesAdapterOperation.addDependency(fetchParametersOperation)
-        
+        setMmpInfoOperation.addDependency(removeUnusedConnectorsOperation)
         // Collect attribution data
         let attributionOperation = AttributionOperation(timeout: configuration.timeout)
         let attributionAdapterOperation = BlockOperation { [unowned attributionOperation, unowned self] in
@@ -147,7 +153,8 @@ class App: NSObject {
                 syncRemoteConfigOperation,
                 advertisingAdapterOperation,
                 advertisingOperation,
-                completionOperation
+                completionOperation,
+                setMmpInfoOperation
             ],
             waitUntilFinished: false
         )
