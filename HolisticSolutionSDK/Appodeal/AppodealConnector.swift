@@ -30,11 +30,15 @@ class AppodealConnector: NSObject, Service {
 
 extension AppodealConnector: Advertising {
     func setTrackId(_ trackId: String) {
-        Appodeal.setExtras(["track_id": trackId])
+        DispatchQueue.main.async {
+            Appodeal.setExtras(["track_id": trackId])
+        }
     }
     
     public func setAttributionId(_ attributionId: String) {
-        Appodeal.setExtras(["attribution_id": attributionId])
+        DispatchQueue.main.async {
+            Appodeal.setExtras(["attribution_id": attributionId])
+        }
     }
     
     public func setConversionData(_ converstionData: [AnyHashable : Any]) {
@@ -43,11 +47,15 @@ extension AppodealConnector: Advertising {
     
     public func setProductTestData(_ productTestData: [AnyHashable : Any]) {
         let keywords = productTestData.values.compactMap { $0 as? String }.joined(separator: ",")
-        Appodeal.setExtras(["keywords": keywords])
+        DispatchQueue.main.async {
+            Appodeal.setExtras(["keywords": keywords])
+        }
     }
     
     public func setMMP(mmp: String) {
-        Appodeal.setExtras(["mmp":mmp])
+        DispatchQueue.main.async {
+            Appodeal.setExtras(["mmp":mmp])
+        }
     }
 }
 
