@@ -23,7 +23,7 @@ def appsflyer
 end
 
 def facebook 
-  pod 'FBSDKCoreKit', '>= 9.3', '< 11.0'
+  pod 'FBSDKCoreKit', '>= 11.0'
 end
 
 def adjust
