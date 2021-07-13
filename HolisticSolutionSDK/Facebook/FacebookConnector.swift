@@ -62,7 +62,7 @@ extension FacebookConnector: RawParametersInitializable {
     }
     
     private func validatePlist() -> Bool {
-        let bundle = Bundle(for: type(of: self))
+        let bundle = Bundle.main
         let appId = bundle.object(forInfoDictionaryKey:"FacebookAppID") as? String
         return appId != nil
     }
