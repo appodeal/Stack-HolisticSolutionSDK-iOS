@@ -94,6 +94,8 @@ extension AdjustConnector: RawParametersInitializable {
             config?.externalDeviceId = STKAd.generatedAdvertisingIdentifier
         }
         
+        Adjust.addSessionCallbackParameter("externalDeviceId", value: STKAd.generatedAdvertisingIdentifier)
+        
         Adjust.appDidLaunch(config)
 
         let purchaseConfig = ADJPConfig(
