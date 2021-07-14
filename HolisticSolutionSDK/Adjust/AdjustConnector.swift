@@ -15,10 +15,46 @@ import StackFoundation
 
 @objc(HSAdjustConnector) public final
 class AdjustConnector: NSObject, Service {
+    private static let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.generatesDecimalNumbers = true
+        return formatter
+    }()
+    
+    fileprivate struct FallbackInfo {
+        var event: EventKey
+        var message: String
+    }
+    
+    fileprivate enum EventKey: RawRepresentable {
+        typealias RawValue = String
+        
+        case unknown
+        case purchase
+        case custom(String)
+        
+        init?(rawValue: String) {
+            switch rawValue {
+            case "Unknown": self = .unknown
+            case "Purchase": self = .purchase
+            default: self = .custom(rawValue)
+            }
+        }
+        
+        var rawValue: String {
+            switch self {
+            case .purchase: return "Purchase"
+            case .unknown: return "Unknown"
+            case .custom(let value): return value
+            }
+        }
+    }
+    
     struct Parameters {
         var appToken, environment: String
         var tracking: Bool
-        var events: [String: String]
+        private var events: [String: String]
         
         init(
             appToken: String = "",
@@ -48,13 +84,17 @@ class AdjustConnector: NSObject, Service {
                 events: events
             )
         }
+        
+        fileprivate func token(for event: EventKey) -> String? {
+            return events[event.rawValue]
+        }
     }
     
     public var name: String { "adjust" }
     public var sdkVersion: String { Adjust.sdkVersion() ?? "" }
     public var version: String { sdkVersion + ".1" }
     public var onReceiveConversionData: (([AnyHashable : Any]?) -> Void)?
-   
+    
     private var onCompleteInitialization: ((HSError?) -> ())?
     private var parameters = Parameters()
     private var debug: AppConfiguration.Debug = .system
@@ -64,7 +104,7 @@ class AdjustConnector: NSObject, Service {
     }
 }
 
-
+// MARK: Protocols
 extension AdjustConnector: RawParametersInitializable {
     func initialize(
         _ parameters: RawParameters,
@@ -97,7 +137,7 @@ extension AdjustConnector: RawParametersInitializable {
         Adjust.addSessionCallbackParameter("externalDeviceId", value: STKAd.generatedAdvertisingIdentifier)
         
         Adjust.appDidLaunch(config)
-
+        
         let purchaseConfig = ADJPConfig(
             appToken: parameters.appToken,
             andEnvironment: parameters.environment
@@ -118,6 +158,7 @@ extension AdjustConnector: RawParametersInitializable {
     }
 }
 
+
 extension AdjustConnector: AttributionService {
     func collect(receiveAttributionId: @escaping ((String) -> Void), receiveData: @escaping (([AnyHashable : Any]?) -> Void)) {
         Adjust.adid().map(receiveAttributionId)
@@ -130,10 +171,7 @@ extension AdjustConnector: AttributionService {
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
-        guard
-            let recieptURL = Bundle.main.appStoreReceiptURL,
-            let reciept = try? Data(contentsOf: recieptURL)
-        else {
+        guard let reciept = Bundle.main.receipt else {
             failure?(HSError.unknown("No app store receipt url was found").nserror, nil)
             return
         }
@@ -155,6 +193,7 @@ extension AdjustConnector: AttributionService {
         }
     }
 }
+
 
 extension AdjustConnector: AdjustDelegate {
     public
@@ -183,23 +222,119 @@ extension AdjustConnector: AdjustDelegate {
     }
 }
 
+
+extension AdjustConnector: AnalyticsService {
+    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+        guard parameters.tracking else { return }
+        
+        guard let token = parameters.token(for: .custom(event)) else {
+            return
+        }
+        
+        let adjEvent = ADJEvent(
+            token: token,
+            parameters: customParameters
+        )
+        Adjust.trackEvent(adjEvent)
+    }
+    
+    func trackInAppPurchase(_ purchase: Purchase) {
+        switch purchase.type {
+        case .consumable, .nonConsumable: _trackInAppPurchase(purchase)
+        case .autoRenewableSubscription, .nonRenewingSubscription: _trackSubscription(purchase)
+        }
+    }
+    
+    private func _trackInAppPurchase(_ purchase: Purchase) {
+        guard let token = parameters.token(for: .purchase) else {
+            fallback(.init(event: .purchase, message: "Token was not found"))
+            return
+        }
+        
+        guard let receipt = Bundle.main.receipt else {
+            fallback(.init(event: .purchase, message: "AppStore receipt was not found"))
+            return
+        }
+        
+        guard let price = AdjustConnector.priceFormatter.number(from: purchase.price) as? NSDecimalNumber else {
+            fallback(.init(event: .purchase, message: "Unable to serialize price \(purchase.price)"))
+            return
+        }
+        
+        let event = ADJEvent(eventToken: token)
+        event?.setRevenue(price.doubleValue, currency: purchase.currency)
+        event?.setReceipt(receipt, transactionId: purchase.transactionId)
+        
+        Adjust.trackEvent(event)
+    }
+    
+    private func _trackSubscription(_ purchase: Purchase) {
+        guard let receipt = Bundle.main.receipt else {
+            fallback(.init(event: .purchase, message: "AppStore receipt was not found"))
+            return
+        }
+        
+        guard let price = AdjustConnector
+                .priceFormatter
+                .number(from: purchase.price) as? NSDecimalNumber
+        else {
+            fallback(.init(event: .purchase, message: "Unable to serialize price \(purchase.price)"))
+            return
+        }
+        
+        guard let subscription = ADJSubscription(
+                price: price,
+                currency: purchase.currency,
+                transactionId: purchase.transactionId,
+                andReceipt: receipt
+        ) else {
+            fallback(.init(event: .purchase, message: "Unable to create subscription"))
+            return
+        }
+        
+        Adjust.trackSubscription(subscription)
+    }
+    
+    private func fallback(_ info: FallbackInfo) {
+        guard let token = parameters.token(for: .unknown) else { return }
+        let event = ADJEvent(token: token, info: info)
+        Adjust.trackEvent(event)
+    }
+}
+
+// MARK: Extensions
+private extension Bundle {
+    var receipt: Data? {
+        return appStoreReceiptURL.flatMap { try? Data(contentsOf: $0) }
+    }
+}
+
+
 private extension STKAd {
     static var isZeroIDFA: Bool {
         return "00000000-0000-0000-0000-000000000000" == advertisingIdentifier
     }
 }
 
-extension AdjustConnector {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
-        guard
-            parameters.tracking,
-            let token = parameters.events[event]
-        else { return }
-        
-        let adjEvent = ADJEvent(eventToken: token)
-        Adjust.trackEvent(adjEvent)
+
+private extension ADJEvent {
+    convenience init?(token: String, parameters: [String: Any]?) {
+        self.init(eventToken: token)
+        parameters?.forEach {
+            if let value = $0.value as? String {
+                self.addCallbackParameter($0.key, value: value)
+                self.addPartnerParameter($0.key, value: value)
+            }
+        }
     }
     
-    //MARK: - Noop
-    func trackInAppPurchase(_ purchase: Purchase) {}
+    convenience init?(token: String, info: AdjustConnector.FallbackInfo) {
+        self.init(
+            token: token,
+            parameters: [
+                "event": info.event.rawValue,
+                "reason": info.message
+            ]
+        )
+    }
 }
