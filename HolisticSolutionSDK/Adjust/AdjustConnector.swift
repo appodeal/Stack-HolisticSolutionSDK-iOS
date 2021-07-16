@@ -32,20 +32,23 @@ class AdjustConnector: NSObject, Service {
         
         case unknown
         case purchase
+        case purchaseVerificationError
         case custom(String)
         
         init?(rawValue: String) {
             switch rawValue {
-            case "Unknown": self = .unknown
-            case "Purchase": self = .purchase
+            case "hs_sdk_unknown": self = .unknown
+            case "hs_sdk_purchase": self = .purchase
+            case "hs_sdk_purchase_error": self = .purchaseVerificationError
             default: self = .custom(rawValue)
             }
         }
         
         var rawValue: String {
             switch self {
-            case .purchase: return "Purchase"
-            case .unknown: return "Unknown"
+            case .purchase: return "hs_sdk_purchase"
+            case .unknown: return "hs_sdk_unknown"
+            case .purchaseVerificationError: return "hs_sdk_purchase_error"
             case .custom(let value): return value
             }
         }
@@ -195,6 +198,12 @@ extension AdjustConnector: AttributionService {
                 let info = info,
                 info.verificationState == ADJPVerificationStatePassed
             else {
+                self?.fallback(
+                    .init(
+                        event: .purchaseVerificationError,
+                        message: "Purchase \(purchase.transactionId) for product \(purchase.productId) verificaition failed"
+                    )
+                )
                 failure?(HSError.service("Purchase was't passed verification"), nil)
                 return
             }
@@ -314,6 +323,7 @@ extension AdjustConnector: AnalyticsService {
         Adjust.trackEvent(event)
     }
 }
+
 
 // MARK: Extensions
 private extension Bundle {
