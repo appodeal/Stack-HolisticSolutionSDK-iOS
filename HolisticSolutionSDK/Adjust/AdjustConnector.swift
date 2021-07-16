@@ -176,9 +176,19 @@ extension AdjustConnector: AttributionService {
             return
         }
         
+        guard
+            let transaction = SKPaymentQueue
+                .default()
+                .transactions
+                .first(where: { $0.transactionIdentifier == purchase.transactionId })
+        else {
+            failure?(HSError.unknown("Transaction was not found").nserror, nil)
+            return
+        }
+        
         AdjustPurchase.verifyPurchase(
             reciept,
-            forTransaction: purchase.productId,
+            forTransaction: transaction,
             productId: purchase.productId
         ) { [weak self] info in
             guard
@@ -228,6 +238,7 @@ extension AdjustConnector: AnalyticsService {
         guard parameters.tracking else { return }
         
         guard let token = parameters.token(for: .custom(event)) else {
+            fallback(.init(event: .custom(event), message: "Token was not found"))
             return
         }
         
@@ -235,6 +246,7 @@ extension AdjustConnector: AnalyticsService {
             token: token,
             parameters: customParameters
         )
+        
         Adjust.trackEvent(adjEvent)
     }
     
@@ -274,7 +286,8 @@ extension AdjustConnector: AnalyticsService {
             return
         }
         
-        guard let price = AdjustConnector
+        guard
+            let price = AdjustConnector
                 .priceFormatter
                 .number(from: purchase.price) as? NSDecimalNumber
         else {
@@ -283,10 +296,10 @@ extension AdjustConnector: AnalyticsService {
         }
         
         guard let subscription = ADJSubscription(
-                price: price,
-                currency: purchase.currency,
-                transactionId: purchase.transactionId,
-                andReceipt: receipt
+            price: price,
+            currency: purchase.currency,
+            transactionId: purchase.transactionId,
+            andReceipt: receipt
         ) else {
             fallback(.init(event: .purchase, message: "Unable to create subscription"))
             return
