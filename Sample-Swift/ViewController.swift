@@ -114,7 +114,7 @@ final class ViewController: StaticTableViewController {
             header: "Appodeal",
             rows: [
                 .init { _ in .base(title: "Version", detail: APDSdkVersionString()) },
-                .init { _ in .base(title: "Initialized", accesory: Appodeal.isInitalized(for: AppDelegate.AppodealConstants.adType) ? .checkmark : .none) },
+                .init { _ in .base(title: "Initialized", accesory: Appodeal.hs.initialized ? .checkmark : .none) },
             ]
         )
     }

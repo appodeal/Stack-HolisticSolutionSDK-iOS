@@ -116,7 +116,7 @@
     
     //appodeal
     _apdVersion.text = APDSdkVersionString();
-    _apdInitialized.text = [Appodeal isInitalizedForAdType:kAppodealTypes] ? @"true" : @"false";
+    _apdInitialized.text = [Appodeal.hs initialized] ? @"true" : @"false";
 }
 
 @end
