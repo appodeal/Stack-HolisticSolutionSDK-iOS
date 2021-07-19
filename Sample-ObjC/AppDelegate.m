@@ -45,6 +45,7 @@ BOOL const kConsent                                 = YES;
                                 completion:^(NSError *error) {
         [NSNotificationCenter.defaultCenter postNotificationName:completeNotification object:nil];
     }];
+    
     return YES;
 }
 

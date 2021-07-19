@@ -75,7 +75,24 @@ import Appodeal
 
 ``` obj-c
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // TODO:  
+     [Appodeal.hs registerWithConnectors:@[
+        HSFirebaseConnector.class,
+        HSFacebookConnector.class,
+        HSAppsFlyerConnector.class,
+        HSAdjustConnector.class
+    ]];
+    
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAppKey:<#(NSString * _Nonnull)#>
+                                                                           timeout:<#(NSTimeInterval)#>
+                                                                             debug:<#(enum HSAppConfigurationDebug)#> 
+                                                                           adTypes:<#(AppodealAdType)#>];
+    
+    [Appodeal.hs initializeWithApplication:application
+                             launchOptions:launchOptions
+                             configuration:configuration
+                                completion:^(NSError *error) {
+        // Holistic solution initialization completed 
+    }];
     return YES;
 }
 ```
@@ -86,7 +103,30 @@ func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 ) -> Bool {
-    // TODO: 
+    let connectors: [Service.Type] = [
+        AppsFlyerConnector.self,
+        AdjustConnector.self,
+        FirebaseConnector.self,
+        FacebookConnector.self
+    ]
+        
+    let configuration: AppConfiguration = .init(
+        appKey: <#T##String#>,
+        timeout: <#T##TimeInterval#>,
+        debug: <#T##AppConfiguration.Debug#>,
+        adTypes: <#T##AppodealAdType#>
+    )
+        
+    Appodeal.hs.register(connectors: connectors)
+    Appodeal.hs.initialize(
+        application: application,
+        launchOptions: launchOptions,
+        configuration: configuration
+    ) { _ in
+        // Holistic solution initialization completed 
+    }
+
+    return true
 }
 ```
 
@@ -96,40 +136,40 @@ Holistic solution SDK allows to validate and track in-app purchases by AppsFlyer
 
 *Objective-C*
 ``` obj-c
-[HSApp validateAndTrackInAppPurchaseWithProductId:<#(NSString * _Nonnull)#> 
-                                            price:<#(NSString * _Nonnull)#> 
-                                         currency:<#(NSString * _Nonnull)#> 
-                                    transactionId:<#(NSString * _Nonnull)#> 
-                             additionalParameters:<#(NSDictionary * _Nonnull)#> 
-                                          success:<#^(NSDictionary * _Nonnull)success#> 
-                                          failure:<#^(NSError * _Nullable, id _Nullable)failure#>];
+[Appodeal.hs validateAndTrackInAppPurchaseWithProductId:<#(NSString * _Nonnull)#>
+                                                       type:<#(enum HSPurchaseType)#>
+                                                      price:<#(NSString * _Nonnull)#>
+                                                   currency:<#(NSString * _Nonnull)#>
+                                              transactionId:<#(NSString * _Nonnull)#>
+                                       additionalParameters:<#(NSDictionary<NSString *,id> * _Nonnull)#>
+                                                    success:<#^(NSDictionary * _Nonnull)success#>
+                                                    failure:<#^(NSError * _Nullable, id _Nullable)failure#>];
 ```
 
 *Swift*
 ```swift
-HSApp.validateAndTrackInAppPurchase(
-    productId: <#T##String#>, 
-    price: <#T##String#>, 
-    currency: <#T##String#>, 
-    transactionId: <#T##String#>, 
-    additionalParameters: <#T##[AnyHashable : Any]#>, 
-    success: <#T##(([AnyHashable : Any]) -> Void)?##(([AnyHashable : Any]) -> Void)?##([AnyHashable : Any]) -> Void#>, 
+Appodeal.hs.validateAndTrackInAppPurchase(
+    productId: <#T##String#>,
+    type: <#T##PurchaseType#>,
+    price: <#T##String#>,
+    currency: <#T##String#>,
+    transactionId: <#T##String#>,
+    additionalParameters: <#T##[String : Any]#>,
+    success: <#T##(([AnyHashable : Any]) -> Void)?##(([AnyHashable : Any]) -> Void)?##([AnyHashable : Any]) -> Void#>,
     failure: <#T##((Error?, Any?) -> Void)?##((Error?, Any?) -> Void)?##(Error?, Any?) -> Void#>
 )
 ```
 
 ### Events
 
-Holistic solution SDK allows to send events to Firebase, AppsFlyer and Facebook analytics systems.
+Holistic solution SDK allows to send events to Firebase, AppsFlyer, Adjust and Facebook analytics systems.
 
 *Objective-C*
 ``` obj-c
-[HSApp trackEvent:<#(NSString * _Nonnull)#> 
- customParameters:<#(NSDictionary<NSString *,id> * _Nullable)#>];
+[Appodeal.hs trackEvent:<#(NSString * _Nonnull)#> customParameters:<#(NSDictionary<NSString *,id> * _Nullable)#>];
 ```
 
 *Swift*
 ```swift
-HSApp.trackEvent(<#T##eventName: String##String#>, 
-                 customParameters: <#T##[String : Any]?#>)
+Appodeal.hs.trackEvent(<#T##eventName: String##String#>, customParameters: <#T##[String : Any]?#>)
 ```
