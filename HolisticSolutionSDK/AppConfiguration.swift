@@ -41,19 +41,3 @@ class AppConfiguration: NSObject {
         super.init()
     }
 }
-
-internal extension AppConfiguration.Debug {
-    func log(_ message: String) {
-        switch self {
-        case .enabled:
-            NSLog("[HSApp] \(message)")
-        case .system:
-            #if DEBUG
-            NSLog("[HSApp] \(message)")
-            #endif
-        default:
-            break
-        }
-    }
-}
-

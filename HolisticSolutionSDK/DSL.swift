@@ -30,6 +30,8 @@ enum PurchaseType: Int {
 
 @objc(HSDSL) public
 protocol DSL {
+    var initialized: Bool { get }
+    
     func register(connectors: [Service.Type])
 
     func initialize(

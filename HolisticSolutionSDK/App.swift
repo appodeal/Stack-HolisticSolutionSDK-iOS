@@ -15,11 +15,17 @@ import Appodeal
 /// for Holistic Solution
 @objc(HSApp) final public
 class App: NSObject {
-    @objc static let sdkVersion: String = "2.0.0"
-    @objc static let shared = App()
+    @objc public static
+    let sdkVersion: String = "2.0.0"
+    
+    @objc public static
+    let shared = App()
     
     private var configuration: AppConfiguration!
     private var registry: ConnnectorsRegistry = .init()
+    
+    @objc private(set) public
+    var initialized: Bool = false
     
     fileprivate lazy var queue: OperationQueue = {
         let queue = OperationQueue()
@@ -28,7 +34,7 @@ class App: NSObject {
         queue.qualityOfService = .default
         return queue
     }()
-
+    
     private func _initialize(
         application: UIApplication,
         launchOptions: [UIApplication.LaunchOptionsKey : Any]?,
@@ -121,22 +127,23 @@ class App: NSObject {
         let advertisingAdapterOperation = BlockOperation { [unowned self, unowned advertisingOperation] in
             advertisingOperation.connector = self.registry.types(of: AppodealConnector.self).first?.init()
         }
-                
+        
         advertisingOperation.addDependency(advertisingAdapterOperation)
         
         let completionOperation = CompletionOperation { error in
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [unowned self] in
+                self.initialized = true
                 completion?(error)
             }
         }
-
+        
         completionOperation.addDependency(privacyOperation)
         completionOperation.addDependency(fetchParametersOperation)
         completionOperation.addDependency(initializeServicesOperation)
         completionOperation.addDependency(attributionOperation)
         completionOperation.addDependency(syncRemoteConfigOperation)
         completionOperation.addDependency(advertisingOperation)
-
+        
         queue.addOperations(
             [
                 privacyAdapterOperation,
@@ -164,7 +171,16 @@ class App: NSObject {
 
 internal extension App {
     static func log(_ message: String) {
-        shared.configuration?.debug.log(message)
+        switch shared.configuration?.debug {
+        case .enabled:
+            NSLog("[HSApp] \(message)")
+        case .system:
+            #if DEBUG
+            NSLog("[HSApp] \(message)")
+            #endif
+        default:
+            break
+        }
     }
 }
 

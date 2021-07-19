@@ -111,9 +111,7 @@ final class API {
             }
             .resume()
     }
-    
-    func setDebug(_ debug: AppConfiguration.Debug) {}
-    
+        
     private func cachePath() throws -> URL {
         guard
             let caches = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first
