@@ -266,6 +266,7 @@
 				4294A1E724A4BE3200F5FFD5 /* Sources */,
 				4294A1E824A4BE3200F5FFD5 /* Frameworks */,
 				4294A1E924A4BE3200F5FFD5 /* Resources */,
+				2E2F3B1CC68037E21B535C55 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -320,6 +321,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2E2F3B1CC68037E21B535C55 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		DAC3D985406FAB2F5BC20ACD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

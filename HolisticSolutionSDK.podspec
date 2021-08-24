@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "2.0.0"
+  spec.version      = "2.0.1"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
@@ -33,8 +33,8 @@ Pod::Spec.new do |spec|
 
   spec.subspec "Core" do |ss|
   	ss.source_files = "HolisticSolutionSDK/**/*.{h,swift}"
-    ss.dependency "Appodeal", "~> 2.10.1"
-    ss.dependency "StackConsentManager", "~> 1.1.0"
+    ss.dependency "Appodeal", "2.10.2"
+    ss.dependency "StackConsentManager", "1.1.2"
 
   	ss.exclude_files = 
   		"HolisticSolutionSDK/AppsFlyer",
@@ -44,26 +44,26 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec "AdNetworks" do |ss|
-    ss.dependency "APDAdColonyAdapter", "~> 2.10.1" 
-    ss.dependency "APDAmazonAdsAdapter", "~> 2.10.1" 
-    ss.dependency "APDAppLovinAdapter", "~> 2.10.1" 
-    ss.dependency "APDBidMachineAdapter", "~> 2.10.1" 
-    ss.dependency "APDFacebookAudienceAdapter", "~> 2.10.1" 
-    ss.dependency "APDGoogleAdMobAdapter", "~> 2.10.1" 
-    ss.dependency "APDIronSourceAdapter", "~> 2.10.1" 
-    ss.dependency "APDMyTargetAdapter", "~> 2.10.1" 
-    ss.dependency "APDOguryAdapter", "~> 2.10.1" 
-    ss.dependency "APDSmaatoAdapter", "~> 2.10.1" 
-    ss.dependency "APDStartAppAdapter", "~> 2.10.1" 
-    ss.dependency "APDUnityAdapter", "~> 2.10.1" 
-    ss.dependency "APDVungleAdapter", "~> 2.10.1" 
-    ss.dependency "APDYandexAdapter", "~> 2.10.1" 
+    ss.dependency 'APDAdColonyAdapter', '2.10.2.1' 
+    ss.dependency 'APDAmazonAdsAdapter', '2.10.2.1' 
+    ss.dependency 'APDAppLovinAdapter', '2.10.2.1' 
+    ss.dependency 'APDBidMachineAdapter', '2.10.2.2'
+    ss.dependency 'APDFacebookAudienceAdapter', '2.10.2.1' 
+    ss.dependency 'APDGoogleAdMobAdapter', '2.10.2.2' 
+    ss.dependency 'APDIronSourceAdapter', '2.10.2.2' 
+    ss.dependency 'APDMyTargetAdapter', '2.10.2.1' 
+    ss.dependency 'APDOguryAdapter', '2.10.2.1' 
+    ss.dependency 'APDSmaatoAdapter', '2.10.2.1' 
+    ss.dependency 'APDStartAppAdapter', '2.10.2.2' 
+    ss.dependency 'APDUnityAdapter', '2.10.2.1' 
+    ss.dependency 'APDVungleAdapter', '2.10.2.2' 
+    ss.dependency 'APDYandexAdapter', '2.10.2.2' 
   end
   
   spec.subspec "Adjust" do |ss|
     ss.source_files = "HolisticSolutionSDK/Adjust"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "Adjust", "~> 4.29.2"
+    ss.dependency "Adjust", "4.29.5"
     ss.dependency "AdjustPurchase", "1.0.0"
   end
 
@@ -76,15 +76,15 @@ Pod::Spec.new do |spec|
   spec.subspec "Firebase" do |ss|
     ss.source_files = "HolisticSolutionSDK/Firebase"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "Firebase/Core", ">= 8.0.0"
-    ss.dependency "Firebase/Analytics", ">= 8.0.0"
-  	ss.dependency "Firebase/RemoteConfig", ">= 8.0.0"
+    ss.dependency "Firebase/Core", "8.6.0"
+    ss.dependency "Firebase/Analytics", "8.6.0"
+  	ss.dependency "Firebase/RemoteConfig", "8.6.0"
   end
 
   spec.subspec "Facebook" do |ss|
     ss.source_files = "HolisticSolutionSDK/Facebook"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "FBSDKCoreKit", ">= 9.0"
+    ss.dependency "FBSDKCoreKit", "11.1.0"
   end
 
   spec.subspec "Full" do |ss| 
