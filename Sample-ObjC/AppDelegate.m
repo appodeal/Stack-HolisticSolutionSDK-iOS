@@ -35,9 +35,9 @@ BOOL const kConsent                                 = YES;
     
     HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAppKey:kAppodealAppKey
                                                                            timeout:30
-                                                                             debug:HSAppConfigurationBooleanEnabled
-                                                                           logging:HSAppConfigurationBooleanEnabled
+                                                                             debug:HSAppConfigurationDebugEnabled
                                                                            adTypes:kAppodealTypes];
+    
     [Appodeal setTestingEnabled:YES];
     [Appodeal.hs initializeWithApplication:application
                              launchOptions:launchOptions
