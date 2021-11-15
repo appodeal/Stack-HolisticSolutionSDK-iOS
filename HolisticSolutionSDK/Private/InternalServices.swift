@@ -24,6 +24,7 @@ protocol AttributionService: Service {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
+        partnerParameters: [String: String],
         success:(([AnyHashable: Any]) -> Void)?,
         failure:((Error?, Any?) -> Void)?
     )
@@ -31,11 +32,21 @@ protocol AttributionService: Service {
 
 
 protocol ProductTestingService: Service {
-    func activateConfig(completion: @escaping (([AnyHashable: Any]?) -> Void))
+    func activateConfig(
+        completion: @escaping (([AnyHashable: Any]?) -> Void)
+    )
 }
 
 
 protocol AnalyticsService: Service {
-    func trackEvent(_ event: String, customParameters: [String: Any]?)
-    func trackInAppPurchase(_ purchase: Purchase)
+    func trackEvent(
+        _ event: String,
+        customParameters: [String: Any]?,
+        partnerParameters: [String: String]
+    )
+    
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    )
 }

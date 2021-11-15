@@ -10,6 +10,8 @@ import Foundation
 
 
 protocol Advertising {
+    var partnerParameters: [String: String] { get }
+
     func setTrackId(_ trackId: String)
     func setAttributionId(_ attributionId: String)
     func setConversionData(_ converstionData: [AnyHashable: Any])

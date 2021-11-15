@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 @objc(HSService) public
-protocol Service {
+protocol Service: AnyObject {
     var name: String { get }
     var sdkVersion: String { get }
     var version: String { get }
@@ -25,6 +25,9 @@ protocol Service {
     
     @objc optional
     func set(debug: AppConfiguration.Debug)
+    
+    @objc optional
+    func set(partnerParameters: [String: String])
 }
 
 

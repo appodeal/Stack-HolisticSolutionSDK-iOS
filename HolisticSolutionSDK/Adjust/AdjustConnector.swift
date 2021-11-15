@@ -105,6 +105,14 @@ class AdjustConnector: NSObject, Service {
     public func set(debug: AppConfiguration.Debug) {
         self.debug = debug
     }
+    
+    public func set(partnerParameters: [String: String]) {
+        App.log("Set partner parameters: \(partnerParameters) to service \(name)")
+        partnerParameters.forEach {
+            Adjust.addSessionCallbackParameter($0.key, value: $0.value)
+            Adjust.addSessionPartnerParameter($0.key, value: $0.value)
+        }
+    }
 }
 
 // MARK: Protocols
@@ -163,7 +171,10 @@ extension AdjustConnector: RawParametersInitializable {
 
 
 extension AdjustConnector: AttributionService {
-    func collect(receiveAttributionId: @escaping ((String) -> Void), receiveData: @escaping (([AnyHashable : Any]?) -> Void)) {
+    func collect(
+        receiveAttributionId: @escaping ((String) -> Void),
+        receiveData: @escaping (([AnyHashable : Any]?) -> Void)
+    ) {
         Adjust.adid().map(receiveAttributionId)
         Adjust.attribution().flatMap { $0.dictionary() }.map(receiveData)
         onReceiveConversionData = receiveData
@@ -171,6 +182,7 @@ extension AdjustConnector: AttributionService {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
+        partnerParameters: [String: String],
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
@@ -202,12 +214,16 @@ extension AdjustConnector: AttributionService {
                     .init(
                         event: .purchaseVerificationError,
                         message: "Purchase \(purchase.transactionId) for product \(purchase.productId) verificaition failed"
-                    )
+                    ),
+                    partnerParameters: partnerParameters
                 )
                 failure?(HSError.service("Purchase was't passed verification"), nil)
                 return
             }
-            self?.trackInAppPurchase(purchase)
+            self?.trackInAppPurchase(
+                purchase,
+                partnerParameters: partnerParameters
+            )
             success?(["message": info.message].compactMapValues { $0 })
         }
     }
@@ -243,55 +259,112 @@ extension AdjustConnector: AdjustDelegate {
 
 
 extension AdjustConnector: AnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+    func trackEvent(
+        _ event: String,
+        customParameters: [String: Any]?,
+        partnerParameters: [String: String]
+    ) {
         guard parameters.tracking else { return }
         
         guard let token = parameters.token(for: .custom(event)) else {
-            fallback(.init(event: .custom(event), message: "Token was not found"))
+            fallback(
+                .init(
+                    event: .custom(event),
+                    message: "Token was not found"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
         let adjEvent = ADJEvent(
             token: token,
-            parameters: customParameters
+            parameters: customParameters,
+            partnerParameters: partnerParameters
         )
         
         Adjust.trackEvent(adjEvent)
     }
     
-    func trackInAppPurchase(_ purchase: Purchase) {
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    ) {
         switch purchase.type {
-        case .consumable, .nonConsumable: _trackInAppPurchase(purchase)
-        case .autoRenewableSubscription, .nonRenewingSubscription: _trackSubscription(purchase)
+        case .consumable, .nonConsumable:
+            _trackInAppPurchase(
+                purchase,
+                partnerParameters: partnerParameters
+            )
+        case .autoRenewableSubscription, .nonRenewingSubscription:
+            _trackSubscription(
+                purchase,
+                partnerParameters: partnerParameters
+            )
         }
     }
     
-    private func _trackInAppPurchase(_ purchase: Purchase) {
+    private func _trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    ) {
         guard let token = parameters.token(for: .purchase) else {
-            fallback(.init(event: .purchase, message: "Token was not found"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "Token was not found"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
         guard let receipt = Bundle.main.receipt else {
-            fallback(.init(event: .purchase, message: "AppStore receipt was not found"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "AppStore receipt was not found"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
         guard let price = AdjustConnector.priceFormatter.number(from: purchase.price) as? NSDecimalNumber else {
-            fallback(.init(event: .purchase, message: "Unable to serialize price \(purchase.price)"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "Unable to serialize price \(purchase.price)"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
-        let event = ADJEvent(eventToken: token)
+        let event = ADJEvent(
+            token: token,
+            parameters: nil,
+            partnerParameters: partnerParameters
+        )
+        
         event?.setRevenue(price.doubleValue, currency: purchase.currency)
         event?.setReceipt(receipt, transactionId: purchase.transactionId)
         
         Adjust.trackEvent(event)
     }
     
-    private func _trackSubscription(_ purchase: Purchase) {
+    private func _trackSubscription(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    ) {
         guard let receipt = Bundle.main.receipt else {
-            fallback(.init(event: .purchase, message: "AppStore receipt was not found"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "AppStore receipt was not found"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
@@ -300,7 +373,13 @@ extension AdjustConnector: AnalyticsService {
                 .priceFormatter
                 .number(from: purchase.price) as? NSDecimalNumber
         else {
-            fallback(.init(event: .purchase, message: "Unable to serialize price \(purchase.price)"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "Unable to serialize price \(purchase.price)"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
@@ -310,16 +389,29 @@ extension AdjustConnector: AnalyticsService {
             transactionId: purchase.transactionId,
             andReceipt: receipt
         ) else {
-            fallback(.init(event: .purchase, message: "Unable to create subscription"))
+            fallback(
+                .init(
+                    event: .purchase,
+                    message: "Unable to create subscription"
+                ),
+                partnerParameters: partnerParameters
+            )
             return
         }
         
         Adjust.trackSubscription(subscription)
     }
     
-    private func fallback(_ info: FallbackInfo) {
+    private func fallback(
+        _ info: FallbackInfo,
+        partnerParameters: [String: String]
+    ) {
         guard let token = parameters.token(for: .unknown) else { return }
-        let event = ADJEvent(token: token, info: info)
+        let event = ADJEvent(
+            token: token,
+            fallbackInfo: info,
+            partnerParameters: partnerParameters
+        )
         Adjust.trackEvent(event)
     }
 }
@@ -341,23 +433,36 @@ private extension STKAd {
 
 
 private extension ADJEvent {
-    convenience init?(token: String, parameters: [String: Any]?) {
+    convenience init?(
+        token: String,
+        parameters: [String: Any]?,
+        partnerParameters: [String: String]
+    ) {
         self.init(eventToken: token)
         parameters?.forEach {
             if let value = $0.value as? String {
-                self.addCallbackParameter($0.key, value: value)
-                self.addPartnerParameter($0.key, value: value)
+                addCallbackParameter($0.key, value: value)
+                addPartnerParameter($0.key, value: value)
             }
+        }
+        partnerParameters.forEach {
+            addCallbackParameter($0.key, value: $0.value)
+            addPartnerParameter($0.key, value: $0.value)
         }
     }
     
-    convenience init?(token: String, info: AdjustConnector.FallbackInfo) {
+    convenience init?(
+        token: String,
+        fallbackInfo: AdjustConnector.FallbackInfo,
+        partnerParameters: [String: String]
+    ) {
         self.init(
             token: token,
             parameters: [
-                "event": info.event.rawValue,
-                "reason": info.message
-            ]
+                "event": fallbackInfo.event.rawValue,
+                "reason": fallbackInfo.message
+            ],
+            partnerParameters: partnerParameters
         )
     }
 }

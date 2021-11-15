@@ -82,7 +82,6 @@ extension FirebaseConnector: RawParametersInitializable {
     }
 }
 
-
 extension FirebaseConnector: ProductTestingService {
     func activateConfig(completion: @escaping (([AnyHashable : Any]?) -> Void)) {
         config.fetch(withExpirationDuration: parameters.expirationDuration) { [weak self] status, error in
@@ -120,11 +119,19 @@ extension FirebaseConnector: ProductTestingService {
 
 
 extension FirebaseConnector: AnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+    func trackEvent(
+        _ event: String,
+        customParameters: [String : Any]?,
+        partnerParameters: [String: String]
+    ) {
         guard parameters.tracking else { return }
-        Analytics.logEvent(event, parameters: customParameters)
+        let params = customParameters?.merging(partnerParameters) { first, _ in first } ?? partnerParameters
+        Analytics.logEvent(event, parameters: params)
     }
     
     //MARK: - Noop
-    func trackInAppPurchase(_ purchase: Purchase) {}
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    ) {}
 }

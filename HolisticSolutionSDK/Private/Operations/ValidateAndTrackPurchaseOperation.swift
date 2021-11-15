@@ -19,7 +19,8 @@ final class ValidateAndTrackPurchaseOperation: AsynchronousOperation {
     
     public var attribution: [AttributionService] = []
     public var analytics: [AnalyticsService] = []
-
+    public var advertising: Advertising!
+    
     private var response: [AnyHashable: Any] = [:]
     private var error: (Error?, Any?)?
     
@@ -50,6 +51,7 @@ final class ValidateAndTrackPurchaseOperation: AsynchronousOperation {
             group.enter()
             service.validateAndTrackInAppPurchase(
                 purchase,
+                partnerParameters: advertising.partnerParameters,
                 success: { [weak self] response in
                     self?.response.merge(response) { current, _ in current }
                     self?.group.leave()
@@ -66,7 +68,12 @@ final class ValidateAndTrackPurchaseOperation: AsynchronousOperation {
             if let error = self.error {
                 self.failure?(error.0, error.1)
             } else {
-                self.analytics.forEach { $0.trackInAppPurchase(self.purchase) }
+                self.analytics.forEach {
+                    $0.trackInAppPurchase(
+                        self.purchase,
+                        partnerParameters: self.advertising.partnerParameters
+                    )
+                }
                 self.success?(self.response)
             }
             self.finish()

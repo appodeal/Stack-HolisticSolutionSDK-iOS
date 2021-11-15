@@ -21,6 +21,7 @@ final class AttributionOperation: CancellableAsynchronousOperation {
         connectors.forEach { connector in
             group.enter()
             DispatchQueue.main.async { [unowned connector] in
+                App.log("Collect attribution data from \(connector.name)")
                 connector.collect(
                     receiveAttributionId: { [weak self] in
                         App.log("Receive attribution id: \($0)")

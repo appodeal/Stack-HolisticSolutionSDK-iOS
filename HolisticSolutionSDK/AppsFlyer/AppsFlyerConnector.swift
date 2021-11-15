@@ -60,6 +60,14 @@ class AppsFlyerConnector: NSObject, Service {
             #endif
         }
     }
+    
+    public func set(partnerParameters: [String : String]) {
+        App.log("Set partner parameters: \(partnerParameters) to service \(name)")
+        AppsFlyerLib.shared().setPartnerData(
+            partnerId: nil,
+            partnerInfo: partnerParameters
+        )
+    }
 }
 
 
@@ -104,15 +112,18 @@ extension AppsFlyerConnector: AttributionService {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
+        partnerParameters: [String: String],
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
+        let parameters = purchase.additionalParameters.merging(partnerParameters) { first, _ in first }
+
         AppsFlyerLib.shared().validateAndLog(
             inAppPurchase: purchase.productId,
             price: purchase.price,
             currency: purchase.currency,
             transactionId: purchase.transactionId,
-            additionalParameters: purchase.additionalParameters,
+            additionalParameters: parameters,
             success: success,
             failure: failure
         )
@@ -143,11 +154,18 @@ extension AppsFlyerConnector: AppsFlyerLibDelegate {
 
 
 extension AppsFlyerConnector: AnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+    func trackEvent(
+        _ event: String,
+        customParameters: [String : Any]?,
+        partnerParameters: [String: String]
+    ) {
         guard trackingEnabled else { return }
         AppsFlyerLib.shared().logEvent(event, withValues: customParameters)
     }
 
     //MARK: - Noop
-    func trackInAppPurchase(_ purchase: Purchase) {}
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: [String: String]
+    ) {}
 }
