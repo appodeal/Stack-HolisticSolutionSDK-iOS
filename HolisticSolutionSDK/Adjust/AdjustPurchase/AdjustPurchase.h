@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-#import <AdjustPurchase/ADJPCommon.h>
-#import <AdjustPurchase/ADJPConfig.h>
-#import <AdjustPurchase/ADJPVerificationInfo.h>
+#if __has_include(<AdjustPurchase/AdjustPurchase.h>)
+    #import <AdjustPurchase/ADJPCommon.h>
+    #import <AdjustPurchase/ADJPConfig.h>
+    #import <AdjustPurchase/ADJPVerificationInfo.h>
+#else
+    #import "ADJPCommon.h"
+    #import "ADJPConfig.h"
+    #import "ADJPVerificationInfo.h"
+#endif
+
 
 /**
  *  @brief  Static class used for In-App-Purchase receipt verification.

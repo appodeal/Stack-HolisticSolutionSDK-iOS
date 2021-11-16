@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import <AdjustPurchase/ADJPCommon.h>
+#if __has_include(<AdjustPurchase/AdjustPurchase.h>)
+    #import <AdjustPurchase/ADJPCommon.h>
+#else
+    #import "ADJPCommon.h"
+#endif
 
 @interface ADJPConfig : NSObject
 

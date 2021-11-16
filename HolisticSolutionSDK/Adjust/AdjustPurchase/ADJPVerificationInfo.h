@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import <AdjustPurchase/ADJPCommon.h>
+#if __has_include(<AdjustPurchase/AdjustPurchase.h>)
+    #import <AdjustPurchase/ADJPCommon.h>
+#else
+    #import "ADJPCommon.h"
+#endif
 
 /**
  *  @brief  Object which is sent as response from AdjustPurchase module in
