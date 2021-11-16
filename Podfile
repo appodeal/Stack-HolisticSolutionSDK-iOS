@@ -44,7 +44,6 @@ end
 
 def adjust
   pod 'Adjust', '4.29.6'
-  pod 'AdjustPurchase', :git => 'https://github.com/adjust/ios_purchase_sdk', :tag => 'v1.0.0'
 end
 
 def deps

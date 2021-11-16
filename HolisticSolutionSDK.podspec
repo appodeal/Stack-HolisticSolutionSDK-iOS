@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "2.0.2"
+  spec.version      = "2.0.3-Beta"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.author       = { "appodeal" => "https://appodeal.com" }
   spec.platform     = :ios, "10.0"
 
-  spec.source       = { :git => "https://github.com/appodeal/Stack-HolisticSolutionSDK-iOS.git", :tag => "v#{spec.version}" }
+  spec.source       = { :git => "https://github.com/appodeal/Stack-HolisticSolutionSDK-iOS.git", :branch => "develop" }
 
   spec.requires_arc = true
   spec.static_framework = true
@@ -62,10 +62,9 @@ Pod::Spec.new do |spec|
   end
   
   spec.subspec "Adjust" do |ss|
-    ss.source_files = "HolisticSolutionSDK/Adjust"
+    ss.source_files = "HolisticSolutionSDK/Adjust/**/*.{h,m,swift}"
     ss.dependency "HolisticSolutionSDK/Core"
     ss.dependency "Adjust", "4.29.6"
-    ss.dependency "AdjustPurchase", "1.0.0"
   end
 
   spec.subspec "AppsFlyer" do |ss|

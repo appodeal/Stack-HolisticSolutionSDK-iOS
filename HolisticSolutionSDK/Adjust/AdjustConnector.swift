@@ -11,6 +11,7 @@ import UIKit
 import Adjust
 import AdjustPurchase
 import StackFoundation
+import StoreKit
 
 
 @objc(HSAdjustConnector) public final

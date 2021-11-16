@@ -3,9 +3,6 @@ PODS:
   - Adjust (4.29.6):
     - Adjust/Core (= 4.29.6)
   - Adjust/Core (4.29.6)
-  - AdjustPurchase (1.0.0):
-    - AdjustPurchase/Core (= 1.0.0)
-  - AdjustPurchase/Core (1.0.0)
   - Ads-Global (3.7.0.7):
     - Ads-Global/BUAdSDK (= 3.7.0.7)
   - Ads-Global/BUAdSDK (3.7.0.7):
@@ -320,7 +317,6 @@ PODS:
 
 DEPENDENCIES:
   - Adjust (= 4.29.6)
-  - AdjustPurchase (from `https://github.com/adjust/ios_purchase_sdk`, tag `v1.0.0`)
   - APDAdColonyAdapter (= 2.10.3.1)
   - APDAmazonAdsAdapter (= 2.10.3.1)
   - APDAppLovinAdapter (= 2.10.3.1)
@@ -357,9 +353,6 @@ SPEC REPOS:
     - APDVungleAdapter
     - APDYandexAdapter
     - Appodeal
-    - BidMachine
-    - StackIAB
-    - StackModules
   trunk:
     - AdColony
     - Adjust
@@ -410,20 +403,9 @@ SPEC REPOS:
     - YandexMobileAds
     - YandexMobileMetrica
 
-EXTERNAL SOURCES:
-  AdjustPurchase:
-    :git: https://github.com/adjust/ios_purchase_sdk
-    :tag: v1.0.0
-
-CHECKOUT OPTIONS:
-  AdjustPurchase:
-    :git: https://github.com/adjust/ios_purchase_sdk
-    :tag: v1.0.0
-
 SPEC CHECKSUMS:
   AdColony: 970af2bff1e500c8a681bfcbd85f8054c0f57071
   Adjust: 94f1c99429fb2a7ebe530294fd66a88d63a54922
-  AdjustPurchase: ec15f1fd2773bd2907b5ce949cd54a09470f0b0f
   Ads-Global: 181a0b751db8694b6a50798977f52f0ae803673a
   AmazonAd: 9adf416ea36ca2325ce2040c0cf124f071089904
   AmazonPublisherServicesSDK: 12ec8a797b49796f2714d5f99235370e24bf93e6
@@ -484,6 +466,6 @@ SPEC CHECKSUMS:
   YandexMobileAds: 8796ef1269362c2df9709914d28c17280b030d6b
   YandexMobileMetrica: 9e713c16bb6aca0ba63b84c8d7b8b86d32f4ecc4
 
-PODFILE CHECKSUM: b8ed344a8e4194de07a4f2f0b65570a28b8c7414
+PODFILE CHECKSUM: 19c59451a77b920b02d7d2b392bb1936c5b11f7a
 
 COCOAPODS: 1.11.2
