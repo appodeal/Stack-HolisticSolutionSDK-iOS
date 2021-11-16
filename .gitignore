@@ -3,6 +3,7 @@
 
 # Xcode
 build/
+release/
 DerivedData
 
 ## Various settings

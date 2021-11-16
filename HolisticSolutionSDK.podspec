@@ -58,18 +58,13 @@ Pod::Spec.new do |spec|
     ss.dependency 'APDVungleAdapter', '2.10.3.1' 
     ss.dependency 'APDYandexAdapter', '2.10.3.1' 
   end
-  
-  spec.subspec "AdjustPurchase" do |ss|
-      ss.source_files = "HolisticSolutionSDK/Adjust/AdjustPurchase/**/*.{h,m,swift}"
-      ss.framework = 'SystemConfiguration'
-  end
 
   spec.subspec "Adjust" do |ss|
     ss.source_files = "HolisticSolutionSDK/Adjust/**/*.{h,m,swift}"
     ss.exclude_files = "HolisticSolutionSDK/Adjust/AdjustPurchase/**/*.{h,m,swift}"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "HolisticSolutionSDK/AdjustPurchase"
     ss.dependency "Adjust", "4.29.6"
+    ss.dependency "AdjustPurchase", "1.0.1"
   end
 
   spec.subspec "AppsFlyer" do |ss|

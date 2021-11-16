@@ -60,6 +60,11 @@ class AppsFlyerConnector: NSObject, Service {
             #endif
         }
     }
+    
+    public func set(partnerParameters: [String : String]) {
+        App.log("Set partner parameters: \(partnerParameters) to service \(name)")
+        AppsFlyerLib.shared().customData = partnerParameters
+    }
 }
 
 
