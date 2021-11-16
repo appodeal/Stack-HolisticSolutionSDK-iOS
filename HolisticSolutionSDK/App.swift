@@ -84,7 +84,7 @@ class App: NSObject {
             initializeRemoteConfigServiceOperation.parameters = fetchParametersOperation.response
             initializeRemoteConfigServiceOperation.connector = { [unowned self] name in
                 let initializable = self.registry.initalizable(name)
-                return initializable is FirebaseConnector ? initializable : nil
+                return initializable is ProductTestingService ? initializable : nil
             }
         }
         initializeRemoteConfigServiceOperation.addDependency(initializeRemoteConfigServiceAdapterOperation)
@@ -112,7 +112,7 @@ class App: NSObject {
             initializeServicesOperation.parameters = fetchParametersOperation.response
             initializeServicesOperation.connector = { [unowned self] name in
                 let initializable = self.registry.initalizable(name)
-                return initializable is FirebaseConnector ? nil : initializable
+                return initializable is ProductTestingService ? nil : initializable
             }
         }
         // Clear registry
