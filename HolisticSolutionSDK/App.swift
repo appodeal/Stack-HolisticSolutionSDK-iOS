@@ -35,6 +35,8 @@ class App: NSObject {
         return queue
     }()
     
+    private var pendingOperations: [Operation] = []
+    
     private func _initialize(
         application: UIApplication,
         launchOptions: [UIApplication.LaunchOptionsKey : Any]?,
@@ -165,6 +167,11 @@ class App: NSObject {
         completionOperation.addDependency(syncRemoteConfigOperation)
         completionOperation.addDependency(advertisingOperation)
         
+        let runPendingTasksOperation = BlockOperation { [unowned self] in
+            self.queue.addOperations(self.pendingOperations, waitUntilFinished: false)
+            self.pendingOperations.removeAll()
+        }
+        
         queue.addOperations(
             [
                 privacyAdapterOperation,
@@ -185,7 +192,8 @@ class App: NSObject {
                 advertisingAdapterOperation,
                 advertisingOperation,
                 completionOperation,
-                setMmpInfoOperation
+                setMmpInfoOperation,
+                runPendingTasksOperation
             ],
             waitUntilFinished: false
         )
@@ -277,7 +285,12 @@ extension App: DSL {
         }
         
         operation.addDependency(adapter)
-        queue.addOperations([adapter, operation], waitUntilFinished: false)
+        
+        if initialized {
+            queue.addOperations([adapter, operation], waitUntilFinished: false)
+        } else {
+            pendingOperations.append(contentsOf: [adapter, operation])
+        }
     }
     
     @objc public
@@ -293,6 +306,10 @@ extension App: DSL {
         
         trackEvent.addDependency(adapter)
         
-        queue.addOperations([adapter, trackEvent], waitUntilFinished: false)
+        if initialized {
+            queue.addOperations([adapter, trackEvent], waitUntilFinished: false)
+        } else {
+            pendingOperations.append(contentsOf: [adapter, trackEvent])
+        }
     }
 }

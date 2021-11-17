@@ -97,7 +97,7 @@ extension AppodealConnector: Initializable {
 extension AppodealConnector: AnalyticsService {
     func trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         DispatchQueue.main.async {
             Appodeal.track(
@@ -111,7 +111,7 @@ extension AppodealConnector: AnalyticsService {
     func trackEvent(
         _ event: String,
         customParameters: [String : Any]?,
-        partnerParameters: [String : String]
+        partnerParameters: PartnerParameters?
     ) {}
 }
 

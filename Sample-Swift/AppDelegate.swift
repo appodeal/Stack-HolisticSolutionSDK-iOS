@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appKey: AppodealConstants.appKey,
             adTypes: AppodealConstants.adType
         )
-        
         Appodeal.setTestingEnabled(true)
+        
         Appodeal.hs.register(connectors: connectors)
         Appodeal.hs.initialize(
             application: application,

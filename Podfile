@@ -60,6 +60,11 @@ target 'HolisticSolutionSDK' do
   deps
 end
 
+target 'HolisticSolutionSDKTests' do
+  project 'HolisticSolutionSDK.xcodeproj'
+  deps
+end
+
 target 'Sample-Swift' do
   project 'Sample-Swift.xcodeproj'
 	deps

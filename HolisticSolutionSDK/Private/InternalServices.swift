@@ -24,7 +24,7 @@ protocol AttributionService: Service {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String],
+        partnerParameters: PartnerParameters?,
         success:(([AnyHashable: Any]) -> Void)?,
         failure:((Error?, Any?) -> Void)?
     )
@@ -42,11 +42,11 @@ protocol AnalyticsService: Service {
     func trackEvent(
         _ event: String,
         customParameters: [String: Any]?,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     )
     
     func trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     )
 }

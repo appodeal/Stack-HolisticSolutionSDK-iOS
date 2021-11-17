@@ -73,17 +73,17 @@ extension FacebookConnector: AnalyticsService {
     func trackEvent(
         _ event: String,
         customParameters: [String : Any]?,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard parameters.tracking else { return }
         let name = AppEvents.Name(event)
-        let params = customParameters?.merging(partnerParameters) { first, _ in first } ?? partnerParameters
+        let params = merged(Any.self, customParameters, partnerParameters)
         AppEvents.logEvent(name, parameters: params)
     }
     
     // MARK: - Noop
     func trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {}
 }

@@ -109,18 +109,16 @@ extension AppsFlyerConnector: AttributionService {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String],
+        partnerParameters: PartnerParameters?,
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
-        let parameters = purchase.additionalParameters.merging(partnerParameters) { first, _ in first }
-
         AppsFlyerLib.shared().validateAndLog(
             inAppPurchase: purchase.productId,
             price: purchase.price,
             currency: purchase.currency,
             transactionId: purchase.transactionId,
-            additionalParameters: parameters,
+            additionalParameters: merged(Any.self, purchase.additionalParameters, partnerParameters),
             success: success,
             failure: failure
         )
@@ -154,7 +152,7 @@ extension AppsFlyerConnector: AnalyticsService {
     func trackEvent(
         _ event: String,
         customParameters: [String : Any]?,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard trackingEnabled else { return }
         AppsFlyerLib.shared().logEvent(event, withValues: customParameters)
@@ -163,6 +161,6 @@ extension AppsFlyerConnector: AnalyticsService {
     //MARK: - Noop
     func trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {}
 }

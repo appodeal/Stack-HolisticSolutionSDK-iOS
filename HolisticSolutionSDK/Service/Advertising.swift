@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol Advertising {
-    var partnerParameters: [String: String] { get }
+    var partnerParameters: PartnerParameters { get }
 
     func setTrackId(_ trackId: String)
     func setAttributionId(_ attributionId: String)

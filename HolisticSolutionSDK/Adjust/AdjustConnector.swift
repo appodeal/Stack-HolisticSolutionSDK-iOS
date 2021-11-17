@@ -183,7 +183,7 @@ extension AdjustConnector: AttributionService {
     
     func validateAndTrackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String],
+        partnerParameters: PartnerParameters?,
         success: (([AnyHashable : Any]) -> Void)?,
         failure: ((Error?, Any?) -> Void)?
     ) {
@@ -263,7 +263,7 @@ extension AdjustConnector: AnalyticsService {
     func trackEvent(
         _ event: String,
         customParameters: [String: Any]?,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard parameters.tracking else { return }
         
@@ -289,7 +289,7 @@ extension AdjustConnector: AnalyticsService {
     
     func trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         switch purchase.type {
         case .consumable, .nonConsumable:
@@ -307,7 +307,7 @@ extension AdjustConnector: AnalyticsService {
     
     private func _trackInAppPurchase(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard let token = parameters.token(for: .purchase) else {
             fallback(
@@ -356,7 +356,7 @@ extension AdjustConnector: AnalyticsService {
     
     private func _trackSubscription(
         _ purchase: Purchase,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard let receipt = Bundle.main.receipt else {
             fallback(
@@ -405,7 +405,7 @@ extension AdjustConnector: AnalyticsService {
     
     private func fallback(
         _ info: FallbackInfo,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         guard let token = parameters.token(for: .unknown) else { return }
         let event = ADJEvent(
@@ -437,7 +437,7 @@ private extension ADJEvent {
     convenience init?(
         token: String,
         parameters: [String: Any]?,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         self.init(eventToken: token)
         parameters?.forEach {
@@ -446,7 +446,7 @@ private extension ADJEvent {
                 addPartnerParameter($0.key, value: value)
             }
         }
-        partnerParameters.forEach {
+        partnerParameters?.forEach {
             addCallbackParameter($0.key, value: $0.value)
             addPartnerParameter($0.key, value: $0.value)
         }
@@ -455,7 +455,7 @@ private extension ADJEvent {
     convenience init?(
         token: String,
         fallbackInfo: AdjustConnector.FallbackInfo,
-        partnerParameters: [String: String]
+        partnerParameters: PartnerParameters?
     ) {
         self.init(
             token: token,

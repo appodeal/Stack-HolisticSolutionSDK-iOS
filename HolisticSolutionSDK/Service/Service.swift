@@ -9,6 +9,9 @@
 import Foundation
 import UIKit
 
+
+public typealias PartnerParameters = [String: String]
+
 @objc(HSService) public
 protocol Service: AnyObject {
     var name: String { get }
@@ -27,7 +30,7 @@ protocol Service: AnyObject {
     func set(debug: AppConfiguration.Debug)
     
     @objc optional
-    func set(partnerParameters: [String: String])
+    func set(partnerParameters: PartnerParameters)
 }
 
 

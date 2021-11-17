@@ -13,6 +13,9 @@
 		421B713926553ADC00075968 /* InitializeServiceOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B713826553ADC00075968 /* InitializeServiceOperation.swift */; };
 		421B713B2655660D00075968 /* FetchServicesParametersOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B713A2655660D00075968 /* FetchServicesParametersOperation.swift */; };
 		4229F7D4264D15C60068E8D7 /* AdjustConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4229F7D3264D15C60068E8D7 /* AdjustConnector.swift */; };
+		422E42ED2744EA4E000E8BE8 /* ParametersResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422E42EC2744EA4E000E8BE8 /* ParametersResolver.swift */; };
+		422E42F52744EDCA000E8BE8 /* HolisticSolutionSDKTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422E42F42744EDCA000E8BE8 /* HolisticSolutionSDKTests.swift */; };
+		422E42F62744EDCA000E8BE8 /* HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A1EB24A4BE3200F5FFD5 /* HolisticSolutionSDK.framework */; };
 		42411A8924A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42411A8824A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift */; };
 		4246449B24AB5E1B00C8B8D1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4246449A24AB5E1B00C8B8D1 /* Service.swift */; };
 		4248EE1924A5EE60003E9CA6 /* AppodealConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4248EE1824A5EE60003E9CA6 /* AppodealConnector.swift */; };
@@ -55,10 +58,18 @@
 		42EB08E524ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EB08E424ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift */; };
 		42FCD7BD266DFECC00F8B83F /* ErrorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FCD7BC266DFECC00F8B83F /* ErrorProvider.swift */; };
 		42FCD7BF266E072A00F8B83F /* CompletionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FCD7BE266E072A00F8B83F /* CompletionOperation.swift */; };
+		A4B83EE378EBC3D0DCE9F55C /* Pods_HolisticSolutionSDKTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29701AF5940B0AD3F17CCC3 /* Pods_HolisticSolutionSDKTests.framework */; };
 		B8FFDBD77A00F474B1E3DDE7 /* Pods_HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		422E42F72744EDCA000E8BE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4294A1E224A4BE3200F5FFD5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4294A1EA24A4BE3200F5FFD5;
+			remoteInfo = HolisticSolutionSDK;
+		};
 		42D4B47A2743AE290007D84E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4294A1E224A4BE3200F5FFD5 /* Project object */;
@@ -83,12 +94,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		203304AA1C5CE00AF4C3E293 /* Pods-HolisticSolutionSDKTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDKTests.debug.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests.debug.xcconfig"; sourceTree = "<group>"; };
 		421B712E2652AFEA00075968 /* DSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSL.swift; sourceTree = "<group>"; };
 		421B71312655063600075968 /* ConsentManagerConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentManagerConnector.swift; sourceTree = "<group>"; };
 		421B7136265537F800075968 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		421B713826553ADC00075968 /* InitializeServiceOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitializeServiceOperation.swift; sourceTree = "<group>"; };
 		421B713A2655660D00075968 /* FetchServicesParametersOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchServicesParametersOperation.swift; sourceTree = "<group>"; };
 		4229F7D3264D15C60068E8D7 /* AdjustConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustConnector.swift; sourceTree = "<group>"; };
+		422E42EC2744EA4E000E8BE8 /* ParametersResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersResolver.swift; sourceTree = "<group>"; };
+		422E42F22744EDCA000E8BE8 /* HolisticSolutionSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HolisticSolutionSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		422E42F42744EDCA000E8BE8 /* HolisticSolutionSDKTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolisticSolutionSDKTests.swift; sourceTree = "<group>"; };
 		42411A8824A9DC8C001CCCD3 /* CancellableAsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableAsynchronousOperation.swift; sourceTree = "<group>"; };
 		4246449A24AB5E1B00C8B8D1 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		4248EE1824A5EE60003E9CA6 /* AppodealConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppodealConnector.swift; sourceTree = "<group>"; };
@@ -134,10 +149,21 @@
 		42FCD7BE266E072A00F8B83F /* CompletionOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionOperation.swift; sourceTree = "<group>"; };
 		5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HolisticSolutionSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AE86170FC82EF84100DBEE5 /* Pods-HolisticSolutionSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.release.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.release.xcconfig"; sourceTree = "<group>"; };
+		6E2EEAEC9CAFA87084AEF641 /* Pods-HolisticSolutionSDKTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDKTests.release.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests.release.xcconfig"; sourceTree = "<group>"; };
 		E009234B9C7CD0210F19C025 /* Pods-HolisticSolutionSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HolisticSolutionSDK.debug.xcconfig"; path = "../Stack-HolisticSolutionSDK-iOS/Pods/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		F29701AF5940B0AD3F17CCC3 /* Pods_HolisticSolutionSDKTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HolisticSolutionSDKTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		422E42EF2744EDCA000E8BE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				422E42F62744EDCA000E8BE8 /* HolisticSolutionSDK.framework in Frameworks */,
+				A4B83EE378EBC3D0DCE9F55C /* Pods_HolisticSolutionSDKTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4251BC442743ACB300EF2BDE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -172,6 +198,14 @@
 				4229F7D3264D15C60068E8D7 /* AdjustConnector.swift */,
 			);
 			path = Adjust;
+			sourceTree = "<group>";
+		};
+		422E42F32744EDCA000E8BE8 /* HolisticSolutionSDKTests */ = {
+			isa = PBXGroup;
+			children = (
+				422E42F42744EDCA000E8BE8 /* HolisticSolutionSDKTests.swift */,
+			);
+			path = HolisticSolutionSDKTests;
 			sourceTree = "<group>";
 		};
 		4248EE1724A5EE1F003E9CA6 /* Service */ = {
@@ -221,6 +255,7 @@
 			isa = PBXGroup;
 			children = (
 				4294A1ED24A4BE3200F5FFD5 /* HolisticSolutionSDK */,
+				422E42F32744EDCA000E8BE8 /* HolisticSolutionSDKTests */,
 				4294A1EC24A4BE3200F5FFD5 /* Products */,
 				B60F4646707361C2ED527F87 /* Pods */,
 				5D7F9EC1F9428C7A652ACF9D /* Frameworks */,
@@ -232,6 +267,7 @@
 			children = (
 				4294A1EB24A4BE3200F5FFD5 /* HolisticSolutionSDK.framework */,
 				4251BC472743ACB300EF2BDE /* AdjustPurchase.framework */,
+				422E42F22744EDCA000E8BE8 /* HolisticSolutionSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,6 +340,7 @@
 				426A29A3265E386D00EB0843 /* ConnectorsRegistry.swift */,
 				42EB08E124ACBD0800B07AAE /* InternalServices.swift */,
 				421B7136265537F800075968 /* UIApplicationExtensions.swift */,
+				422E42EC2744EA4E000E8BE8 /* ParametersResolver.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -330,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				5477BFA3591B0F22F80B7A8E /* Pods_HolisticSolutionSDK.framework */,
+				F29701AF5940B0AD3F17CCC3 /* Pods_HolisticSolutionSDKTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,6 +377,8 @@
 			children = (
 				E009234B9C7CD0210F19C025 /* Pods-HolisticSolutionSDK.debug.xcconfig */,
 				5AE86170FC82EF84100DBEE5 /* Pods-HolisticSolutionSDK.release.xcconfig */,
+				203304AA1C5CE00AF4C3E293 /* Pods-HolisticSolutionSDKTests.debug.xcconfig */,
+				6E2EEAEC9CAFA87084AEF641 /* Pods-HolisticSolutionSDKTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -374,6 +414,27 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		422E42F12744EDCA000E8BE8 /* HolisticSolutionSDKTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 422E42F92744EDCA000E8BE8 /* Build configuration list for PBXNativeTarget "HolisticSolutionSDKTests" */;
+			buildPhases = (
+				403B3E90F4BB9F126B2F4CD1 /* [CP] Check Pods Manifest.lock */,
+				422E42EE2744EDCA000E8BE8 /* Sources */,
+				422E42EF2744EDCA000E8BE8 /* Frameworks */,
+				422E42F02744EDCA000E8BE8 /* Resources */,
+				88CEBBE291C16C85A56DD82E /* [CP] Embed Pods Frameworks */,
+				2E1299E9AF1A13B25493BDEF /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				422E42F82744EDCA000E8BE8 /* PBXTargetDependency */,
+			);
+			name = HolisticSolutionSDKTests;
+			productName = HolisticSolutionSDKTests;
+			productReference = 422E42F22744EDCA000E8BE8 /* HolisticSolutionSDKTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4251BC462743ACB300EF2BDE /* AdjustPurchase */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4251BC4D2743ACB300EF2BDE /* Build configuration list for PBXNativeTarget "AdjustPurchase" */;
@@ -420,9 +481,13 @@
 		4294A1E224A4BE3200F5FFD5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = com.appodeal;
 				TargetAttributes = {
+					422E42F12744EDCA000E8BE8 = {
+						CreatedOnToolsVersion = 13.0;
+					};
 					4251BC462743ACB300EF2BDE = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -447,11 +512,19 @@
 			targets = (
 				4294A1EA24A4BE3200F5FFD5 /* HolisticSolutionSDK */,
 				4251BC462743ACB300EF2BDE /* AdjustPurchase */,
+				422E42F12744EDCA000E8BE8 /* HolisticSolutionSDKTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		422E42F02744EDCA000E8BE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4251BC452743ACB300EF2BDE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -469,6 +542,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2E1299E9AF1A13B25493BDEF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2E2F3B1CC68037E21B535C55 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -484,6 +574,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDK/Pods-HolisticSolutionSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		403B3E90F4BB9F126B2F4CD1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HolisticSolutionSDKTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88CEBBE291C16C85A56DD82E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HolisticSolutionSDKTests/Pods-HolisticSolutionSDKTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		DAC3D985406FAB2F5BC20ACD /* [CP] Check Pods Manifest.lock */ = {
@@ -511,6 +640,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		422E42EE2744EDCA000E8BE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				422E42F52744EDCA000E8BE8 /* HolisticSolutionSDKTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4251BC432743ACB300EF2BDE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -541,6 +678,7 @@
 				4294A20924A4D61100F5FFD5 /* Advertising.swift in Sources */,
 				4273EBA624A60D9C00A868FD /* AttributionOperation.swift in Sources */,
 				42EB08E524ACC5C900B07AAE /* ValidateAndTrackPurchaseOperation.swift in Sources */,
+				422E42ED2744EA4E000E8BE8 /* ParametersResolver.swift in Sources */,
 				426A29A4265E386D00EB0843 /* ConnectorsRegistry.swift in Sources */,
 				421B713B2655660D00075968 /* FetchServicesParametersOperation.swift in Sources */,
 				42CAC483265D1D2F000A0A71 /* APIConnnector.swift in Sources */,
@@ -564,6 +702,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		422E42F82744EDCA000E8BE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4294A1EA24A4BE3200F5FFD5 /* HolisticSolutionSDK */;
+			targetProxy = 422E42F72744EDCA000E8BE8 /* PBXContainerItemProxy */;
+		};
 		42D4B47B2743AE290007D84E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4251BC462743ACB300EF2BDE /* AdjustPurchase */;
@@ -572,6 +715,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		422E42FA2744EDCA000E8BE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 203304AA1C5CE00AF4C3E293 /* Pods-HolisticSolutionSDKTests.debug.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WG4VFF78ZM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.HolisticSolutionSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		422E42FB2744EDCA000E8BE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E2EEAEC9CAFA87084AEF641 /* Pods-HolisticSolutionSDKTests.release.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WG4VFF78ZM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.HolisticSolutionSDKTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		4251BC4E2743ACB300EF2BDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -593,6 +784,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.AdjustPurchase;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -624,6 +816,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MACH_O_TYPE = staticlib;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.AdjustPurchase;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -818,6 +1011,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		422E42F92744EDCA000E8BE8 /* Build configuration list for PBXNativeTarget "HolisticSolutionSDKTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				422E42FA2744EDCA000E8BE8 /* Debug */,
+				422E42FB2744EDCA000E8BE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4251BC4D2743ACB300EF2BDE /* Build configuration list for PBXNativeTarget "AdjustPurchase" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
