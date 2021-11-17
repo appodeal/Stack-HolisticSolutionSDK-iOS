@@ -86,7 +86,7 @@
 }
 
 - (void)synthesizeEvent {
-    [Appodeal.hs trackEvent:@"level_started" customParameters:nil];
+    [Appodeal.hs trackEvent:@"game_started" customParameters:nil];
 }
 
 - (void)alertWithTitle:(NSString *)title message:(NSString * _Nullable)message {
