@@ -21,6 +21,9 @@ xcuserdata
 GoogleService-Info.plist
 Services-Info.plist
 
+## Adjust
+AdjustSigSdk.xcframework
+
 ## Obj-C/Swift specific
 *.hmap
 *.ipa

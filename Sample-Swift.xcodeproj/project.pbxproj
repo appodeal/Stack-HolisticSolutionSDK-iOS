@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		4206424A266619750031B314 /* StaticTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42064249266619750031B314 /* StaticTableViewController.swift */; };
 		420F4EC424A641A6002A242F /* HolisticSolutionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */; };
 		422AA5FE268C7F5A007E8CEB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 422AA5FD268C7F5A007E8CEB /* GoogleService-Info.plist */; };
+		422E42FD27452FB5000E8BE8 /* AdjustSigSdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 422E42FC27452FB5000E8BE8 /* AdjustSigSdk.xcframework */; };
 		42528753246025E80013D9BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528752246025E80013D9BA /* AppDelegate.swift */; };
 		42528755246025E80013D9BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528754246025E80013D9BA /* SceneDelegate.swift */; };
 		42528757246025E80013D9BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42528756246025E80013D9BA /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 		1CB274AAF39A97CD91B136DD /* Pods-Sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.debug.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.debug.xcconfig"; sourceTree = "<group>"; };
 		42064249266619750031B314 /* StaticTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticTableViewController.swift; sourceTree = "<group>"; };
 		422AA5FD268C7F5A007E8CEB /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "Plists/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		422E42FC27452FB5000E8BE8 /* AdjustSigSdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AdjustSigSdk.xcframework; path = Plists/AdjustSigSdk.xcframework; sourceTree = "<group>"; };
 		4252874F246025E80013D9BA /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42528752246025E80013D9BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42528754246025E80013D9BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -46,6 +48,7 @@
 				426A29A6265E5CCB00EB0843 /* AppTrackingTransparency.framework in Frameworks */,
 				BCC7513A4D8CCD6FE1BC60DA /* Pods_Sample_Swift.framework in Frameworks */,
 				420F4EC424A641A6002A242F /* HolisticSolutionSDK.framework in Frameworks */,
+				422E42FD27452FB5000E8BE8 /* AdjustSigSdk.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +110,7 @@
 		E251E3D817705301F3678043 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				422E42FC27452FB5000E8BE8 /* AdjustSigSdk.xcframework */,
 				426A29A5265E5CCB00EB0843 /* AppTrackingTransparency.framework */,
 				4294A1FC24A4C0E200F5FFD5 /* HolisticSolutionSDK.framework */,
 				A25545BCFDDD9F58A279F9CD /* Pods_Sample_Swift.framework */,
@@ -395,7 +399,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.sandbox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasko.simplenumbers;
 				PRODUCT_NAME = Sample;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -415,7 +419,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.appodeal.sandbox;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stasko.simplenumbers;
 				PRODUCT_NAME = Sample;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
