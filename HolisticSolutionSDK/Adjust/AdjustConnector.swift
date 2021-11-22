@@ -177,8 +177,12 @@ extension AdjustConnector: AttributionService {
         receiveData: @escaping (([AnyHashable : Any]?) -> Void)
     ) {
         Adjust.adid().map(receiveAttributionId)
-        Adjust.attribution().flatMap { $0.dictionary() }.map(receiveData)
-        onReceiveConversionData = receiveData
+        if parameters.environment == ADJEnvironmentSandbox {
+            receiveData(nil)
+        } else {
+            Adjust.attribution().flatMap { $0.dictionary() }.map(receiveData)
+            onReceiveConversionData = receiveData
+        }
     }
     
     func validateAndTrackInAppPurchase(

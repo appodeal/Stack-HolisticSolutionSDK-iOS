@@ -13,7 +13,6 @@
 
 
 NSString *const completeNotification                = @"HSAppCompleteNotification";
-NSString *const kAppodealAppKey                     = @"dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f";
 AppodealAdType const kAppodealTypes                 = AppodealAdTypeBanner;
 BOOL const kConsent                                 = YES;
 
@@ -33,7 +32,9 @@ BOOL const kConsent                                 = YES;
         HSAdjustConnector.class
     ]];
     
-    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAppKey:kAppodealAppKey
+    NSString *appKey = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"AppodealAppKey"];
+    
+    HSAppConfiguration *configuration = [[HSAppConfiguration alloc] initWithAppKey:appKey
                                                                            timeout:30
                                                                              debug:HSAppConfigurationDebugEnabled
                                                                            adTypes:kAppodealTypes];

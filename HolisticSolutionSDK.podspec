@@ -70,7 +70,7 @@ Pod::Spec.new do |spec|
   spec.subspec "AppsFlyer" do |ss|
     ss.source_files = "HolisticSolutionSDK/AppsFlyer"
     ss.dependency "HolisticSolutionSDK/Core"
-    ss.dependency "AppsFlyerFramework", "6.4.0"
+    ss.dependency "AppsFlyerFramework", "6.4.2"
   end
 
   spec.subspec "Firebase" do |ss|

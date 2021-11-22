@@ -35,7 +35,7 @@ def firebase
 end
 
 def appsflyer
-  pod 'AppsFlyerFramework', '6.4.0'
+  pod 'AppsFlyerFramework', '6.4.2'
 end
 
 def facebook 

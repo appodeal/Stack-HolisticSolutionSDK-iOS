@@ -74,9 +74,9 @@ PODS:
     - StackAnalytics (~> 1.2.0)
     - StackIAB (~> 1.5.0)
     - StackModules (~> 1.1.7)
-  - AppsFlyerFramework (6.4.0):
-    - AppsFlyerFramework/Main (= 6.4.0)
-  - AppsFlyerFramework/Main (6.4.0)
+  - AppsFlyerFramework (6.4.2):
+    - AppsFlyerFramework/Main (= 6.4.2)
+  - AppsFlyerFramework/Main (6.4.2)
   - BDMAdColonyAdapter (1.8.0.0):
     - AdColony (= 4.7.2)
     - BidMachine (~> 1.8.0.0)
@@ -330,7 +330,7 @@ DEPENDENCIES:
   - APDVungleAdapter (= 2.10.3.1)
   - APDYandexAdapter (= 2.10.3.1)
   - Appodeal (= 2.10.3)
-  - AppsFlyerFramework (= 6.4.0)
+  - AppsFlyerFramework (= 6.4.2)
   - FBSDKCoreKit (= 12.0.0)
   - Firebase/Analytics (= 8.8.0)
   - Firebase/Core (= 8.8.0)
@@ -423,7 +423,7 @@ SPEC CHECKSUMS:
   APDYandexAdapter: c282d91206706cde48a4c7f5fe1fa32950a32837
   AppLovinSDK: 6c261fe2ba6ed53969fcfb40aabd41cd3e7d9373
   Appodeal: 6595beb3294bf009b70a61bcceee0bc0871bcb40
-  AppsFlyerFramework: 9c37252d3edce38257afc065ad48a48c0f004000
+  AppsFlyerFramework: 2303994c0bda3afa48eba93680ab5fe48f46cd94
   BDMAdColonyAdapter: 446cb72ebb037f021a820f271f2836be89969f1e
   BDMAmazonAdapter: ef66f53c35f73cdf5e0019bea39c9d0cd4c0b60d
   BDMCriteoAdapter: ebc177d997f22c6e150ed5aa1d24027a256e70bb
@@ -466,6 +466,6 @@ SPEC CHECKSUMS:
   YandexMobileAds: 8796ef1269362c2df9709914d28c17280b030d6b
   YandexMobileMetrica: 9e713c16bb6aca0ba63b84c8d7b8b86d32f4ecc4
 
-PODFILE CHECKSUM: ac373d73bc90b74f998c1d144c0955b641b111ee
+PODFILE CHECKSUM: 03c31dc4a2961c7be3671b5f7c5a9cf16a676fe7
 
 COCOAPODS: 1.11.2
