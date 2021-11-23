@@ -17,10 +17,8 @@ struct ConnnectorsRegistry {
         ConsentManagerConnector.self
     ]
 
-    var ad: Advertising {
-        let ad = connectors.compactMap { $0 as? Advertising }.first
-        guard let ad = ad else { fatalError("Appodeal connnector is not found") }
-        return ad
+    var ad: Advertising! {
+        return connectors.compactMap { $0 as? Advertising }.first
     }
     
     mutating func register(connectors: [Service.Type]) {

@@ -26,6 +26,7 @@ internal class CancellableAsynchronousOperation: AsynchronousOperation, ErrorPro
     
     override func main() {
         super.main()
+        App.log("Start operation \(self)")
         guard timer == nil else { return }
         let timer = Timer(
             timeInterval: timeout,
@@ -41,6 +42,7 @@ internal class CancellableAsynchronousOperation: AsynchronousOperation, ErrorPro
     
     @objc private func didFire(timer: Timer) {
         guard isExecuting else { return }
+        App.log("Operation \(self) was canceled by timeout: \(timeout)")
         error = .timeout("Execution exceeds limit: \(timeout)s")
         finish()
     }

@@ -16,7 +16,7 @@ import Appodeal
 @objc(HSApp) final public
 class App: NSObject {
     @objc public static
-    let sdkVersion: String = "2.0.2"
+    let sdkVersion: String = "2.0.3"
     
     @objc public static
     let shared = App()
@@ -34,6 +34,8 @@ class App: NSObject {
         queue.qualityOfService = .default
         return queue
     }()
+    
+    private var pendingOperations: [Operation] = []
     
     private func _initialize(
         application: UIApplication,
@@ -78,12 +80,41 @@ class App: NSObject {
         let fetchParametersAdapterOperation = BlockOperation { [unowned self, unowned fetchParametersOperation] in
             fetchParametersOperation.services = self.registry.all()
         }
+        // Explicit operation for Firebase
+        let initializeRemoteConfigServiceOperation = InitializeServicesOperation()
+        let initializeRemoteConfigServiceAdapterOperation = BlockOperation { [unowned initializeRemoteConfigServiceOperation, unowned fetchParametersOperation] in
+            initializeRemoteConfigServiceOperation.parameters = fetchParametersOperation.response
+            initializeRemoteConfigServiceOperation.connector = { [unowned self] name in
+                let initializable = self.registry.initalizable(name)
+                return initializable is ProductTestingService ? initializable : nil
+            }
+        }
+        initializeRemoteConfigServiceOperation.addDependency(initializeRemoteConfigServiceAdapterOperation)
+        // Sync remote config
+        let syncRemoteConfigOperation = ProductTestSyncOperation(timeout: configuration.timeout)
+        let syncRemoteConfigAdapterOperation = BlockOperation { [unowned syncRemoteConfigOperation, unowned self] in
+            syncRemoteConfigOperation.advertising = self.registry.ad
+            syncRemoteConfigOperation.productTesting = self.registry.all()
+        }
+        syncRemoteConfigOperation.addDependency(syncRemoteConfigAdapterOperation)
+        syncRemoteConfigOperation.addDependency(initializeRemoteConfigServiceOperation)
+        // Send partner parameters from ad to services
+        let syncPartnerParametersOperation = BlockOperation { [unowned self] in
+            let services: [Service] = self.registry.all()
+            services.forEach {
+                let parameters = self.registry.ad.partnerParameters
+                $0.set?(partnerParameters: parameters)
+            }
+        }
+        syncPartnerParametersOperation.addDependency(syncRemoteConfigOperation)
+        
         // Initialize services
         let initializeServicesOperation = InitializeServicesOperation()
         let initializeServicesAdapterOperation = BlockOperation { [unowned initializeServicesOperation, unowned fetchParametersOperation] in
             initializeServicesOperation.parameters = fetchParametersOperation.response
             initializeServicesOperation.connector = { [unowned self] name in
-                return self.registry.initalizable(name)
+                let initializable = self.registry.initalizable(name)
+                return initializable is ProductTestingService ? nil : initializable
             }
         }
         // Clear registry
@@ -97,11 +128,11 @@ class App: NSObject {
                 self.registry.ad.setMMP(mmp: mmp.name)
             }
         }
-        
         removeUnusedConnectorsOperation.addDependency(fetchParametersOperation)
         fetchParametersOperation.addDependency(setupConnectorsOperation)
         fetchParametersOperation.addDependency(fetchParametersAdapterOperation)
         initializeServicesOperation.addDependency(initializeServicesAdapterOperation)
+        initializeServicesOperation.addDependency(syncPartnerParametersOperation)
         initializeServicesAdapterOperation.addDependency(fetchParametersOperation)
         setMmpInfoOperation.addDependency(removeUnusedConnectorsOperation)
         // Collect attribution data
@@ -111,14 +142,6 @@ class App: NSObject {
             attributionOperation.connectors = self.registry.all()
         }
         attributionOperation.addDependency(attributionAdapterOperation)
-        
-        // Sync remote config
-        let syncRemoteConfigOperation = ProductTestSyncOperation(timeout: configuration.timeout)
-        let syncRemoteConfigAdapterOperation = BlockOperation { [unowned syncRemoteConfigOperation, unowned self] in
-            syncRemoteConfigOperation.advertising = self.registry.ad
-            syncRemoteConfigOperation.productTesting = self.registry.all()
-        }
-        syncRemoteConfigOperation.addDependency(syncRemoteConfigAdapterOperation)
         
         let advertisingOperation = InitializeServiceOperation<AppodealConnector>(
             parameters: self.configuration
@@ -144,6 +167,11 @@ class App: NSObject {
         completionOperation.addDependency(syncRemoteConfigOperation)
         completionOperation.addDependency(advertisingOperation)
         
+        let runPendingTasksOperation = BlockOperation { [unowned self] in
+            self.queue.addOperations(self.pendingOperations, waitUntilFinished: false)
+            self.pendingOperations.removeAll()
+        }
+        
         queue.addOperations(
             [
                 privacyAdapterOperation,
@@ -152,16 +180,20 @@ class App: NSObject {
                 fetchParametersAdapterOperation,
                 fetchParametersOperation,
                 removeUnusedConnectorsOperation,
+                initializeRemoteConfigServiceAdapterOperation,
+                initializeRemoteConfigServiceOperation,
+                syncRemoteConfigAdapterOperation,
+                syncRemoteConfigOperation,
+                syncPartnerParametersOperation,
                 initializeServicesAdapterOperation,
                 initializeServicesOperation,
                 attributionAdapterOperation,
                 attributionOperation,
-                syncRemoteConfigAdapterOperation,
-                syncRemoteConfigOperation,
                 advertisingAdapterOperation,
                 advertisingOperation,
                 completionOperation,
-                setMmpInfoOperation
+                setMmpInfoOperation,
+                runPendingTasksOperation
             ],
             waitUntilFinished: false
         )
@@ -175,9 +207,9 @@ internal extension App {
         case .enabled:
             NSLog("[HSApp] \(message)")
         case .system:
-            #if DEBUG
+#if DEBUG
             NSLog("[HSApp] \(message)")
-            #endif
+#endif
         default:
             break
         }
@@ -249,10 +281,16 @@ extension App: DSL {
         let adapter = BlockOperation { [unowned self, unowned operation] in
             operation.analytics = self.registry.all()
             operation.attribution = self.registry.all()
+            operation.advertising = self.registry.ad
         }
         
         operation.addDependency(adapter)
-        queue.addOperations([adapter, operation], waitUntilFinished: false)
+        
+        if initialized {
+            queue.addOperations([adapter, operation], waitUntilFinished: false)
+        } else {
+            pendingOperations.append(contentsOf: [adapter, operation])
+        }
     }
     
     @objc public
@@ -263,10 +301,15 @@ extension App: DSL {
         let trackEvent = TrackEventOperation(event: eventName, params: customParameters)
         let adapter = BlockOperation { [unowned self, unowned trackEvent] in
             trackEvent.analytics = self.registry.all()
+            trackEvent.advertising = self.registry.ad
         }
         
         trackEvent.addDependency(adapter)
         
-        queue.addOperations([adapter, trackEvent], waitUntilFinished: false)
+        if initialized {
+            queue.addOperations([adapter, trackEvent], waitUntilFinished: false)
+        } else {
+            pendingOperations.append(contentsOf: [adapter, trackEvent])
+        }
     }
 }

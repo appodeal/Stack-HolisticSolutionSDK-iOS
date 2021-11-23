@@ -28,7 +28,7 @@ final class ProductTestSyncOperation: CancellableAsynchronousOperation {
         }
         
         group.notify(queue: .main) { [weak self] in
-            App.log("[HSApp] Finish activating of remote configs")
+            App.log("Finish activating of remote configs")
             self?.finish()
         }
     }

@@ -3,6 +3,7 @@
 
 # Xcode
 build/
+release/
 DerivedData
 
 ## Various settings
@@ -20,7 +21,7 @@ xcuserdata
 GoogleService-Info.plist
 Services-Info.plist
 
-## Adjust 
+## Adjust
 AdjustSigSdk.xcframework
 
 ## Obj-C/Swift specific

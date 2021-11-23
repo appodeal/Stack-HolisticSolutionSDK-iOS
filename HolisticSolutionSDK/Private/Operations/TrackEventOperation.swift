@@ -14,6 +14,7 @@ final class TrackEventOperation: AsynchronousOperation {
     private let params: [String: Any]?
     
     var analytics: [AnalyticsService] = []
+    var advertising: Advertising?
     
     init(
         event: String,
@@ -26,8 +27,18 @@ final class TrackEventOperation: AsynchronousOperation {
     
     override func main() {
         super.main()
-        App.log("Track event \(event), parameters: \(params?.description ?? "")")
-        analytics.forEach { $0.trackEvent(event, customParameters: params) }
+        App.log("""
+Track event \(event), \
+parameters: \(params?.description ?? "-"), \
+partner parameters: \(advertising?.partnerParameters.description ?? "-")
+""")
+        analytics.forEach {
+            $0.trackEvent(
+                event,
+                customParameters: params,
+                partnerParameters: advertising?.partnerParameters
+            )
+        }
         finish()
     }
 }

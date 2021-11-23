@@ -11,6 +11,7 @@ import Foundation
 
 class InitializeServiceOperation<Connector>: AsynchronousOperation, ErrorProvider where Connector: Initializable & Service {
     var connector: Connector!
+    
     let parameters: Connector.Parameters
     
     private(set) var error: HSError?
@@ -22,12 +23,11 @@ class InitializeServiceOperation<Connector>: AsynchronousOperation, ErrorProvide
     
     override func main() {
         super.main()
-        App.log("Initialize service \(connector.name)")
+        App.log("Initialize service \(connector.name) with parameters: \(parameters)")
         DispatchQueue.main.async { [unowned self] in
             self.connector.initialize(self.parameters) { [weak self] error in
                 guard let self = self else { return }
                 defer { self.finish() }
-                
                 if let error = error {
                     self.error = error
                     App.log("Error while initializing service \(self.connector.name): \(error.nserror)")
@@ -43,6 +43,7 @@ class InitializeServiceOperation<Connector>: AsynchronousOperation, ErrorProvide
 class InitializeServicesOperation: AsynchronousOperation {
     var parameters: RawParameters?
     var connector: ((String) -> RawParametersInitializable?)!
+    var advertising: Advertising!
     
     private lazy var group = DispatchGroup()
     
@@ -62,7 +63,7 @@ class InitializeServicesOperation: AsynchronousOperation {
             {
                 DispatchQueue.main.async { [unowned connector] in
                     let name = connector.name
-                    App.log("Initialize service \(name)")
+                    App.log("Initialize service \(name) with parameters: \(info.description)")
                     connector.initialize(info) { [weak self] error in
                         guard let self = self else { return }
                         defer { self.group.leave() }

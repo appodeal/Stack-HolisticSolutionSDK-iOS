@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static let complete: Notification.Name = .init("HSAppCompleteNotification")
     
     struct AppodealConstants {
-        static let appKey = "dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f"
+        static let appKey = Bundle.main.object(forInfoDictionaryKey: "AppodealAppKey") as! String
         static let adType: AppodealAdType = .banner
     }
     
@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appKey: AppodealConstants.appKey,
             adTypes: AppodealConstants.adType
         )
-        
         Appodeal.setTestingEnabled(true)
+        
         Appodeal.hs.register(connectors: connectors)
         Appodeal.hs.initialize(
             application: application,

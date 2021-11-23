@@ -164,7 +164,7 @@ final class ViewController: StaticTableViewController {
     }
     
     func synthesizeEvent() {
-        Appodeal.hs.trackEvent("level_started", customParameters: nil)
+        Appodeal.hs.trackEvent("start_game", customParameters: nil)
     }
     
     func alert(_ title: String, message: String? = nil) {

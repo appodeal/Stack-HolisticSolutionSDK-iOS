@@ -63,7 +63,9 @@ internal class AsynchronousOperation: Operation {
         }
     }
     
-    private let stateQueue = DispatchQueue(label: "com.hsoperation.queue",
-                                           attributes: .concurrent)
+    private let stateQueue = DispatchQueue(
+        label: "com.hsoperation.queue",
+        attributes: .concurrent
+    )
     private var stateStore: State = .ready
 }

@@ -70,16 +70,20 @@ extension FacebookConnector: RawParametersInitializable {
 
 
 extension FacebookConnector: AnalyticsService {
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {
+    func trackEvent(
+        _ event: String,
+        customParameters: [String : Any]?,
+        partnerParameters: PartnerParameters?
+    ) {
         guard parameters.tracking else { return }
         let name = AppEvents.Name(event)
-        if let params = customParameters {
-            AppEvents.logEvent(name, parameters: params)
-        } else {
-            AppEvents.logEvent(name)
-        }
+        let params = merged(Any.self, customParameters, partnerParameters)
+        AppEvents.logEvent(name, parameters: params)
     }
-
+    
     // MARK: - Noop
-    func trackInAppPurchase(_ purchase: Purchase) {}
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: PartnerParameters?
+    ) {}
 }

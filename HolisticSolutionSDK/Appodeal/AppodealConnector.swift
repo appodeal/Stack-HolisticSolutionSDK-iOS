@@ -17,6 +17,7 @@ class AppodealConnector: NSObject, Service {
     var name: String { "appodeal" }
     var sdkVersion: String { APDSdkVersionString() }
     var version: String { APDSdkVersionString() + ".1" }
+    var keywords: String?
     
     func set(debug: AppConfiguration.Debug) {
         switch debug {
@@ -29,30 +30,42 @@ class AppodealConnector: NSObject, Service {
 
 
 extension AppodealConnector: Advertising {
+    var partnerParameters: [String: String] {
+        return [
+            "appodeal_sdk_version": Appodeal.getVersion(),
+            "appodeal_segment_id": Appodeal.segmentId().stringValue,
+            "appodeal_framework": APDFrameworkString(Appodeal.framework()),
+            "appodeal_framework_version": Appodeal.frameworkVersion(),
+            "appodeal_plugin_version": Appodeal.pluginVersion(),
+            "firebase_keywords": keywords
+        ].compactMapValues { $0 }
+    }
+    
     func setTrackId(_ trackId: String) {
         DispatchQueue.main.async {
             Appodeal.setExtras(["track_id": trackId])
         }
     }
     
-    public func setAttributionId(_ attributionId: String) {
+    func setAttributionId(_ attributionId: String) {
         DispatchQueue.main.async {
             Appodeal.setExtras(["attribution_id": attributionId])
         }
     }
     
-    public func setConversionData(_ converstionData: [AnyHashable : Any]) {
+    func setConversionData(_ converstionData: [AnyHashable : Any]) {
         Appodeal.setCustomState(converstionData)
     }
     
-    public func setProductTestData(_ productTestData: [AnyHashable : Any]) {
+    func setProductTestData(_ productTestData: [AnyHashable : Any]) {
         let keywords = productTestData.values.compactMap { $0 as? String }.joined(separator: ",")
+        self.keywords = keywords
         DispatchQueue.main.async {
             Appodeal.setExtras(["keywords": keywords])
         }
     }
     
-    public func setMMP(mmp: String) {
+    func setMMP(mmp: String) {
         DispatchQueue.main.async {
             Appodeal.setExtras(["mmp":mmp])
         }
@@ -82,7 +95,10 @@ extension AppodealConnector: Initializable {
 
 
 extension AppodealConnector: AnalyticsService {
-    func trackInAppPurchase(_ purchase: Purchase) {
+    func trackInAppPurchase(
+        _ purchase: Purchase,
+        partnerParameters: PartnerParameters?
+    ) {
         DispatchQueue.main.async {
             Appodeal.track(
                 inAppPurchase: purchase.priceValue(),
@@ -91,7 +107,12 @@ extension AppodealConnector: AnalyticsService {
         }
     }
     
-    func trackEvent(_ event: String, customParameters: [String : Any]?) {}
+    // noop
+    func trackEvent(
+        _ event: String,
+        customParameters: [String : Any]?,
+        partnerParameters: PartnerParameters?
+    ) {}
 }
 
 

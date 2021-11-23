@@ -11,22 +11,20 @@ install! 'cocoapods',
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '2.10.3-Beta'
-  pod 'StackIAB', '1.4.4'
-  pod 'APDAdColonyAdapter', '2.10.3.1-Beta' 
-  pod 'APDAmazonAdsAdapter', '2.10.3.1-Beta' 
-  pod 'APDAppLovinAdapter', '2.10.3.1-Beta' 
-  pod 'APDBidMachineAdapter', '2.10.3.1-Beta' # Required
-  pod 'APDFacebookAudienceAdapter', '2.10.3.1-Beta' 
-  pod 'APDGoogleAdMobAdapter', '2.10.3.1-Beta' 
-  pod 'APDIronSourceAdapter', '2.10.3.1-Beta' 
-  pod 'APDMyTargetAdapter', '2.10.3.1-Beta' 
-  pod 'APDOguryAdapter', '2.10.3.1-Beta' 
-  pod 'APDSmaatoAdapter', '2.10.3.1-Beta' 
-  pod 'APDStartAppAdapter', '2.10.3.1-Beta' 
-  pod 'APDUnityAdapter', '2.10.3.1-Beta' 
-  pod 'APDVungleAdapter', '2.10.3.1-Beta' 
-  pod 'APDYandexAdapter', '2.10.3.1-Beta' 
+  pod 'Appodeal', '2.10.3'
+  pod 'StackIAB', '1.5.2'
+  pod 'APDAdColonyAdapter', '2.10.3.1' 
+  pod 'APDAmazonAdsAdapter', '2.10.3.1' 
+  pod 'APDAppLovinAdapter', '2.10.3.1' 
+  pod 'APDBidMachineAdapter', '2.10.3.1' # Required
+  pod 'APDFacebookAudienceAdapter', '2.10.3.1' 
+  pod 'APDGoogleAdMobAdapter', '2.10.3.1' 
+  pod 'APDIronSourceAdapter', '2.10.3.1' 
+  pod 'APDMyTargetAdapter', '2.10.3.1' 
+  pod 'APDOguryAdapter', '2.10.3.1' 
+  pod 'APDUnityAdapter', '2.10.3.1' 
+  pod 'APDVungleAdapter', '2.10.3.1' 
+  pod 'APDYandexAdapter', '2.10.3.1' 
   pod 'StackConsentManager', '1.1.2'
 end
 
@@ -37,16 +35,15 @@ def firebase
 end
 
 def appsflyer
-  pod 'AppsFlyerFramework', '6.4.0'
+  pod 'AppsFlyerFramework', '6.4.2'
 end
 
 def facebook 
-  pod 'FBSDKCoreKit', '11.2.1'
+  pod 'FBSDKCoreKit', '12.0.0'
 end
 
 def adjust
   pod 'Adjust', '4.29.6'
-  pod 'AdjustPurchase', :git => 'https://github.com/adjust/ios_purchase_sdk', :tag => 'v1.0.0'
 end
 
 def deps
@@ -59,6 +56,11 @@ end
 
 
 target 'HolisticSolutionSDK' do
+  project 'HolisticSolutionSDK.xcodeproj'
+  deps
+end
+
+target 'HolisticSolutionSDKTests' do
   project 'HolisticSolutionSDK.xcodeproj'
   deps
 end
@@ -79,7 +81,7 @@ post_install do |installer|
   project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['ENABLE_BITCODE'] = 'YES'
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
     end
   end
 end
