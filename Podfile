@@ -17,14 +17,14 @@ def appodeal
   pod 'APDAmazonAdsAdapter', '2.10.3.1' 
   pod 'APDAppLovinAdapter', '2.10.3.1' 
   pod 'APDBidMachineAdapter', '2.10.3.1' # Required
-  pod 'APDFacebookAudienceAdapter', '2.10.3.1' 
-  pod 'APDGoogleAdMobAdapter', '2.10.3.1' 
+  pod 'APDFacebookAudienceAdapter', '2.10.3.2' 
+  pod 'APDGoogleAdMobAdapter', '2.10.3.2' 
   pod 'APDIronSourceAdapter', '2.10.3.1' 
-  pod 'APDMyTargetAdapter', '2.10.3.1' 
+  pod 'APDMyTargetAdapter', '2.10.3.2' 
   pod 'APDOguryAdapter', '2.10.3.1' 
   pod 'APDUnityAdapter', '2.10.3.1' 
   pod 'APDVungleAdapter', '2.10.3.1' 
-  pod 'APDYandexAdapter', '2.10.3.1' 
+  pod 'APDYandexAdapter', '2.10.3.2' 
   pod 'StackConsentManager', '1.1.2'
 end
 

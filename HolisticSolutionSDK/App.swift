@@ -16,7 +16,7 @@ import Appodeal
 @objc(HSApp) final public
 class App: NSObject {
     @objc public static
-    let sdkVersion: String = "2.0.3"
+    let sdkVersion: String = "2.0.4"
     
     @objc public static
     let shared = App()

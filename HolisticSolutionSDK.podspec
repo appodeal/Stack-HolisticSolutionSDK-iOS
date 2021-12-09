@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = "HolisticSolutionSDK"
-  spec.version      = "2.0.3"
+  spec.version      = "2.0.4"
   spec.summary      = "The HolisticSolutionSDK provides easy to use API for integration attribution, product testing and advertising platform."
   spec.description  = <<-DESC
   The Holistic Solution SDK is iOS framework. It provides easy to use API for integration attribution, product testing and advertising platform.
@@ -49,14 +49,14 @@ Pod::Spec.new do |spec|
     ss.dependency 'APDAmazonAdsAdapter', '2.10.3.1' 
     ss.dependency 'APDAppLovinAdapter', '2.10.3.1' 
     ss.dependency 'APDBidMachineAdapter', '2.10.3.1' # Required
-    ss.dependency 'APDFacebookAudienceAdapter', '2.10.3.1' 
-    ss.dependency 'APDGoogleAdMobAdapter', '2.10.3.1' 
+    ss.dependency 'APDFacebookAudienceAdapter', '2.10.3.2' 
+    ss.dependency 'APDGoogleAdMobAdapter', '2.10.3.2' 
     ss.dependency 'APDIronSourceAdapter', '2.10.3.1' 
-    ss.dependency 'APDMyTargetAdapter', '2.10.3.1' 
+    ss.dependency 'APDMyTargetAdapter', '2.10.3.2' 
     ss.dependency 'APDOguryAdapter', '2.10.3.1' 
     ss.dependency 'APDUnityAdapter', '2.10.3.1' 
     ss.dependency 'APDVungleAdapter', '2.10.3.1' 
-    ss.dependency 'APDYandexAdapter', '2.10.3.1' 
+    ss.dependency 'APDYandexAdapter', '2.10.3.2' 
   end
 
   spec.subspec "Adjust" do |ss|
