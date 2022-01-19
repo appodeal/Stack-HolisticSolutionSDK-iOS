@@ -11,35 +11,35 @@ install! 'cocoapods',
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '2.10.3'
+  pod 'Appodeal', '2.11.1'
   pod 'StackIAB', '1.5.2'
-  pod 'APDAdColonyAdapter', '2.10.3.1' 
-  pod 'APDAmazonAdsAdapter', '2.10.3.1' 
-  pod 'APDAppLovinAdapter', '2.10.3.1' 
-  pod 'APDBidMachineAdapter', '2.10.3.1' # Required
-  pod 'APDFacebookAudienceAdapter', '2.10.3.2' 
-  pod 'APDGoogleAdMobAdapter', '2.10.3.2' 
-  pod 'APDIronSourceAdapter', '2.10.3.1' 
-  pod 'APDMyTargetAdapter', '2.10.3.2' 
-  pod 'APDOguryAdapter', '2.10.3.1' 
-  pod 'APDUnityAdapter', '2.10.3.1' 
-  pod 'APDVungleAdapter', '2.10.3.1' 
-  pod 'APDYandexAdapter', '2.10.3.2' 
+  pod 'APDAdColonyAdapter', '2.11.1.1'
+  pod 'APDAmazonAdsAdapter', '2.11.1.1'
+  pod 'APDAppLovinAdapter', '2.11.1.1'
+  pod 'APDBidMachineAdapter', '2.11.1.1' # Required
+  pod 'APDFacebookAudienceAdapter', '2.11.1.1'
+  pod 'APDGoogleAdMobAdapter', '2.11.1.1'
+  pod 'APDIronSourceAdapter', '2.11.1.1'
+  pod 'APDMyTargetAdapter', '2.11.1.1'
+  pod 'APDOguryAdapter', '2.11.1.1'
+  pod 'APDUnityAdapter', '2.11.1.1'
+  pod 'APDVungleAdapter', '2.11.1.1'
+  pod 'APDYandexAdapter', '2.11.1.1'
   pod 'StackConsentManager', '1.1.2'
 end
 
 def firebase
-  pod 'Firebase/Core', '8.8.0'
-  pod 'Firebase/Analytics', '8.8.0'
-  pod 'Firebase/RemoteConfig', '8.8.0'
+  pod 'Firebase/Core', '8.11.0'
+  pod 'Firebase/Analytics', '8.11.0'
+  pod 'Firebase/RemoteConfig', '8.11.0'
 end
 
 def appsflyer
-  pod 'AppsFlyerFramework', '6.4.2'
+  pod 'AppsFlyerFramework', '6.5.1'
 end
 
 def facebook 
-  pod 'FBSDKCoreKit', '12.0.0'
+  pod 'FBSDKCoreKit', '12.3.0'
 end
 
 def adjust

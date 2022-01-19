@@ -77,8 +77,14 @@ extension FacebookConnector: AnalyticsService {
     ) {
         guard parameters.tracking else { return }
         let name = AppEvents.Name(event)
-        let params = merged(Any.self, customParameters, partnerParameters)
-        AppEvents.logEvent(name, parameters: params)
+        let params = merged(Any.self, customParameters, partnerParameters)?
+            .reduce([AppEvents.ParameterName: Any]()) { result, pair in
+                var result = result
+                result[AppEvents.ParameterName(pair.key)] = pair.value
+                return result
+            }
+        
+        AppEvents.shared.logEvent(name, parameters: params)
     }
     
     // MARK: - Noop
